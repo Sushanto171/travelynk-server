@@ -1,0 +1,63 @@
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  BANNED
+}
+
+enum Provider {
+  CREDENTIALS
+  GOOGLE
+  GITHUB
+  FACEBOOK
+  TWITTER
+}
+
+
+enum PlanStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+enum PlanType {
+  SOLO
+  GROUP
+  FAMILY
+  FRIENDS
+  COLLEAGUES
+  COUPLES
+  PETS
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionPlan {
+  BASIC
+  PREMIUM
+  PRO
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  VIDEO
+  AUDIO
+  FILE
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+}

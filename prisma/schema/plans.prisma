@@ -1,0 +1,52 @@
+model Plan {
+  id            String        @id @default(uuid())
+
+  owner_id      String
+  owner         Traveler     @relation("plan_owner", fields: [owner_id], references: [id])
+
+  title         String
+  destination   String
+  google_map    String?
+  budget        Float?
+  start_date    DateTime
+  end_date      DateTime
+  tour_type     PlanType     @default(SOLO)
+  slug          String       @unique
+  itinerary     String?
+  tag           String?
+  status        PlanStatus   @default(PENDING)
+
+  buddies       PlanBuddy[]
+  reviews       Review[]
+
+  is_completed  Boolean      @default(false)
+  created_at    DateTime     @default(now())
+
+  @@map("plans")
+}
+
+model PlanBuddy {
+  traveler_id String
+  plan_id     String
+
+  traveler    Traveler  @relation(fields: [traveler_id], references: [id], onDelete: Cascade)
+  plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+  @@id([traveler_id, plan_id])
+  @@map("TravelerToPlans")
+}
+
+model Review {
+  id          String    @id @default(uuid())
+  reviewer_id String
+  plan_id     String
+  rating      Int
+  comment     String?
+  created_at  DateTime  @default(now())
+
+  reviewer    Traveler  @relation(fields: [reviewer_id], references: [id], onDelete: Cascade)
+  plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+  @@unique([reviewer_id, plan_id])
+  @@map("reviews")
+}

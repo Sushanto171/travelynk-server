@@ -1,0 +1,20 @@
+model UserAuthProviders {
+  user_id          String
+  auth_providersId String
+  user             User          @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  auth_providers   AuthProviders @relation(fields: [auth_providersId], references: [id], onDelete: Cascade)
+
+  @@id([user_id, auth_providersId])
+  @@map("UserToAuthProviders")
+}
+
+model AuthProviders {
+  id                String              @id @default(uuid())
+  provider_id       String?
+  provider          Provider            @default(CREDENTIALS)
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  userAuthProviders UserAuthProviders[]
+
+  @@map("authProviders")
+}

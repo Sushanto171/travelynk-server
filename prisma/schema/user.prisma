@@ -1,0 +1,84 @@
+model User {
+  id                     String              @id @default(uuid())
+  email                  String              @unique
+  password               String?
+  status                 UserStatus          @default(ACTIVE)
+  role                   UserRole            @default(USER)
+  is_deleted             Boolean             @default(false)
+  created_at             DateTime            @default(now())
+  updated_at             DateTime            @updatedAt
+  admin                  Admin?
+  traveler               Traveler?
+  auths                  UserAuthProviders[]
+  conversations_sender   Conversation[]      @relation("sender")
+  conversations_receiver Conversation[]      @relation("receiver")
+  messages               Message[]
+
+  @@map("users")
+}
+
+model Admin {
+  id             String   @id @default(uuid())
+  name           String
+  email          String   @unique
+  user_id        String   @unique
+  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  contact_number String?
+  address        String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Traveler {
+  id               String    @id @default(uuid())
+  name             String
+  email            String    @unique
+  profile_photo    String?
+  bio              String?
+  contact_number   String?
+  date_of_birth    DateTime?
+  address          String?
+  current_location String?
+  is_verified      Boolean   @default(false)
+  last_active_at   DateTime?
+  is_subscribed    Boolean   @default(false)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+
+  user_id          String @unique
+  user             User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  interests         TravelerToInterests[]
+  visited_countries travelerCountries[]
+
+  owned_plans      Plan[]         @relation("plan_owner")
+  joined_plans     PlanBuddy[]
+  subscriptions    Subscription[]
+  payments         Payment[]
+  reviews          Review[]
+
+  @@map("travelers")
+}
+
+model TravelerToInterests {
+  traveler_id  String
+  interests_id String
+  traveler     Traveler  @relation(fields: [traveler_id], references: [id], onDelete: Cascade)
+  interests    Interests @relation(fields: [interests_id], references: [id], onDelete: Cascade)
+
+  @@id([traveler_id, interests_id])
+  @@map("TravelerToInterests")
+}
+
+model Interests {
+  id                  String                @id @default(uuid())
+  name                String                @unique
+  description         String?
+  created_at          DateTime              @default(now())
+  updated_at          DateTime              @updatedAt
+  travelerToInterests TravelerToInterests[]
+
+  @@map("interests")
+}
