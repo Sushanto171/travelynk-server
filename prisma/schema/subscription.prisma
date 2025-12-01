@@ -1,0 +1,33 @@
+model Subscription {
+  id                 String        @id @default(uuid())
+  subscriber_id       String        @unique
+  subscriber        Traveler   @relation(fields: [subscriber_id], references: [id])
+  plan_type         SubscriptionPlan @default(BASIC)
+  payment_method    String
+  start_date       DateTime
+  end_date         DateTime
+  is_active        Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  payments         Payment[]
+  
+
+  @@map("subscriptions")
+}
+
+
+model Payment {
+  id                 String        @id @default(uuid())
+  subscription_id      String        @unique
+  subscription        Subscription   @relation(fields: [subscription_id], references: [id])
+  transaction_id      String
+  traveler_id        String 
+  traveler          Traveler     @relation(fields: [traveler_id], references: [id])
+  amount             Float
+  status             PaymentStatus @default(PENDING)
+  paymentGatewayData Json?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  @@map("payments")
+}

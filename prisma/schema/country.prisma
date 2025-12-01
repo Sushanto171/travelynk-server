@@ -1,0 +1,20 @@
+model Countries {
+  id                String              @id @default(uuid())
+  name              String
+  code              String              @unique
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  travelerCountries travelerCountries[]
+
+  @@map("countries")
+}
+
+model travelerCountries {
+  traveler_id String
+  country_id  String
+  traveler    Traveler  @relation(fields: [traveler_id], references: [id], onDelete: Cascade)
+  country     Countries @relation(fields: [country_id], references: [id], onDelete: Cascade)
+
+  @@id([traveler_id, country_id])
+  @@map("travelerCountries")
+}
