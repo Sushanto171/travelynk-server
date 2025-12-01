@@ -15,4 +15,4 @@ router.delete("/:id", ReviewController.deleteById)
 
 
 
-export const TravelerRoutes = router
+export const ReviewRoutes = router

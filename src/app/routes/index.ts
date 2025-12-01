@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { AuthRoutes } from "../modules/auth/auth.routes";
+import { PlanRoutes } from "../modules/plan/plan.routes";
+import { ReviewRoutes } from "../modules/review/review.routes";
 import { UserRoutes } from "../modules/user/user.routes";
 import { TravelerRoutes } from './../modules/traveler/traveler.routes';
 
@@ -18,10 +20,19 @@ const routes: Route[] = [
   {
     path: "/auth",
     router: AuthRoutes
-  },{
-    path:"/traveler",
+  },
+  {
+    path: "/traveler",
     router: TravelerRoutes
-  }
+  },
+  {
+    path: "/plan",
+    router: PlanRoutes
+  },
+  {
+    path: "/review",
+    router: ReviewRoutes
+  },
 ]
 
 routes.forEach(route => router.use(route.path, route.router))
