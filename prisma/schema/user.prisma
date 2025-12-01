@@ -1,18 +1,19 @@
 model User {
-  id         String              @id @default(uuid())
-  email      String              @unique
-  password   String?
-  status     UserStatus          @default(ACTIVE)
-  role       UserRole            @default(USER)
-  is_deleted Boolean             @default(false)
-  created_at DateTime            @default(now())
-  updated_at DateTime            @updatedAt
-  admin      Admin?
-  traveler   Traveler?
-  auths      UserAuthProviders[]
-  conversations_sender Conversation[]  @relation("sender")
-  conversations_receiver Conversation[]  @relation("receiver")
-  messages   Message[]
+  id                     String              @id @default(uuid())
+  email                  String              @unique
+  password               String?
+  status                 UserStatus          @default(ACTIVE)
+  role                   UserRole            @default(USER)
+  is_deleted             Boolean             @default(false)
+  created_at             DateTime            @default(now())
+  updated_at             DateTime            @updatedAt
+  admin                  Admin?
+  traveler               Traveler?
+  auths                  UserAuthProviders[]
+  conversations_sender   Conversation[]      @relation("sender")
+  conversations_receiver Conversation[]      @relation("receiver")
+  messages               Message[]
+
   @@map("users")
 }
 
@@ -46,17 +47,17 @@ model Traveler {
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
 
-  user_id String @unique
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id          String @unique
+  user             User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   interests         TravelerToInterests[]
   visited_countries travelerCountries[]
 
-  owned_plans  Plan[]      @relation("plan_owner")
-  joined_plans PlanBuddy[]
-  subscriptions Subscription[]
-  payments      Payment[]
-  reviews      Review[]
+  owned_plans      Plan[]         @relation("plan_owner")
+  joined_plans     PlanBuddy[]
+  subscriptions    Subscription[]
+  payments         Payment[]
+  reviews          Review[]
 
   @@map("travelers")
 }

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Server } from "http";
 import { app } from "./app";
+import { seeAdmin } from "./app/utils/seedAdmin";
 import config from "./config";
 
 const startServer = async () => {
@@ -22,6 +23,9 @@ const startServer = async () => {
         process.exit(1);
       }
     };
+    // seed admin
+    await seeAdmin()
+
     // Handle termination signals
     process.on("SIGINT", exitHandler);
     process.on("SIGTERM", exitHandler);
