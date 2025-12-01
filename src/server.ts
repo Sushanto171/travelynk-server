@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { Server } from "http";
 import { app } from "./app";
-import config from "./app/config";
+import config from "./config";
 
 const startServer = async () => {
   let server: Server;
