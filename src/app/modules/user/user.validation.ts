@@ -1,4 +1,5 @@
 import z from "zod";
+import { UserRole } from "../../../generated/prisma/enums";
 
 const createTravelerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters long"),
@@ -16,9 +17,17 @@ const createAdminSchema = z.object({
   }),
 });
 
+const updateProfileStatusSchema = z.object({
+  status: z.enum(Object.keys(UserRole)
+  )
+})
+
 export const UserValidation = {
   createTravelerSchema,
   createAdminSchema,
+  updateProfileStatusSchema
 }
 
 export type createTravelerInput = z.infer<typeof createTravelerSchema>
+export type createAdminInput = z.infer<typeof createAdminSchema>
+export type updateProfileStatus = z.infer<typeof updateProfileStatusSchema>

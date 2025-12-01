@@ -1,10 +1,23 @@
 import { prisma } from "../../../config/prisma.config";
-import { UserRole } from "../../../generated/prisma/enums";
+import { Provider, UserRole, UserStatus } from "../../../generated/prisma/enums";
 import { BcryptHelper } from "../../helpers/bcrypt.helper";
 import { createTravelerInput } from "./user.validation";
 
 const getAllFromDB = async () => {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany(
+    {
+      select: {
+        id: true,
+        email: true,
+        role: true,
+        status: true,
+        created_at: true,
+        updated_at: true,
+        admin: true,
+        traveler: true,
+      }
+    }
+  );
   return users;
 };
 
@@ -16,9 +29,24 @@ const createTraveler = async (payload: createTravelerInput) => {
       data: {
         password: hashedPassword,
         role: UserRole.USER,
-        email: payload.traveler.email
+        email: payload.traveler.email,
       }
     })
+
+    // auths : {provider:"credentials"}[]
+    const provider = await tnx.authProviders.create({
+      data: {
+        provider: Provider.CREDENTIALS
+      }
+    })
+
+    await tnx.userAuthProviders.create({
+      data: {
+        auth_providersId: provider.id,
+        user_id: user.id
+      }
+    })
+
 
     return await tnx.traveler.create({
       data: {
@@ -37,9 +65,28 @@ const createAdmin = async () => {
   return users;
 };
 
+const changeProfileStatus = async (
+  id: string,
+  payload: {
+    status: UserStatus;
+  }
+) => {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: { id },
+  });
+
+  const result = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: payload,
+  });
+  return result;
+};
 
 export const UserService = {
   getAllFromDB,
   createTraveler,
   createAdmin,
+  changeProfileStatus
 }

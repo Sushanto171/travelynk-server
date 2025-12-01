@@ -37,8 +37,22 @@ const createAdmin = catchAsync(async (req, res) => {
   })
 })
 
+const changeProfileStatus = catchAsync(async (req, res) => {
+  const id = req.params.id;
+
+  const result = await UserService.changeProfileStatus(id, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Change profile status successfully!",
+    data: result,
+  });
+});
+
 export const UserController = {
   getAllFormDB,
   createTraveler,
-  createAdmin
+  createAdmin,
+  changeProfileStatus
 }

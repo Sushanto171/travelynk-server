@@ -13,4 +13,10 @@ router.post('/create-traveler', validateRequest(UserValidation.createTravelerSch
 
 router.post('/create-admin', auth(UserRole.ADMIN), validateRequest(UserValidation.createAdminSchema), UserController.createAdmin)
 
+router.patch(
+  "/change-profile-status/:id",
+  auth(UserRole.ADMIN),
+  UserController.changeProfileStatus
+);
+
 export const UserRoutes = router
