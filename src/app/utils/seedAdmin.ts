@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import config from "../../config"
 import { prisma } from "../../config/prisma.config"
+import { Provider, UserRole } from "../../generated/prisma/enums"
 import { ApiError } from "../helpers/ApiError"
 import { BcryptHelper } from "../helpers/bcrypt.helper"
 
@@ -17,10 +18,23 @@ export const seeAdmin = async () => {
     const user = await prisma.user.upsert({
       where: { email },
       create: {
+        role: UserRole.ADMIN,
         password: hashedPassword,
         email,
         admin: {
-          create: { email, name }
+          create: {
+            email, name,
+
+          }
+        },
+        auths: {
+          create: {
+            auth_providers: {
+              create: {
+                provider: Provider.CREDENTIALS
+              }
+            }
+          }
         }
       },
       update: {}

@@ -6,6 +6,7 @@ import { jwtHelper } from "../../helpers/jwt.helper";
 import { setCookie } from "../../helpers/setCookie";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
+import { AuthService } from "./auth.service";
 
 const credentialLogin = catchAsync(async (req, res, next) => {
 
@@ -31,7 +32,35 @@ const credentialLogin = catchAsync(async (req, res, next) => {
   })(req, res, next);
 });
 
+const getMe = catchAsync(async (req, res) => {
+
+  const result = await AuthService.getMe(req.user as JwtPayload)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "User data retrieved successfully.",
+    data: result,
+  });
+
+});
+
+
+
+const logout = catchAsync(async (req, res) => {
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Logout successfully",
+    data: null,
+  });
+});
 
 export const AuthController = {
-  credentialLogin
+  credentialLogin,
+  getMe,
+  logout
 }

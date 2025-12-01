@@ -1,7 +1,7 @@
 import { prisma } from "../../../config/prisma.config";
 import { Provider, UserRole, UserStatus } from "../../../generated/prisma/enums";
 import { BcryptHelper } from "../../helpers/bcrypt.helper";
-import { createTravelerInput } from "./user.validation";
+import { createAdminInput, createTravelerInput } from "./user.validation";
 
 const getAllFromDB = async () => {
   const users = await prisma.user.findMany(
@@ -56,13 +56,43 @@ const createTraveler = async (payload: createTravelerInput) => {
       },
     })
   })
-
-
 };
 
-const createAdmin = async () => {
-  const users = await prisma.user.findMany();
-  return users;
+const createAdmin = async (payload: createAdminInput) => {
+  const hashedPassword = await BcryptHelper.generateHashPassword(payload.password)
+
+  return await prisma.$transaction(async (tnx) => {
+    const user = await prisma.user.create({
+      data: {
+        password: hashedPassword,
+        role: UserRole.ADMIN,
+        email: payload.admin.email,
+      }
+    })
+
+    // auths : {provider:"credentials"}[]
+    const provider = await tnx.authProviders.create({
+      data: {
+        provider: Provider.CREDENTIALS
+      }
+    })
+
+    await tnx.userAuthProviders.create({
+      data: {
+        auth_providersId: provider.id,
+        user_id: user.id
+      }
+    })
+
+
+    return await tnx.admin.create({
+      data: {
+        user_id: user.id,
+        email: user.email,
+        name: payload.admin.name
+      },
+    })
+  })
 };
 
 const changeProfileStatus = async (
