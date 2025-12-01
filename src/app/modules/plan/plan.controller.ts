@@ -47,7 +47,7 @@ const deleteById = catchAsync(async (req, res) => {
   })
 })
 
-export const TravelerController = {
+export const PlanController = {
   getAllFormDB,
   getById,
   updateById,

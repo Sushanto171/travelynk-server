@@ -18,7 +18,7 @@ const deleteById = async () => {
   return
 }
 
-export const TravelerService = {
+export const PlanService = {
   getAllFormDB,
   getById,
   updateById,
