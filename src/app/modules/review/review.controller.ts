@@ -9,51 +9,35 @@ const insertIntoDB = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "message",
+    message: "Review created successfully",
     data: result
   })
 })
 
-const getById = catchAsync(async (req, res) => {
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "message",
-    data: ""
-  })
-})
 
 const updateById = catchAsync(async (req, res) => {
+  const result = await ReviewService.updateById(req.user!, req.params.id, req.body)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "message",
-    data: ""
+    message: "Review updated successfully",
+    data: result
   })
 })
 
-const softDelete = catchAsync(async (req, res) => {
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "message",
-    data: ""
-  })
-})
 
 const deleteById = catchAsync(async (req, res) => {
+  await ReviewService.deleteById(req.user!, req.params.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "message",
-    data: ""
+    message: "Review deleted successfully",
+    data: null
   })
 })
 
 export const ReviewController = {
   insertIntoDB,
-  getById,
   updateById,
-  softDelete,
   deleteById
 }

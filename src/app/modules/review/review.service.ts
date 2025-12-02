@@ -1,9 +1,9 @@
 import { JwtPayload } from "jsonwebtoken"
-import { PlanStatus } from "../../../generated/prisma/enums"
+import { PlanStatus, UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
-import { CreateReviewInput } from "./review.validation"
+import { CreateReviewInput, UpdateReviewInput } from "./review.validation"
 
 const insertIntoDB = async (user: JwtPayload, plan_id: string, payload: CreateReviewInput) => {
   const planInfo = await prisma.plan.findFirstOrThrow({
@@ -35,26 +35,40 @@ const insertIntoDB = async (user: JwtPayload, plan_id: string, payload: CreateRe
   return result
 }
 
-const getById = async () => {
-  return
+
+const updateById = async (user: JwtPayload, id: string, payload: UpdateReviewInput) => {
+  return await prisma.review.update({
+    where: {
+      id,
+      reviewer_id: user.id
+    },
+    data: payload
+  })
 }
 
-const updateById = async () => {
-  return
-}
 
-const softDelete = async () => {
-  return
-}
+const deleteById = async (user: JwtPayload, id: string) => {
 
-const deleteById = async () => {
-  return
+  // verify plan owner / reviewer /admin
+  if (user.role !== UserRole.ADMIN) {
+    await prisma.review.findFirstOrThrow({
+      where: {
+        id,
+        OR: [
+          { reviewer_id: user.id },
+          { plan: { owner_id: user.id } }
+        ]
+      }
+    })
+  }
+
+  return await prisma.review.delete({
+    where: { id },
+  })
 }
 
 export const ReviewService = {
   insertIntoDB,
-  getById,
   updateById,
-  softDelete,
   deleteById
 }
