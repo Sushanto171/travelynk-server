@@ -13,7 +13,7 @@ router.patch("/:id", auth(UserRole.ADMIN, UserRole.USER), TravelerController.upd
 
 router.delete("/soft/:id", auth(UserRole.ADMIN, UserRole.USER), TravelerController.softDelete)
 
-router.delete("/:id", auth(UserRole.USER), TravelerController.deleteById)
+router.delete("/:id", auth(UserRole.ADMIN), TravelerController.deleteById)
 
 
 

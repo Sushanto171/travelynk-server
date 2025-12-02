@@ -45,11 +45,13 @@ const softDelete = catchAsync(async (req, res) => {
 })
 
 const deleteById = catchAsync(async (req, res) => {
+
+  await TravelerService.deleteById(req.params.id)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "message",
-    data: ""
+    message: "Traveler deleted successfully",
+    data: null
   })
 })
 
