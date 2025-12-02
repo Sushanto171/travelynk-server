@@ -29,13 +29,13 @@ export type AggregatePlan = {
 export type PlanAvgAggregateOutputType = {
   latitude: number | null
   longitude: number | null
-  budget: number | null
+  budget: runtime.Decimal | null
 }
 
 export type PlanSumAggregateOutputType = {
   latitude: number | null
   longitude: number | null
-  budget: number | null
+  budget: runtime.Decimal | null
 }
 
 export type PlanMinAggregateOutputType = {
@@ -47,13 +47,13 @@ export type PlanMinAggregateOutputType = {
   longitude: number | null
   place_id: string | null
   map_url: string | null
-  budget: number | null
+  budget: runtime.Decimal | null
   start_date: Date | null
   end_date: Date | null
-  tour_type: $Enums.PlanType | null
   itinerary: string | null
   tag: string | null
   slug: string | null
+  tour_type: $Enums.PlanType | null
   status: $Enums.PlanStatus | null
   created_at: Date | null
   updated_at: Date | null
@@ -68,13 +68,13 @@ export type PlanMaxAggregateOutputType = {
   longitude: number | null
   place_id: string | null
   map_url: string | null
-  budget: number | null
+  budget: runtime.Decimal | null
   start_date: Date | null
   end_date: Date | null
-  tour_type: $Enums.PlanType | null
   itinerary: string | null
   tag: string | null
   slug: string | null
+  tour_type: $Enums.PlanType | null
   status: $Enums.PlanStatus | null
   created_at: Date | null
   updated_at: Date | null
@@ -92,10 +92,10 @@ export type PlanCountAggregateOutputType = {
   budget: number
   start_date: number
   end_date: number
-  tour_type: number
   itinerary: number
   tag: number
   slug: number
+  tour_type: number
   status: number
   created_at: number
   updated_at: number
@@ -127,10 +127,10 @@ export type PlanMinAggregateInputType = {
   budget?: true
   start_date?: true
   end_date?: true
-  tour_type?: true
   itinerary?: true
   tag?: true
   slug?: true
+  tour_type?: true
   status?: true
   created_at?: true
   updated_at?: true
@@ -148,10 +148,10 @@ export type PlanMaxAggregateInputType = {
   budget?: true
   start_date?: true
   end_date?: true
-  tour_type?: true
   itinerary?: true
   tag?: true
   slug?: true
+  tour_type?: true
   status?: true
   created_at?: true
   updated_at?: true
@@ -169,10 +169,10 @@ export type PlanCountAggregateInputType = {
   budget?: true
   start_date?: true
   end_date?: true
-  tour_type?: true
   itinerary?: true
   tag?: true
   slug?: true
+  tour_type?: true
   status?: true
   created_at?: true
   updated_at?: true
@@ -274,13 +274,13 @@ export type PlanGroupByOutputType = {
   longitude: number | null
   place_id: string | null
   map_url: string | null
-  budget: number | null
+  budget: runtime.Decimal
   start_date: Date
   end_date: Date
-  tour_type: $Enums.PlanType
   itinerary: string | null
   tag: string | null
   slug: string
+  tour_type: $Enums.PlanType
   status: $Enums.PlanStatus
   created_at: Date
   updated_at: Date
@@ -318,13 +318,13 @@ export type PlanWhereInput = {
   longitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
   place_id?: Prisma.StringNullableFilter<"Plan"> | string | null
   map_url?: Prisma.StringNullableFilter<"Plan"> | string | null
-  budget?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  budget?: Prisma.DecimalFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
-  tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
   itinerary?: Prisma.StringNullableFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableFilter<"Plan"> | string | null
   slug?: Prisma.StringFilter<"Plan"> | string
+  tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
@@ -342,13 +342,13 @@ export type PlanOrderByWithRelationInput = {
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   place_id?: Prisma.SortOrderInput | Prisma.SortOrder
   map_url?: Prisma.SortOrderInput | Prisma.SortOrder
-  budget?: Prisma.SortOrderInput | Prisma.SortOrder
+  budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
-  tour_type?: Prisma.SortOrder
   itinerary?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
+  tour_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -370,12 +370,12 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   longitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
   place_id?: Prisma.StringNullableFilter<"Plan"> | string | null
   map_url?: Prisma.StringNullableFilter<"Plan"> | string | null
-  budget?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  budget?: Prisma.DecimalFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
-  tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
   itinerary?: Prisma.StringNullableFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableFilter<"Plan"> | string | null
+  tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
@@ -393,13 +393,13 @@ export type PlanOrderByWithAggregationInput = {
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   place_id?: Prisma.SortOrderInput | Prisma.SortOrder
   map_url?: Prisma.SortOrderInput | Prisma.SortOrder
-  budget?: Prisma.SortOrderInput | Prisma.SortOrder
+  budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
-  tour_type?: Prisma.SortOrder
   itinerary?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
+  tour_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -422,13 +422,13 @@ export type PlanScalarWhereWithAggregatesInput = {
   longitude?: Prisma.FloatNullableWithAggregatesFilter<"Plan"> | number | null
   place_id?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
   map_url?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
-  budget?: Prisma.FloatNullableWithAggregatesFilter<"Plan"> | number | null
+  budget?: Prisma.DecimalWithAggregatesFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
-  tour_type?: Prisma.EnumPlanTypeWithAggregatesFilter<"Plan"> | $Enums.PlanType
   itinerary?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
   slug?: Prisma.StringWithAggregatesFilter<"Plan"> | string
+  tour_type?: Prisma.EnumPlanTypeWithAggregatesFilter<"Plan"> | $Enums.PlanType
   status?: Prisma.EnumPlanStatusWithAggregatesFilter<"Plan"> | $Enums.PlanStatus
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
@@ -442,13 +442,13 @@ export type PlanCreateInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -466,13 +466,13 @@ export type PlanUncheckedCreateInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -488,13 +488,13 @@ export type PlanUpdateInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -512,13 +512,13 @@ export type PlanUncheckedUpdateInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -535,13 +535,13 @@ export type PlanCreateManyInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -555,13 +555,13 @@ export type PlanUpdateManyMutationInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,13 +576,13 @@ export type PlanUncheckedUpdateManyInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -600,10 +600,10 @@ export type PlanCountOrderByAggregateInput = {
   budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
-  tour_type?: Prisma.SortOrder
   itinerary?: Prisma.SortOrder
   tag?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  tour_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -627,10 +627,10 @@ export type PlanMaxOrderByAggregateInput = {
   budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
-  tour_type?: Prisma.SortOrder
   itinerary?: Prisma.SortOrder
   tag?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  tour_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -648,10 +648,10 @@ export type PlanMinOrderByAggregateInput = {
   budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
-  tour_type?: Prisma.SortOrder
   itinerary?: Prisma.SortOrder
   tag?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  tour_type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
@@ -684,6 +684,14 @@ export type NullableFloatFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type EnumPlanTypeFieldUpdateOperationsInput = {
@@ -772,13 +780,13 @@ export type PlanCreateWithoutBuddiesInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -795,13 +803,13 @@ export type PlanUncheckedCreateWithoutBuddiesInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -832,13 +840,13 @@ export type PlanUpdateWithoutBuddiesInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -855,13 +863,13 @@ export type PlanUncheckedUpdateWithoutBuddiesInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -876,13 +884,13 @@ export type PlanCreateWithoutReviewsInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -899,13 +907,13 @@ export type PlanUncheckedCreateWithoutReviewsInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -936,13 +944,13 @@ export type PlanUpdateWithoutReviewsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -959,13 +967,13 @@ export type PlanUncheckedUpdateWithoutReviewsInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -980,13 +988,13 @@ export type PlanCreateWithoutOwnerInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -1002,13 +1010,13 @@ export type PlanUncheckedCreateWithoutOwnerInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -1054,13 +1062,13 @@ export type PlanScalarWhereInput = {
   longitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
   place_id?: Prisma.StringNullableFilter<"Plan"> | string | null
   map_url?: Prisma.StringNullableFilter<"Plan"> | string | null
-  budget?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  budget?: Prisma.DecimalFilter<"Plan"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
-  tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
   itinerary?: Prisma.StringNullableFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableFilter<"Plan"> | string | null
   slug?: Prisma.StringFilter<"Plan"> | string
+  tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
@@ -1074,13 +1082,13 @@ export type PlanCreateManyOwnerInput = {
   longitude?: number | null
   place_id?: string | null
   map_url?: string | null
-  budget?: number | null
+  budget?: runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date: Date | string
   end_date: Date | string
-  tour_type?: $Enums.PlanType
   itinerary?: string | null
   tag?: string | null
   slug: string
+  tour_type?: $Enums.PlanType
   status?: $Enums.PlanStatus
   created_at?: Date | string
   updated_at?: Date | string
@@ -1094,13 +1102,13 @@ export type PlanUpdateWithoutOwnerInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1116,13 +1124,13 @@ export type PlanUncheckedUpdateWithoutOwnerInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1138,13 +1146,13 @@ export type PlanUncheckedUpdateManyWithoutOwnerInput = {
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  budget?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1202,10 +1210,10 @@ export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
-  tour_type?: boolean
   itinerary?: boolean
   tag?: boolean
   slug?: boolean
+  tour_type?: boolean
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -1227,10 +1235,10 @@ export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
-  tour_type?: boolean
   itinerary?: boolean
   tag?: boolean
   slug?: boolean
+  tour_type?: boolean
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -1249,10 +1257,10 @@ export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
-  tour_type?: boolean
   itinerary?: boolean
   tag?: boolean
   slug?: boolean
+  tour_type?: boolean
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
@@ -1271,16 +1279,16 @@ export type PlanSelectScalar = {
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
-  tour_type?: boolean
   itinerary?: boolean
   tag?: boolean
   slug?: boolean
+  tour_type?: boolean
   status?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "title" | "destination" | "latitude" | "longitude" | "place_id" | "map_url" | "budget" | "start_date" | "end_date" | "tour_type" | "itinerary" | "tag" | "slug" | "status" | "created_at" | "updated_at", ExtArgs["result"]["plan"]>
+export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "title" | "destination" | "latitude" | "longitude" | "place_id" | "map_url" | "budget" | "start_date" | "end_date" | "itinerary" | "tag" | "slug" | "tour_type" | "status" | "created_at" | "updated_at", ExtArgs["result"]["plan"]>
 export type PlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   buddies?: boolean | Prisma.Plan$buddiesArgs<ExtArgs>
@@ -1310,13 +1318,13 @@ export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     longitude: number | null
     place_id: string | null
     map_url: string | null
-    budget: number | null
+    budget: runtime.Decimal
     start_date: Date
     end_date: Date
-    tour_type: $Enums.PlanType
     itinerary: string | null
     tag: string | null
     slug: string
+    tour_type: $Enums.PlanType
     status: $Enums.PlanStatus
     created_at: Date
     updated_at: Date
@@ -1754,13 +1762,13 @@ export interface PlanFieldRefs {
   readonly longitude: Prisma.FieldRef<"Plan", 'Float'>
   readonly place_id: Prisma.FieldRef<"Plan", 'String'>
   readonly map_url: Prisma.FieldRef<"Plan", 'String'>
-  readonly budget: Prisma.FieldRef<"Plan", 'Float'>
+  readonly budget: Prisma.FieldRef<"Plan", 'Decimal'>
   readonly start_date: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly end_date: Prisma.FieldRef<"Plan", 'DateTime'>
-  readonly tour_type: Prisma.FieldRef<"Plan", 'PlanType'>
   readonly itinerary: Prisma.FieldRef<"Plan", 'String'>
   readonly tag: Prisma.FieldRef<"Plan", 'String'>
   readonly slug: Prisma.FieldRef<"Plan", 'String'>
+  readonly tour_type: Prisma.FieldRef<"Plan", 'PlanType'>
   readonly status: Prisma.FieldRef<"Plan", 'PlanStatus'>
   readonly created_at: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Plan", 'DateTime'>

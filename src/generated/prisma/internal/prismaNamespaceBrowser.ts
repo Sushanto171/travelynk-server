@@ -157,10 +157,10 @@ export const PlanScalarFieldEnum = {
   budget: 'budget',
   start_date: 'start_date',
   end_date: 'end_date',
-  tour_type: 'tour_type',
   itinerary: 'itinerary',
   tag: 'tag',
   slug: 'slug',
+  tour_type: 'tour_type',
   status: 'status',
   created_at: 'created_at',
   updated_at: 'updated_at'

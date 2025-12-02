@@ -233,7 +233,7 @@ export type PlanBuddyScalarWhereWithAggregatesInput = {
 }
 
 export type PlanBuddyCreateInput = {
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
   traveler: Prisma.TravelerCreateNestedOneWithoutJoined_plansInput
@@ -243,7 +243,7 @@ export type PlanBuddyCreateInput = {
 export type PlanBuddyUncheckedCreateInput = {
   traveler_id: string
   plan_id: string
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -267,7 +267,7 @@ export type PlanBuddyUncheckedUpdateInput = {
 export type PlanBuddyCreateManyInput = {
   traveler_id: string
   plan_id: string
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -414,7 +414,7 @@ export type PlanBuddyUncheckedUpdateManyWithoutTravelerNestedInput = {
 }
 
 export type PlanBuddyCreateWithoutPlanInput = {
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
   traveler: Prisma.TravelerCreateNestedOneWithoutJoined_plansInput
@@ -422,7 +422,7 @@ export type PlanBuddyCreateWithoutPlanInput = {
 
 export type PlanBuddyUncheckedCreateWithoutPlanInput = {
   traveler_id: string
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -465,7 +465,7 @@ export type PlanBuddyScalarWhereInput = {
 }
 
 export type PlanBuddyCreateWithoutTravelerInput = {
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
   plan: Prisma.PlanCreateNestedOneWithoutBuddiesInput
@@ -473,7 +473,7 @@ export type PlanBuddyCreateWithoutTravelerInput = {
 
 export type PlanBuddyUncheckedCreateWithoutTravelerInput = {
   plan_id: string
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -506,7 +506,7 @@ export type PlanBuddyUpdateManyWithWhereWithoutTravelerInput = {
 
 export type PlanBuddyCreateManyPlanInput = {
   traveler_id: string
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -534,7 +534,7 @@ export type PlanBuddyUncheckedUpdateManyWithoutPlanInput = {
 
 export type PlanBuddyCreateManyTravelerInput = {
   plan_id: string
-  request_type: $Enums.RequestType
+  request_type?: $Enums.RequestType
   created_at?: Date | string
   updated_at?: Date | string
 }

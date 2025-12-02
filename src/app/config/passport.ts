@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { Provider, UserStatus } from "../../generated/prisma/enums";
+import { Provider, UserRole, UserStatus } from "../../generated/prisma/enums";
 import { BcryptHelper } from "../helpers/bcrypt.helper";
 import { prisma } from "./prisma.config";
 
@@ -19,6 +19,16 @@ passport.use(
             status: UserStatus.ACTIVE
           },
           include: {
+            traveler: {
+              select: {
+                id: true
+              }
+            },
+            admin: {
+              select: {
+                id: true
+              }
+            },
             auths: {
               select: {
                 auth_providers: true,
@@ -49,10 +59,19 @@ passport.use(
           return done("Invalid email or password");
         }
         const userData = {
-          id: user.id,
+          id: "",
           email: user.email,
           role: user.role,
         }
+        switch (user.role) {
+          case UserRole.ADMIN:
+            userData.id = user?.admin?.id as string
+            break
+          case UserRole.USER:
+            userData.id = user?.traveler?.id as string
+            break
+        }
+
         return done(null, userData);
 
       } catch (error) {

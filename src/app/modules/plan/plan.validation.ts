@@ -9,12 +9,19 @@ const createPlanSchema = z.object({
   place_id: z.string().optional(),
   map_url: z.string().optional(),
   budget: z.number("Plan budget is required").nonnegative("Plan budget must be positive value"),
-  start_date: z.date("Start Date is required"),
-  end_date: z.date("End Date is required"),
+  start_date: z.coerce.date("Start Date is required"),
+  end_date: z.coerce.date("End Date is required"),
   tour_type: z.enum(Object.values(PlanType)),
   itinerary: z.string().optional(),
   tag: z.string().optional(),
-})
+}).refine(
+  (data) => data.end_date >= data.start_date,
+  {
+    message: "End date cannot be earlier than start date",
+    path: ["end_date"],
+  }
+);
+
 
 export const PlanValidator = {
   createPlanSchema

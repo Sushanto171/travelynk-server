@@ -66,5 +66,5 @@ enum MessageStatus {
 enum RequestType{
   REQUESTED
   ACCEPTED
-  CANCELED
+  REMOVE
 }
