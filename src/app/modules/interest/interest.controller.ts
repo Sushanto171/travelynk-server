@@ -8,18 +8,18 @@ const getAllFormDB = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "All country retrieved successfully",
+    message: "All interest retrieved successfully",
     data: result
   })
 })
 
 const insertIntoDB = catchAsync(async (req, res) => {
-  const result = await InterestService.insertIntoDB()
+  const result = await InterestService.insertIntoDB(req.body)
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.CREATED,
-    message: "Country inserted successfully",
+    message: "interest inserted successfully",
     data: result
   })
 })
@@ -29,7 +29,7 @@ const getById = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Country data retrieved successfully",
+    message: "interest data retrieved successfully",
     data: result
   })
 })
@@ -39,7 +39,7 @@ const updateById = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Country updated successfully",
+    message: "interest updated successfully",
     data: result
   })
 })
@@ -50,7 +50,7 @@ const deleteById = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Country delete successfully",
+    message: "interest delete successfully",
     data: null
   })
 })

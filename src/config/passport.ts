@@ -16,7 +16,6 @@ passport.use(
         const user = await prisma.user.findFirst({
           where: {
             email,
-            is_deleted: false,
           },
           include: {
             auths: {
@@ -29,6 +28,10 @@ passport.use(
 
         if (!user) {
           return done("Invalid email or password");
+        }
+
+        if (user.is_deleted) {
+          return done("Your account is temporary deleted");
         }
 
         const hasCredentialProvider = user.auths.some(

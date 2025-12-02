@@ -39,6 +39,7 @@ export type TravelerMinAggregateOutputType = {
   is_subscribed: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  is_deleted: boolean | null
   user_id: string | null
 }
 
@@ -57,6 +58,7 @@ export type TravelerMaxAggregateOutputType = {
   is_subscribed: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  is_deleted: boolean | null
   user_id: string | null
 }
 
@@ -75,6 +77,7 @@ export type TravelerCountAggregateOutputType = {
   is_subscribed: number
   created_at: number
   updated_at: number
+  is_deleted: number
   user_id: number
   _all: number
 }
@@ -95,6 +98,7 @@ export type TravelerMinAggregateInputType = {
   is_subscribed?: true
   created_at?: true
   updated_at?: true
+  is_deleted?: true
   user_id?: true
 }
 
@@ -113,6 +117,7 @@ export type TravelerMaxAggregateInputType = {
   is_subscribed?: true
   created_at?: true
   updated_at?: true
+  is_deleted?: true
   user_id?: true
 }
 
@@ -131,6 +136,7 @@ export type TravelerCountAggregateInputType = {
   is_subscribed?: true
   created_at?: true
   updated_at?: true
+  is_deleted?: true
   user_id?: true
   _all?: true
 }
@@ -222,6 +228,7 @@ export type TravelerGroupByOutputType = {
   is_subscribed: boolean
   created_at: Date
   updated_at: Date
+  is_deleted: boolean
   user_id: string
   _count: TravelerCountAggregateOutputType | null
   _min: TravelerMinAggregateOutputType | null
@@ -261,6 +268,7 @@ export type TravelerWhereInput = {
   is_subscribed?: Prisma.BoolFilter<"Traveler"> | boolean
   created_at?: Prisma.DateTimeFilter<"Traveler"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Traveler"> | Date | string
+  is_deleted?: Prisma.BoolFilter<"Traveler"> | boolean
   user_id?: Prisma.StringFilter<"Traveler"> | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   interests?: Prisma.TravelerToInterestsListRelationFilter
@@ -287,6 +295,7 @@ export type TravelerOrderByWithRelationInput = {
   is_subscribed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   interests?: Prisma.TravelerToInterestsOrderByRelationAggregateInput
@@ -317,6 +326,7 @@ export type TravelerWhereUniqueInput = Prisma.AtLeast<{
   is_subscribed?: Prisma.BoolFilter<"Traveler"> | boolean
   created_at?: Prisma.DateTimeFilter<"Traveler"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Traveler"> | Date | string
+  is_deleted?: Prisma.BoolFilter<"Traveler"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   interests?: Prisma.TravelerToInterestsListRelationFilter
   visited_countries?: Prisma.TravelerCountriesListRelationFilter
@@ -342,6 +352,7 @@ export type TravelerOrderByWithAggregationInput = {
   is_subscribed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
   _count?: Prisma.TravelerCountOrderByAggregateInput
   _max?: Prisma.TravelerMaxOrderByAggregateInput
@@ -366,6 +377,7 @@ export type TravelerScalarWhereWithAggregatesInput = {
   is_subscribed?: Prisma.BoolWithAggregatesFilter<"Traveler"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Traveler"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Traveler"> | Date | string
+  is_deleted?: Prisma.BoolWithAggregatesFilter<"Traveler"> | boolean
   user_id?: Prisma.StringWithAggregatesFilter<"Traveler"> | string
 }
 
@@ -384,6 +396,7 @@ export type TravelerCreateInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
@@ -409,6 +422,7 @@ export type TravelerUncheckedCreateInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
@@ -434,6 +448,7 @@ export type TravelerUpdateInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
@@ -459,6 +474,7 @@ export type TravelerUncheckedUpdateInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
@@ -484,6 +500,7 @@ export type TravelerCreateManyInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
 }
 
@@ -502,6 +519,7 @@ export type TravelerUpdateManyMutationInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TravelerUncheckedUpdateManyInput = {
@@ -519,6 +537,7 @@ export type TravelerUncheckedUpdateManyInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -547,6 +566,7 @@ export type TravelerCountOrderByAggregateInput = {
   is_subscribed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
 }
 
@@ -565,6 +585,7 @@ export type TravelerMaxOrderByAggregateInput = {
   is_subscribed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
 }
 
@@ -583,6 +604,7 @@ export type TravelerMinOrderByAggregateInput = {
   is_subscribed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  is_deleted?: Prisma.SortOrder
   user_id?: Prisma.SortOrder
 }
 
@@ -735,6 +757,7 @@ export type TravelerCreateWithoutVisited_countriesInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   owned_plans?: Prisma.PlanCreateNestedManyWithoutOwnerInput
@@ -759,6 +782,7 @@ export type TravelerUncheckedCreateWithoutVisited_countriesInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   owned_plans?: Prisma.PlanUncheckedCreateNestedManyWithoutOwnerInput
@@ -799,6 +823,7 @@ export type TravelerUpdateWithoutVisited_countriesInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   owned_plans?: Prisma.PlanUpdateManyWithoutOwnerNestedInput
@@ -823,6 +848,7 @@ export type TravelerUncheckedUpdateWithoutVisited_countriesInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   owned_plans?: Prisma.PlanUncheckedUpdateManyWithoutOwnerNestedInput
@@ -847,6 +873,7 @@ export type TravelerCreateWithoutOwned_plansInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
@@ -871,6 +898,7 @@ export type TravelerUncheckedCreateWithoutOwned_plansInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
@@ -911,6 +939,7 @@ export type TravelerUpdateWithoutOwned_plansInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
@@ -935,6 +964,7 @@ export type TravelerUncheckedUpdateWithoutOwned_plansInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
@@ -959,6 +989,7 @@ export type TravelerCreateWithoutJoined_plansInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
@@ -983,6 +1014,7 @@ export type TravelerUncheckedCreateWithoutJoined_plansInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
@@ -1023,6 +1055,7 @@ export type TravelerUpdateWithoutJoined_plansInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
@@ -1047,6 +1080,7 @@ export type TravelerUncheckedUpdateWithoutJoined_plansInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
@@ -1071,6 +1105,7 @@ export type TravelerCreateWithoutReviewsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
@@ -1095,6 +1130,7 @@ export type TravelerUncheckedCreateWithoutReviewsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
@@ -1135,6 +1171,7 @@ export type TravelerUpdateWithoutReviewsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
@@ -1159,6 +1196,7 @@ export type TravelerUncheckedUpdateWithoutReviewsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
@@ -1183,6 +1221,7 @@ export type TravelerCreateWithoutSubscriptionsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
@@ -1207,6 +1246,7 @@ export type TravelerUncheckedCreateWithoutSubscriptionsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
@@ -1247,6 +1287,7 @@ export type TravelerUpdateWithoutSubscriptionsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
@@ -1271,6 +1312,7 @@ export type TravelerUncheckedUpdateWithoutSubscriptionsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
@@ -1295,6 +1337,7 @@ export type TravelerCreateWithoutPaymentsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
@@ -1319,6 +1362,7 @@ export type TravelerUncheckedCreateWithoutPaymentsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
@@ -1359,6 +1403,7 @@ export type TravelerUpdateWithoutPaymentsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
@@ -1383,6 +1428,7 @@ export type TravelerUncheckedUpdateWithoutPaymentsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
@@ -1407,6 +1453,7 @@ export type TravelerCreateWithoutUserInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   interests?: Prisma.TravelerToInterestsCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
   owned_plans?: Prisma.PlanCreateNestedManyWithoutOwnerInput
@@ -1431,6 +1478,7 @@ export type TravelerUncheckedCreateWithoutUserInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   interests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
   owned_plans?: Prisma.PlanUncheckedCreateNestedManyWithoutOwnerInput
@@ -1471,6 +1519,7 @@ export type TravelerUpdateWithoutUserInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   interests?: Prisma.TravelerToInterestsUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
   owned_plans?: Prisma.PlanUpdateManyWithoutOwnerNestedInput
@@ -1495,6 +1544,7 @@ export type TravelerUncheckedUpdateWithoutUserInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   interests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
   owned_plans?: Prisma.PlanUncheckedUpdateManyWithoutOwnerNestedInput
@@ -1519,6 +1569,7 @@ export type TravelerCreateWithoutInterestsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user: Prisma.UserCreateNestedOneWithoutTravelerInput
   visited_countries?: Prisma.travelerCountriesCreateNestedManyWithoutTravelerInput
   owned_plans?: Prisma.PlanCreateNestedManyWithoutOwnerInput
@@ -1543,6 +1594,7 @@ export type TravelerUncheckedCreateWithoutInterestsInput = {
   is_subscribed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  is_deleted?: boolean
   user_id: string
   visited_countries?: Prisma.travelerCountriesUncheckedCreateNestedManyWithoutTravelerInput
   owned_plans?: Prisma.PlanUncheckedCreateNestedManyWithoutOwnerInput
@@ -1583,6 +1635,7 @@ export type TravelerUpdateWithoutInterestsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutTravelerNestedInput
   visited_countries?: Prisma.travelerCountriesUpdateManyWithoutTravelerNestedInput
   owned_plans?: Prisma.PlanUpdateManyWithoutOwnerNestedInput
@@ -1607,6 +1660,7 @@ export type TravelerUncheckedUpdateWithoutInterestsInput = {
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  is_deleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user_id?: Prisma.StringFieldUpdateOperationsInput | string
   visited_countries?: Prisma.travelerCountriesUncheckedUpdateManyWithoutTravelerNestedInput
   owned_plans?: Prisma.PlanUncheckedUpdateManyWithoutOwnerNestedInput
@@ -1716,6 +1770,7 @@ export type TravelerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   is_subscribed?: boolean
   created_at?: boolean
   updated_at?: boolean
+  is_deleted?: boolean
   user_id?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   interests?: boolean | Prisma.Traveler$interestsArgs<ExtArgs>
@@ -1743,6 +1798,7 @@ export type TravelerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   is_subscribed?: boolean
   created_at?: boolean
   updated_at?: boolean
+  is_deleted?: boolean
   user_id?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["traveler"]>
@@ -1762,6 +1818,7 @@ export type TravelerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   is_subscribed?: boolean
   created_at?: boolean
   updated_at?: boolean
+  is_deleted?: boolean
   user_id?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["traveler"]>
@@ -1781,10 +1838,11 @@ export type TravelerSelectScalar = {
   is_subscribed?: boolean
   created_at?: boolean
   updated_at?: boolean
+  is_deleted?: boolean
   user_id?: boolean
 }
 
-export type TravelerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profile_photo" | "bio" | "contact_number" | "date_of_birth" | "address" | "current_location" | "is_verified" | "last_active_at" | "is_subscribed" | "created_at" | "updated_at" | "user_id", ExtArgs["result"]["traveler"]>
+export type TravelerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profile_photo" | "bio" | "contact_number" | "date_of_birth" | "address" | "current_location" | "is_verified" | "last_active_at" | "is_subscribed" | "created_at" | "updated_at" | "is_deleted" | "user_id", ExtArgs["result"]["traveler"]>
 export type TravelerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   interests?: boolean | Prisma.Traveler$interestsArgs<ExtArgs>
@@ -1830,6 +1888,7 @@ export type $TravelerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     is_subscribed: boolean
     created_at: Date
     updated_at: Date
+    is_deleted: boolean
     user_id: string
   }, ExtArgs["result"]["traveler"]>
   composites: {}
@@ -2276,6 +2335,7 @@ export interface TravelerFieldRefs {
   readonly is_subscribed: Prisma.FieldRef<"Traveler", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Traveler", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Traveler", 'DateTime'>
+  readonly is_deleted: Prisma.FieldRef<"Traveler", 'Boolean'>
   readonly user_id: Prisma.FieldRef<"Traveler", 'String'>
 }
     

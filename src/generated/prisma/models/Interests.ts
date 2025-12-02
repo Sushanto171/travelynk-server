@@ -27,7 +27,6 @@ export type AggregateInterests = {
 export type InterestsMinAggregateOutputType = {
   id: string | null
   name: string | null
-  description: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -35,7 +34,6 @@ export type InterestsMinAggregateOutputType = {
 export type InterestsMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  description: string | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -43,7 +41,6 @@ export type InterestsMaxAggregateOutputType = {
 export type InterestsCountAggregateOutputType = {
   id: number
   name: number
-  description: number
   created_at: number
   updated_at: number
   _all: number
@@ -53,7 +50,6 @@ export type InterestsCountAggregateOutputType = {
 export type InterestsMinAggregateInputType = {
   id?: true
   name?: true
-  description?: true
   created_at?: true
   updated_at?: true
 }
@@ -61,7 +57,6 @@ export type InterestsMinAggregateInputType = {
 export type InterestsMaxAggregateInputType = {
   id?: true
   name?: true
-  description?: true
   created_at?: true
   updated_at?: true
 }
@@ -69,7 +64,6 @@ export type InterestsMaxAggregateInputType = {
 export type InterestsCountAggregateInputType = {
   id?: true
   name?: true
-  description?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -150,7 +144,6 @@ export type InterestsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type InterestsGroupByOutputType = {
   id: string
   name: string
-  description: string | null
   created_at: Date
   updated_at: Date
   _count: InterestsCountAggregateOutputType | null
@@ -179,7 +172,6 @@ export type InterestsWhereInput = {
   NOT?: Prisma.InterestsWhereInput | Prisma.InterestsWhereInput[]
   id?: Prisma.StringFilter<"Interests"> | string
   name?: Prisma.StringFilter<"Interests"> | string
-  description?: Prisma.StringNullableFilter<"Interests"> | string | null
   created_at?: Prisma.DateTimeFilter<"Interests"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Interests"> | Date | string
   travelerToInterests?: Prisma.TravelerToInterestsListRelationFilter
@@ -188,7 +180,6 @@ export type InterestsWhereInput = {
 export type InterestsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   travelerToInterests?: Prisma.TravelerToInterestsOrderByRelationAggregateInput
@@ -200,7 +191,6 @@ export type InterestsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InterestsWhereInput | Prisma.InterestsWhereInput[]
   OR?: Prisma.InterestsWhereInput[]
   NOT?: Prisma.InterestsWhereInput | Prisma.InterestsWhereInput[]
-  description?: Prisma.StringNullableFilter<"Interests"> | string | null
   created_at?: Prisma.DateTimeFilter<"Interests"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Interests"> | Date | string
   travelerToInterests?: Prisma.TravelerToInterestsListRelationFilter
@@ -209,7 +199,6 @@ export type InterestsWhereUniqueInput = Prisma.AtLeast<{
 export type InterestsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.InterestsCountOrderByAggregateInput
@@ -223,7 +212,6 @@ export type InterestsScalarWhereWithAggregatesInput = {
   NOT?: Prisma.InterestsScalarWhereWithAggregatesInput | Prisma.InterestsScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Interests"> | string
   name?: Prisma.StringWithAggregatesFilter<"Interests"> | string
-  description?: Prisma.StringNullableWithAggregatesFilter<"Interests"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Interests"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Interests"> | Date | string
 }
@@ -231,7 +219,6 @@ export type InterestsScalarWhereWithAggregatesInput = {
 export type InterestsCreateInput = {
   id?: string
   name: string
-  description?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   travelerToInterests?: Prisma.TravelerToInterestsCreateNestedManyWithoutInterestsInput
@@ -240,7 +227,6 @@ export type InterestsCreateInput = {
 export type InterestsUncheckedCreateInput = {
   id?: string
   name: string
-  description?: string | null
   created_at?: Date | string
   updated_at?: Date | string
   travelerToInterests?: Prisma.TravelerToInterestsUncheckedCreateNestedManyWithoutInterestsInput
@@ -249,7 +235,6 @@ export type InterestsUncheckedCreateInput = {
 export type InterestsUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   travelerToInterests?: Prisma.TravelerToInterestsUpdateManyWithoutInterestsNestedInput
@@ -258,7 +243,6 @@ export type InterestsUpdateInput = {
 export type InterestsUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   travelerToInterests?: Prisma.TravelerToInterestsUncheckedUpdateManyWithoutInterestsNestedInput
@@ -267,7 +251,6 @@ export type InterestsUncheckedUpdateInput = {
 export type InterestsCreateManyInput = {
   id?: string
   name: string
-  description?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -275,7 +258,6 @@ export type InterestsCreateManyInput = {
 export type InterestsUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -283,7 +265,6 @@ export type InterestsUpdateManyMutationInput = {
 export type InterestsUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -296,7 +277,6 @@ export type InterestsScalarRelationFilter = {
 export type InterestsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -304,7 +284,6 @@ export type InterestsCountOrderByAggregateInput = {
 export type InterestsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -312,7 +291,6 @@ export type InterestsMaxOrderByAggregateInput = {
 export type InterestsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -334,7 +312,6 @@ export type InterestsUpdateOneRequiredWithoutTravelerToInterestsNestedInput = {
 export type InterestsCreateWithoutTravelerToInterestsInput = {
   id?: string
   name: string
-  description?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -342,7 +319,6 @@ export type InterestsCreateWithoutTravelerToInterestsInput = {
 export type InterestsUncheckedCreateWithoutTravelerToInterestsInput = {
   id?: string
   name: string
-  description?: string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -366,7 +342,6 @@ export type InterestsUpdateToOneWithWhereWithoutTravelerToInterestsInput = {
 export type InterestsUpdateWithoutTravelerToInterestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,7 +349,6 @@ export type InterestsUpdateWithoutTravelerToInterestsInput = {
 export type InterestsUncheckedUpdateWithoutTravelerToInterestsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -413,7 +387,6 @@ export type InterestsCountOutputTypeCountTravelerToInterestsArgs<ExtArgs extends
 export type InterestsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  description?: boolean
   created_at?: boolean
   updated_at?: boolean
   travelerToInterests?: boolean | Prisma.Interests$travelerToInterestsArgs<ExtArgs>
@@ -423,7 +396,6 @@ export type InterestsSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type InterestsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  description?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["interests"]>
@@ -431,7 +403,6 @@ export type InterestsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type InterestsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  description?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["interests"]>
@@ -439,12 +410,11 @@ export type InterestsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type InterestsSelectScalar = {
   id?: boolean
   name?: boolean
-  description?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type InterestsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "created_at" | "updated_at", ExtArgs["result"]["interests"]>
+export type InterestsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "created_at" | "updated_at", ExtArgs["result"]["interests"]>
 export type InterestsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   travelerToInterests?: boolean | Prisma.Interests$travelerToInterestsArgs<ExtArgs>
   _count?: boolean | Prisma.InterestsCountOutputTypeDefaultArgs<ExtArgs>
@@ -460,7 +430,6 @@ export type $InterestsPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    description: string | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["interests"]>
@@ -889,7 +858,6 @@ export interface Prisma__InterestsClient<T, Null = never, ExtArgs extends runtim
 export interface InterestsFieldRefs {
   readonly id: Prisma.FieldRef<"Interests", 'String'>
   readonly name: Prisma.FieldRef<"Interests", 'String'>
-  readonly description: Prisma.FieldRef<"Interests", 'String'>
   readonly created_at: Prisma.FieldRef<"Interests", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Interests", 'DateTime'>
 }

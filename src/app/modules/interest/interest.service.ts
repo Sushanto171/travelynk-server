@@ -2,7 +2,12 @@ import { prisma } from "../../../config/prisma.config"
 import { CreateInterestInput, UpdateInterestInput } from "./interest.validator"
 
 const getAllFormDB = async () => {
-  return await prisma.interests.findMany()
+  return await prisma.interests.findMany({
+    select: {
+      id: true,
+      name: true,
+    }
+  })
 }
 
 const insertIntoDB = async (payload: CreateInterestInput) => {

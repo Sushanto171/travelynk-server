@@ -259,6 +259,7 @@ export const TravelerScalarFieldEnum = {
   is_subscribed: 'is_subscribed',
   created_at: 'created_at',
   updated_at: 'updated_at',
+  is_deleted: 'is_deleted',
   user_id: 'user_id'
 } as const
 
@@ -276,7 +277,6 @@ export type TravelerToInterestsScalarFieldEnum = (typeof TravelerToInterestsScal
 export const InterestsScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

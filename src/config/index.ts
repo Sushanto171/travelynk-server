@@ -19,5 +19,10 @@ export default {
     SEED_ADMIN_EMAIL: process.env.SEED_ADMIN_EMAIL,
     SEED_ADMIN_NAME: process.env.SEED_ADMIN_NAME,
     SEED_ADMIN_PASSWORD: process.env.SEED_ADMIN_PASSWORD
+  },
+  cloudinary: {
+    NAME: process.env.NAME,
+    API_KEY: process.env.API_KEY,
+    API_SECRET: process.env.API_SECRET,
   }
 };

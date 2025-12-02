@@ -34,6 +34,7 @@ const softDelete = async (id: string) => {
   const result = await prisma.traveler.update({
     where: { id },
     data: {
+      is_deleted: true,
       user: {
         update: {
           is_deleted: true

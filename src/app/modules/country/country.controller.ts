@@ -14,7 +14,7 @@ const getAllFormDB = catchAsync(async (req, res) => {
 })
 
 const insertIntoDB = catchAsync(async (req, res) => {
-  const result = await CountryService.insertIntoDB()
+  const result = await CountryService.insertIntoDB(req.body)
 
   sendResponse(res, {
     success: true,

@@ -2,14 +2,19 @@ import { prisma } from "../../../config/prisma.config"
 import { CreateCountryInput, UpdateCountryInput } from "./country.validator"
 
 const getAllFormDB = async () => {
-  return await prisma.countries.findMany()
+  return await prisma.countries.findMany({
+    select: {
+      name: true,
+      code: true
+    }
+  })
 }
 
 const insertIntoDB = async (payload: CreateCountryInput) => {
+
   return await prisma.countries.createMany({
     data: payload.map((country) => ({ name: country.name, code: country.code }))
   })
-
 }
 
 const getById = async (id: string) => {
