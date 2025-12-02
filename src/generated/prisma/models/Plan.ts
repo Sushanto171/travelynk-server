@@ -27,10 +27,14 @@ export type AggregatePlan = {
 }
 
 export type PlanAvgAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
   budget: number | null
 }
 
 export type PlanSumAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
   budget: number | null
 }
 
@@ -39,16 +43,18 @@ export type PlanMinAggregateOutputType = {
   owner_id: string | null
   title: string | null
   destination: string | null
-  google_map: string | null
+  latitude: number | null
+  longitude: number | null
+  place_id: string | null
+  map_url: string | null
   budget: number | null
   start_date: Date | null
   end_date: Date | null
   tour_type: $Enums.PlanType | null
-  slug: string | null
   itinerary: string | null
   tag: string | null
+  slug: string | null
   status: $Enums.PlanStatus | null
-  is_completed: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -58,16 +64,18 @@ export type PlanMaxAggregateOutputType = {
   owner_id: string | null
   title: string | null
   destination: string | null
-  google_map: string | null
+  latitude: number | null
+  longitude: number | null
+  place_id: string | null
+  map_url: string | null
   budget: number | null
   start_date: Date | null
   end_date: Date | null
   tour_type: $Enums.PlanType | null
-  slug: string | null
   itinerary: string | null
   tag: string | null
+  slug: string | null
   status: $Enums.PlanStatus | null
-  is_completed: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -77,16 +85,18 @@ export type PlanCountAggregateOutputType = {
   owner_id: number
   title: number
   destination: number
-  google_map: number
+  latitude: number
+  longitude: number
+  place_id: number
+  map_url: number
   budget: number
   start_date: number
   end_date: number
   tour_type: number
-  slug: number
   itinerary: number
   tag: number
+  slug: number
   status: number
-  is_completed: number
   created_at: number
   updated_at: number
   _all: number
@@ -94,10 +104,14 @@ export type PlanCountAggregateOutputType = {
 
 
 export type PlanAvgAggregateInputType = {
+  latitude?: true
+  longitude?: true
   budget?: true
 }
 
 export type PlanSumAggregateInputType = {
+  latitude?: true
+  longitude?: true
   budget?: true
 }
 
@@ -106,16 +120,18 @@ export type PlanMinAggregateInputType = {
   owner_id?: true
   title?: true
   destination?: true
-  google_map?: true
+  latitude?: true
+  longitude?: true
+  place_id?: true
+  map_url?: true
   budget?: true
   start_date?: true
   end_date?: true
   tour_type?: true
-  slug?: true
   itinerary?: true
   tag?: true
+  slug?: true
   status?: true
-  is_completed?: true
   created_at?: true
   updated_at?: true
 }
@@ -125,16 +141,18 @@ export type PlanMaxAggregateInputType = {
   owner_id?: true
   title?: true
   destination?: true
-  google_map?: true
+  latitude?: true
+  longitude?: true
+  place_id?: true
+  map_url?: true
   budget?: true
   start_date?: true
   end_date?: true
   tour_type?: true
-  slug?: true
   itinerary?: true
   tag?: true
+  slug?: true
   status?: true
-  is_completed?: true
   created_at?: true
   updated_at?: true
 }
@@ -144,16 +162,18 @@ export type PlanCountAggregateInputType = {
   owner_id?: true
   title?: true
   destination?: true
-  google_map?: true
+  latitude?: true
+  longitude?: true
+  place_id?: true
+  map_url?: true
   budget?: true
   start_date?: true
   end_date?: true
   tour_type?: true
-  slug?: true
   itinerary?: true
   tag?: true
+  slug?: true
   status?: true
-  is_completed?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -250,16 +270,18 @@ export type PlanGroupByOutputType = {
   owner_id: string
   title: string
   destination: string
-  google_map: string | null
+  latitude: number | null
+  longitude: number | null
+  place_id: string | null
+  map_url: string | null
   budget: number | null
   start_date: Date
   end_date: Date
   tour_type: $Enums.PlanType
-  slug: string
   itinerary: string | null
   tag: string | null
+  slug: string
   status: $Enums.PlanStatus
-  is_completed: boolean
   created_at: Date
   updated_at: Date
   _count: PlanCountAggregateOutputType | null
@@ -292,16 +314,18 @@ export type PlanWhereInput = {
   owner_id?: Prisma.StringFilter<"Plan"> | string
   title?: Prisma.StringFilter<"Plan"> | string
   destination?: Prisma.StringFilter<"Plan"> | string
-  google_map?: Prisma.StringNullableFilter<"Plan"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  place_id?: Prisma.StringNullableFilter<"Plan"> | string | null
+  map_url?: Prisma.StringNullableFilter<"Plan"> | string | null
   budget?: Prisma.FloatNullableFilter<"Plan"> | number | null
   start_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
-  slug?: Prisma.StringFilter<"Plan"> | string
   itinerary?: Prisma.StringNullableFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableFilter<"Plan"> | string | null
+  slug?: Prisma.StringFilter<"Plan"> | string
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   owner?: Prisma.XOR<Prisma.TravelerScalarRelationFilter, Prisma.TravelerWhereInput>
@@ -314,16 +338,18 @@ export type PlanOrderByWithRelationInput = {
   owner_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  google_map?: Prisma.SortOrderInput | Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  place_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  map_url?: Prisma.SortOrderInput | Prisma.SortOrder
   budget?: Prisma.SortOrderInput | Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   tour_type?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   itinerary?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
+  slug?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   owner?: Prisma.TravelerOrderByWithRelationInput
@@ -340,7 +366,10 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   owner_id?: Prisma.StringFilter<"Plan"> | string
   title?: Prisma.StringFilter<"Plan"> | string
   destination?: Prisma.StringFilter<"Plan"> | string
-  google_map?: Prisma.StringNullableFilter<"Plan"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  place_id?: Prisma.StringNullableFilter<"Plan"> | string | null
+  map_url?: Prisma.StringNullableFilter<"Plan"> | string | null
   budget?: Prisma.FloatNullableFilter<"Plan"> | number | null
   start_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
@@ -348,7 +377,6 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   itinerary?: Prisma.StringNullableFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableFilter<"Plan"> | string | null
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   owner?: Prisma.XOR<Prisma.TravelerScalarRelationFilter, Prisma.TravelerWhereInput>
@@ -361,16 +389,18 @@ export type PlanOrderByWithAggregationInput = {
   owner_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  google_map?: Prisma.SortOrderInput | Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  place_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  map_url?: Prisma.SortOrderInput | Prisma.SortOrder
   budget?: Prisma.SortOrderInput | Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   tour_type?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   itinerary?: Prisma.SortOrderInput | Prisma.SortOrder
   tag?: Prisma.SortOrderInput | Prisma.SortOrder
+  slug?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.PlanCountOrderByAggregateInput
@@ -388,16 +418,18 @@ export type PlanScalarWhereWithAggregatesInput = {
   owner_id?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   title?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   destination?: Prisma.StringWithAggregatesFilter<"Plan"> | string
-  google_map?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
+  latitude?: Prisma.FloatNullableWithAggregatesFilter<"Plan"> | number | null
+  longitude?: Prisma.FloatNullableWithAggregatesFilter<"Plan"> | number | null
+  place_id?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
+  map_url?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
   budget?: Prisma.FloatNullableWithAggregatesFilter<"Plan"> | number | null
   start_date?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   tour_type?: Prisma.EnumPlanTypeWithAggregatesFilter<"Plan"> | $Enums.PlanType
-  slug?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   itinerary?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableWithAggregatesFilter<"Plan"> | string | null
+  slug?: Prisma.StringWithAggregatesFilter<"Plan"> | string
   status?: Prisma.EnumPlanStatusWithAggregatesFilter<"Plan"> | $Enums.PlanStatus
-  is_completed?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
 }
@@ -406,16 +438,18 @@ export type PlanCreateInput = {
   id?: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   owner: Prisma.TravelerCreateNestedOneWithoutOwned_plansInput
@@ -428,16 +462,18 @@ export type PlanUncheckedCreateInput = {
   owner_id: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   buddies?: Prisma.PlanBuddyUncheckedCreateNestedManyWithoutPlanInput
@@ -448,16 +484,18 @@ export type PlanUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.TravelerUpdateOneRequiredWithoutOwned_plansNestedInput
@@ -470,16 +508,18 @@ export type PlanUncheckedUpdateInput = {
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput
@@ -491,16 +531,18 @@ export type PlanCreateManyInput = {
   owner_id: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -509,16 +551,18 @@ export type PlanUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -528,16 +572,18 @@ export type PlanUncheckedUpdateManyInput = {
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -547,21 +593,25 @@ export type PlanCountOrderByAggregateInput = {
   owner_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  google_map?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  place_id?: Prisma.SortOrder
+  map_url?: Prisma.SortOrder
   budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   tour_type?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   itinerary?: Prisma.SortOrder
   tag?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type PlanAvgOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   budget?: Prisma.SortOrder
 }
 
@@ -570,16 +620,18 @@ export type PlanMaxOrderByAggregateInput = {
   owner_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  google_map?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  place_id?: Prisma.SortOrder
+  map_url?: Prisma.SortOrder
   budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   tour_type?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   itinerary?: Prisma.SortOrder
   tag?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -589,21 +641,25 @@ export type PlanMinOrderByAggregateInput = {
   owner_id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  google_map?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
+  place_id?: Prisma.SortOrder
+  map_url?: Prisma.SortOrder
   budget?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   tour_type?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
   itinerary?: Prisma.SortOrder
   tag?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
 
 export type PlanSumOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   budget?: Prisma.SortOrder
 }
 
@@ -712,16 +768,18 @@ export type PlanCreateWithoutBuddiesInput = {
   id?: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   owner: Prisma.TravelerCreateNestedOneWithoutOwned_plansInput
@@ -733,16 +791,18 @@ export type PlanUncheckedCreateWithoutBuddiesInput = {
   owner_id: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlanInput
@@ -768,16 +828,18 @@ export type PlanUpdateWithoutBuddiesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.TravelerUpdateOneRequiredWithoutOwned_plansNestedInput
@@ -789,16 +851,18 @@ export type PlanUncheckedUpdateWithoutBuddiesInput = {
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlanNestedInput
@@ -808,16 +872,18 @@ export type PlanCreateWithoutReviewsInput = {
   id?: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   owner: Prisma.TravelerCreateNestedOneWithoutOwned_plansInput
@@ -829,16 +895,18 @@ export type PlanUncheckedCreateWithoutReviewsInput = {
   owner_id: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   buddies?: Prisma.PlanBuddyUncheckedCreateNestedManyWithoutPlanInput
@@ -864,16 +932,18 @@ export type PlanUpdateWithoutReviewsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.TravelerUpdateOneRequiredWithoutOwned_plansNestedInput
@@ -885,16 +955,18 @@ export type PlanUncheckedUpdateWithoutReviewsInput = {
   owner_id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput
@@ -904,16 +976,18 @@ export type PlanCreateWithoutOwnerInput = {
   id?: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   buddies?: Prisma.PlanBuddyCreateNestedManyWithoutPlanInput
@@ -924,16 +998,18 @@ export type PlanUncheckedCreateWithoutOwnerInput = {
   id?: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   buddies?: Prisma.PlanBuddyUncheckedCreateNestedManyWithoutPlanInput
@@ -974,16 +1050,18 @@ export type PlanScalarWhereInput = {
   owner_id?: Prisma.StringFilter<"Plan"> | string
   title?: Prisma.StringFilter<"Plan"> | string
   destination?: Prisma.StringFilter<"Plan"> | string
-  google_map?: Prisma.StringNullableFilter<"Plan"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Plan"> | number | null
+  place_id?: Prisma.StringNullableFilter<"Plan"> | string | null
+  map_url?: Prisma.StringNullableFilter<"Plan"> | string | null
   budget?: Prisma.FloatNullableFilter<"Plan"> | number | null
   start_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Plan"> | Date | string
   tour_type?: Prisma.EnumPlanTypeFilter<"Plan"> | $Enums.PlanType
-  slug?: Prisma.StringFilter<"Plan"> | string
   itinerary?: Prisma.StringNullableFilter<"Plan"> | string | null
   tag?: Prisma.StringNullableFilter<"Plan"> | string | null
+  slug?: Prisma.StringFilter<"Plan"> | string
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
 }
@@ -992,16 +1070,18 @@ export type PlanCreateManyOwnerInput = {
   id?: string
   title: string
   destination: string
-  google_map?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  place_id?: string | null
+  map_url?: string | null
   budget?: number | null
   start_date: Date | string
   end_date: Date | string
   tour_type?: $Enums.PlanType
-  slug: string
   itinerary?: string | null
   tag?: string | null
+  slug: string
   status?: $Enums.PlanStatus
-  is_completed?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -1010,16 +1090,18 @@ export type PlanUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUpdateManyWithoutPlanNestedInput
@@ -1030,16 +1112,18 @@ export type PlanUncheckedUpdateWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput
@@ -1050,16 +1134,18 @@ export type PlanUncheckedUpdateManyWithoutOwnerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  google_map?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  place_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  map_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   budget?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tour_type?: Prisma.EnumPlanTypeFieldUpdateOperationsInput | $Enums.PlanType
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
   itinerary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
-  is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1109,16 +1195,18 @@ export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   owner_id?: boolean
   title?: boolean
   destination?: boolean
-  google_map?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  place_id?: boolean
+  map_url?: boolean
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
   tour_type?: boolean
-  slug?: boolean
   itinerary?: boolean
   tag?: boolean
+  slug?: boolean
   status?: boolean
-  is_completed?: boolean
   created_at?: boolean
   updated_at?: boolean
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
@@ -1132,16 +1220,18 @@ export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   owner_id?: boolean
   title?: boolean
   destination?: boolean
-  google_map?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  place_id?: boolean
+  map_url?: boolean
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
   tour_type?: boolean
-  slug?: boolean
   itinerary?: boolean
   tag?: boolean
+  slug?: boolean
   status?: boolean
-  is_completed?: boolean
   created_at?: boolean
   updated_at?: boolean
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
@@ -1152,16 +1242,18 @@ export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   owner_id?: boolean
   title?: boolean
   destination?: boolean
-  google_map?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  place_id?: boolean
+  map_url?: boolean
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
   tour_type?: boolean
-  slug?: boolean
   itinerary?: boolean
   tag?: boolean
+  slug?: boolean
   status?: boolean
-  is_completed?: boolean
   created_at?: boolean
   updated_at?: boolean
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
@@ -1172,21 +1264,23 @@ export type PlanSelectScalar = {
   owner_id?: boolean
   title?: boolean
   destination?: boolean
-  google_map?: boolean
+  latitude?: boolean
+  longitude?: boolean
+  place_id?: boolean
+  map_url?: boolean
   budget?: boolean
   start_date?: boolean
   end_date?: boolean
   tour_type?: boolean
-  slug?: boolean
   itinerary?: boolean
   tag?: boolean
+  slug?: boolean
   status?: boolean
-  is_completed?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "title" | "destination" | "google_map" | "budget" | "start_date" | "end_date" | "tour_type" | "slug" | "itinerary" | "tag" | "status" | "is_completed" | "created_at" | "updated_at", ExtArgs["result"]["plan"]>
+export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "title" | "destination" | "latitude" | "longitude" | "place_id" | "map_url" | "budget" | "start_date" | "end_date" | "tour_type" | "itinerary" | "tag" | "slug" | "status" | "created_at" | "updated_at", ExtArgs["result"]["plan"]>
 export type PlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   buddies?: boolean | Prisma.Plan$buddiesArgs<ExtArgs>
@@ -1212,16 +1306,18 @@ export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     owner_id: string
     title: string
     destination: string
-    google_map: string | null
+    latitude: number | null
+    longitude: number | null
+    place_id: string | null
+    map_url: string | null
     budget: number | null
     start_date: Date
     end_date: Date
     tour_type: $Enums.PlanType
-    slug: string
     itinerary: string | null
     tag: string | null
+    slug: string
     status: $Enums.PlanStatus
-    is_completed: boolean
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["plan"]>
@@ -1654,16 +1750,18 @@ export interface PlanFieldRefs {
   readonly owner_id: Prisma.FieldRef<"Plan", 'String'>
   readonly title: Prisma.FieldRef<"Plan", 'String'>
   readonly destination: Prisma.FieldRef<"Plan", 'String'>
-  readonly google_map: Prisma.FieldRef<"Plan", 'String'>
+  readonly latitude: Prisma.FieldRef<"Plan", 'Float'>
+  readonly longitude: Prisma.FieldRef<"Plan", 'Float'>
+  readonly place_id: Prisma.FieldRef<"Plan", 'String'>
+  readonly map_url: Prisma.FieldRef<"Plan", 'String'>
   readonly budget: Prisma.FieldRef<"Plan", 'Float'>
   readonly start_date: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly end_date: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly tour_type: Prisma.FieldRef<"Plan", 'PlanType'>
-  readonly slug: Prisma.FieldRef<"Plan", 'String'>
   readonly itinerary: Prisma.FieldRef<"Plan", 'String'>
   readonly tag: Prisma.FieldRef<"Plan", 'String'>
+  readonly slug: Prisma.FieldRef<"Plan", 'String'>
   readonly status: Prisma.FieldRef<"Plan", 'PlanStatus'>
-  readonly is_completed: Prisma.FieldRef<"Plan", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Plan", 'DateTime'>
 }

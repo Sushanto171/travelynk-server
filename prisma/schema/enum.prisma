@@ -20,6 +20,7 @@ enum Provider {
 
 enum PlanStatus {
   PENDING
+  ONGOING
   COMPLETED
   CANCELLED
 }

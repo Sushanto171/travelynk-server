@@ -39,6 +39,7 @@ export type Provider = (typeof Provider)[keyof typeof Provider]
 
 export const PlanStatus = {
   PENDING: 'PENDING',
+  ONGOING: 'ONGOING',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
