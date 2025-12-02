@@ -11,7 +11,6 @@ router.get("/", PlanController.getAllFormDB)
 
 router.post("/", auth(UserRole.USER), validateRequest(PlanValidator.createPlanSchema), PlanController.insertIntoDB)
 
-router.get("/:id", PlanController.getById)
 
 router.patch("/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest(PlanValidator.updatePlanSchema), PlanController.updateById)
 
@@ -19,11 +18,7 @@ router.patch("/status/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest
 
 router.delete("/:id", auth(UserRole.USER, UserRole.ADMIN), PlanController.deleteById)
 
-
-
-
-// Plan (JOIN/BUDDIES) management here
-router.post("/join", auth(UserRole.USER), PlanController.requestToJoin)
-
+// Prevents shadowing
+router.get("/:id", PlanController.getById)
 
 export const PlanRoutes = router

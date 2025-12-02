@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken"
-import { PlanStatus, UserRole } from "../../../generated/prisma/enums"
+import { UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
-import { CreatePlanInput, RequestJoinInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
+import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
 
 const getAllFormDB = async () => {
   const now = new Date(Date.now()).toISOString()
@@ -170,41 +170,6 @@ const deleteById = async (user: JwtPayload, id: string,) => {
 }
 
 
-
-
-
-// Plan (JOIN/BUDDIES) management here
-
-const requestToJoin = async (user: JwtPayload, payload: RequestJoinInput) => {
-  const plainInfo = await prisma.plan.findUniqueOrThrow({
-    where: {
-      id: payload.plan_id,
-      status: PlanStatus.PENDING,
-      owner: {
-        id: {
-          not: user.id
-        }
-      }
-    }
-  })
-
-  const now = new Date()
-  const startDate = new Date(plainInfo.start_date)
-
-  if (startDate < now) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Join date is over.")
-  }
-
-  const result = await prisma.planBuddy.create({
-    data: {
-      plan_id: plainInfo.id,
-      traveler_id: user.id
-    }
-  })
-
-  return result
-}
-
 export const PlanService = {
   getAllFormDB,
   insertIntoDB,
@@ -212,5 +177,4 @@ export const PlanService = {
   updateById,
   updatePlanStatus,
   deleteById,
-  requestToJoin
 }

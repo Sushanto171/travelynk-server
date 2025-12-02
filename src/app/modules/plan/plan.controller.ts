@@ -66,21 +66,6 @@ const deleteById = catchAsync(async (req, res) => {
   })
 })
 
-
-
-
-// Plan (JOIN/BUDDIES) management here
-const requestToJoin = catchAsync(async (req, res) => {
-  await PlanService.requestToJoin(req.user!, req.body)
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "Plan deleted successfully",
-    data: null
-  })
-})
-
 export const PlanController = {
   getAllFormDB,
   insertIntoDB,
@@ -88,5 +73,4 @@ export const PlanController = {
   updateById,
   updateStatus,
   deleteById,
-  requestToJoin
 }
