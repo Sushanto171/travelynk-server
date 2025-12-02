@@ -9,6 +9,8 @@ const router = Router()
 
 router.get("/", PlanController.getAllFormDB)
 
+router.get("/my-plan", auth(UserRole.USER), PlanController.getMyPlans)
+
 router.post("/", auth(UserRole.USER), validateRequest(PlanValidator.createPlanSchema), PlanController.insertIntoDB)
 
 

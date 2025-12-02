@@ -34,6 +34,16 @@ const getById = catchAsync(async (req, res) => {
   })
 })
 
+const getMyPlans = catchAsync(async (req, res) => {
+  const result = await PlanService.getMyPlans(req.user!,)
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Plan retrieved successfully",
+    data: result
+  })
+})
+
 const updateById = catchAsync(async (req, res) => {
   const result = await PlanService.updateById(req.user!, req.params.id, req.body)
   sendResponse(res, {
@@ -69,6 +79,7 @@ const deleteById = catchAsync(async (req, res) => {
 export const PlanController = {
   getAllFormDB,
   insertIntoDB,
+  getMyPlans,
   getById,
   updateById,
   updateStatus,

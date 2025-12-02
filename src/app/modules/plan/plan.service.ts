@@ -107,6 +107,37 @@ const getById = async (id: string) => {
   return result
 }
 
+const getMyPlans = async (user: JwtPayload,) => {
+  const result = await prisma.plan.findFirstOrThrow({
+    where: {
+      owner_id: user.id
+    },
+    include: {
+      owner: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        }
+      },
+      buddies: {
+        select: {
+          request_type: true,
+          traveler: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            }
+          }
+        },
+      },
+      reviews: true
+    }
+  })
+  return result
+}
+
 const updateById = async (user: JwtPayload, id: string, payload: UpdatePlanInput) => {
 
   // verify plan owner
@@ -174,6 +205,7 @@ export const PlanService = {
   getAllFormDB,
   insertIntoDB,
   getById,
+  getMyPlans,
   updateById,
   updatePlanStatus,
   deleteById,
