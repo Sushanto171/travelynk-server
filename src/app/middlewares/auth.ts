@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import config from "../../config";
 import { UserRole } from "../../generated/prisma/enums";
+import config from "../config";
 import { ApiError } from "../helpers/ApiError";
 import { httpStatus } from "../helpers/httpStatus";
 import { jwtHelper } from "../helpers/jwt.helper";

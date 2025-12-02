@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { BcryptHelper } from "../app/helpers/bcrypt.helper";
-import { Provider } from "../generated/prisma/enums";
+import { Provider, UserStatus } from "../../generated/prisma/enums";
+import { BcryptHelper } from "../helpers/bcrypt.helper";
 import { prisma } from "./prisma.config";
 
 passport.use(
@@ -16,6 +16,7 @@ passport.use(
         const user = await prisma.user.findFirst({
           where: {
             email,
+            status: UserStatus.ACTIVE
           },
           include: {
             auths: {

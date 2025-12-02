@@ -2,14 +2,15 @@
 import { v2 as cloudinary } from 'cloudinary';
 import fs from "fs";
 import multer from "multer";
-import config from '../../config';
+import path from 'path';
+import config from '../config';
 import { ApiError } from './ApiError';
 import { httpStatus } from './httpStatus';
 
 // diskStorage ===> store file after upload cloudinary
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/uploads')
+    cb(null, path.join(process.cwd(), "/uploads"))
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)

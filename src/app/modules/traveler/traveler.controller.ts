@@ -24,11 +24,12 @@ const getById = catchAsync(async (req, res) => {
 })
 
 const updateById = catchAsync(async (req, res) => {
+  const result = await TravelerService.updateById(req)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "message",
-    data: ""
+    message: "Profile updated successfully",
+    data: result
   })
 })
 

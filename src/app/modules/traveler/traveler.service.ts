@@ -1,4 +1,6 @@
-import { prisma } from "../../../config/prisma.config"
+import { Request } from "express"
+import { prisma } from "../../config/prisma.config"
+import { fileUploadHelper } from "../../helpers/fileUploader"
 
 const getAllFormDB = async () => {
   const result = await prisma.traveler.findMany({
@@ -26,8 +28,21 @@ const getById = async (id: string) => {
 
 }
 
-const updateById = async () => {
-  return
+const updateById = async (req: Request) => {
+  const id = req.params.id
+  const file = req.file
+  if (file) {
+    const res = await fileUploadHelper.uploadFileToCloudinary(file)
+    req.body.profile_photo = res.url
+  }
+
+  const result = await prisma.traveler.update({
+    where: {
+      id
+    },
+    data: req.body
+  })
+  return result
 }
 
 const softDelete = async (id: string) => {

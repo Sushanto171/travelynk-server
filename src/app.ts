@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 import express, { type Application } from 'express';
 import expressSession from "express-session";
 import passport from 'passport';
+import "./app/config/passport";
 import globalErrorHandler from './app/middlewares/globalError.middleware';
 import notFound from './app/middlewares/notFound.middleware';
 import router from './app/routes';
-import "./config/passport";
 
 dotenv.config();
 
@@ -27,6 +27,8 @@ app.use(cookieParser())
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(
   cors({
     origin: "http://localhost:3000",

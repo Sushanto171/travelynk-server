@@ -1,4 +1,4 @@
-import { prisma } from "../../../config/prisma.config"
+import { prisma } from "../../config/prisma.config"
 import { CreateInterestInput, UpdateInterestInput } from "./interest.validator"
 
 const getAllFormDB = async () => {

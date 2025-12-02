@@ -1,4 +1,4 @@
-import { prisma } from "../../../config/prisma.config"
+import { prisma } from "../../config/prisma.config"
 import { CreateCountryInput, UpdateCountryInput } from "./country.validator"
 
 const getAllFormDB = async () => {
