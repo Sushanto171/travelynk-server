@@ -7,12 +7,11 @@ const getAllFormDB = async () => {
 
 const insertIntoDB = async (payload: CreateInterestInput) => {
 
-  const result = await prisma.interests.createMany({
+  return await prisma.interests.createMany({
     data: payload,
     skipDuplicates: true
   })
 
-  return result
 }
 const getById = async (id: string) => {
   return await prisma.interests.findFirstOrThrow({
@@ -23,24 +22,24 @@ const getById = async (id: string) => {
 }
 
 const updateById = async (id: string, payload: UpdateInterestInput) => {
-  const result = await prisma.countries.update({
+  return await prisma.interests.update({
     where: {
       id
     },
     data: payload
   })
-  return result
+
 }
 
 
 const deleteById = async (id: string) => {
 
-  const result = await prisma.countries.delete({
+  return await prisma.interests.delete({
     where: {
       id
     },
   })
-  return result
+
 }
 
 export const InterestService = {
