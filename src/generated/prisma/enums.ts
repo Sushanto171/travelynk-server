@@ -97,3 +97,12 @@ export const MessageStatus = {
 } as const
 
 export type MessageStatus = (typeof MessageStatus)[keyof typeof MessageStatus]
+
+
+export const RequestType = {
+  REQUESTED: 'REQUESTED',
+  ACCEPTED: 'ACCEPTED',
+  CANCELED: 'CANCELED'
+} as const
+
+export type RequestType = (typeof RequestType)[keyof typeof RequestType]

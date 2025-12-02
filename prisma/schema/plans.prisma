@@ -1,9 +1,7 @@
 model Plan {
   id            String        @id @default(uuid())
-
   owner_id      String
   owner         Traveler     @relation("plan_owner", fields: [owner_id], references: [id])
-
   title         String
   destination   String
   google_map    String?
@@ -15,22 +13,23 @@ model Plan {
   itinerary     String?
   tag           String?
   status        PlanStatus   @default(PENDING)
-
   buddies       PlanBuddy[]
   reviews       Review[]
 
   is_completed  Boolean      @default(false)
-  created_at    DateTime     @default(now())
-
+created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
   @@map("plans")
 }
 
-model PlanBuddy {
+model PlanBuddy { 
   traveler_id String
   plan_id     String
-
+  request_type RequestType
   traveler    Traveler  @relation(fields: [traveler_id], references: [id], onDelete: Cascade)
   plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
 
   @@id([traveler_id, plan_id])
   @@map("TravelerToPlans")
@@ -42,7 +41,8 @@ model Review {
   plan_id     String
   rating      Int
   comment     String?
-  created_at  DateTime  @default(now())
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
 
   reviewer    Traveler  @relation(fields: [reviewer_id], references: [id], onDelete: Cascade)
   plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)

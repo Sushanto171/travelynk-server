@@ -1,5 +1,5 @@
-import { prisma } from "../../../config/prisma.config";
 import { Provider, UserRole, UserStatus } from "../../../generated/prisma/enums";
+import { prisma } from "../../config/prisma.config";
 import { BcryptHelper } from "../../helpers/bcrypt.helper";
 import { createAdminInput, createTravelerInput } from "./user.validation";
 

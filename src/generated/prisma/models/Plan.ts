@@ -50,6 +50,7 @@ export type PlanMinAggregateOutputType = {
   status: $Enums.PlanStatus | null
   is_completed: boolean | null
   created_at: Date | null
+  updated_at: Date | null
 }
 
 export type PlanMaxAggregateOutputType = {
@@ -68,6 +69,7 @@ export type PlanMaxAggregateOutputType = {
   status: $Enums.PlanStatus | null
   is_completed: boolean | null
   created_at: Date | null
+  updated_at: Date | null
 }
 
 export type PlanCountAggregateOutputType = {
@@ -86,6 +88,7 @@ export type PlanCountAggregateOutputType = {
   status: number
   is_completed: number
   created_at: number
+  updated_at: number
   _all: number
 }
 
@@ -114,6 +117,7 @@ export type PlanMinAggregateInputType = {
   status?: true
   is_completed?: true
   created_at?: true
+  updated_at?: true
 }
 
 export type PlanMaxAggregateInputType = {
@@ -132,6 +136,7 @@ export type PlanMaxAggregateInputType = {
   status?: true
   is_completed?: true
   created_at?: true
+  updated_at?: true
 }
 
 export type PlanCountAggregateInputType = {
@@ -150,6 +155,7 @@ export type PlanCountAggregateInputType = {
   status?: true
   is_completed?: true
   created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -255,6 +261,7 @@ export type PlanGroupByOutputType = {
   status: $Enums.PlanStatus
   is_completed: boolean
   created_at: Date
+  updated_at: Date
   _count: PlanCountAggregateOutputType | null
   _avg: PlanAvgAggregateOutputType | null
   _sum: PlanSumAggregateOutputType | null
@@ -296,6 +303,7 @@ export type PlanWhereInput = {
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
   is_completed?: Prisma.BoolFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   owner?: Prisma.XOR<Prisma.TravelerScalarRelationFilter, Prisma.TravelerWhereInput>
   buddies?: Prisma.PlanBuddyListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -317,6 +325,7 @@ export type PlanOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   owner?: Prisma.TravelerOrderByWithRelationInput
   buddies?: Prisma.PlanBuddyOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
@@ -341,6 +350,7 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
   is_completed?: Prisma.BoolFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
   owner?: Prisma.XOR<Prisma.TravelerScalarRelationFilter, Prisma.TravelerWhereInput>
   buddies?: Prisma.PlanBuddyListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -362,6 +372,7 @@ export type PlanOrderByWithAggregationInput = {
   status?: Prisma.SortOrder
   is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.PlanCountOrderByAggregateInput
   _avg?: Prisma.PlanAvgOrderByAggregateInput
   _max?: Prisma.PlanMaxOrderByAggregateInput
@@ -388,6 +399,7 @@ export type PlanScalarWhereWithAggregatesInput = {
   status?: Prisma.EnumPlanStatusWithAggregatesFilter<"Plan"> | $Enums.PlanStatus
   is_completed?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
 }
 
 export type PlanCreateInput = {
@@ -405,6 +417,7 @@ export type PlanCreateInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   owner: Prisma.TravelerCreateNestedOneWithoutOwned_plansInput
   buddies?: Prisma.PlanBuddyCreateNestedManyWithoutPlanInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutPlanInput
@@ -426,6 +439,7 @@ export type PlanUncheckedCreateInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   buddies?: Prisma.PlanBuddyUncheckedCreateNestedManyWithoutPlanInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlanInput
 }
@@ -445,6 +459,7 @@ export type PlanUpdateInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.TravelerUpdateOneRequiredWithoutOwned_plansNestedInput
   buddies?: Prisma.PlanBuddyUpdateManyWithoutPlanNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutPlanNestedInput
@@ -466,6 +481,7 @@ export type PlanUncheckedUpdateInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlanNestedInput
 }
@@ -486,6 +502,7 @@ export type PlanCreateManyInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanUpdateManyMutationInput = {
@@ -503,6 +520,7 @@ export type PlanUpdateManyMutationInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanUncheckedUpdateManyInput = {
@@ -521,6 +539,7 @@ export type PlanUncheckedUpdateManyInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanCountOrderByAggregateInput = {
@@ -539,6 +558,7 @@ export type PlanCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type PlanAvgOrderByAggregateInput = {
@@ -561,6 +581,7 @@ export type PlanMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type PlanMinOrderByAggregateInput = {
@@ -579,6 +600,7 @@ export type PlanMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   is_completed?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type PlanSumOrderByAggregateInput = {
@@ -701,6 +723,7 @@ export type PlanCreateWithoutBuddiesInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   owner: Prisma.TravelerCreateNestedOneWithoutOwned_plansInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutPlanInput
 }
@@ -721,6 +744,7 @@ export type PlanUncheckedCreateWithoutBuddiesInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlanInput
 }
 
@@ -755,6 +779,7 @@ export type PlanUpdateWithoutBuddiesInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.TravelerUpdateOneRequiredWithoutOwned_plansNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutPlanNestedInput
 }
@@ -775,6 +800,7 @@ export type PlanUncheckedUpdateWithoutBuddiesInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlanNestedInput
 }
 
@@ -793,6 +819,7 @@ export type PlanCreateWithoutReviewsInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   owner: Prisma.TravelerCreateNestedOneWithoutOwned_plansInput
   buddies?: Prisma.PlanBuddyCreateNestedManyWithoutPlanInput
 }
@@ -813,6 +840,7 @@ export type PlanUncheckedCreateWithoutReviewsInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   buddies?: Prisma.PlanBuddyUncheckedCreateNestedManyWithoutPlanInput
 }
 
@@ -847,6 +875,7 @@ export type PlanUpdateWithoutReviewsInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   owner?: Prisma.TravelerUpdateOneRequiredWithoutOwned_plansNestedInput
   buddies?: Prisma.PlanBuddyUpdateManyWithoutPlanNestedInput
 }
@@ -867,6 +896,7 @@ export type PlanUncheckedUpdateWithoutReviewsInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput
 }
 
@@ -885,6 +915,7 @@ export type PlanCreateWithoutOwnerInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   buddies?: Prisma.PlanBuddyCreateNestedManyWithoutPlanInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutPlanInput
 }
@@ -904,6 +935,7 @@ export type PlanUncheckedCreateWithoutOwnerInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
   buddies?: Prisma.PlanBuddyUncheckedCreateNestedManyWithoutPlanInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutPlanInput
 }
@@ -953,6 +985,7 @@ export type PlanScalarWhereInput = {
   status?: Prisma.EnumPlanStatusFilter<"Plan"> | $Enums.PlanStatus
   is_completed?: Prisma.BoolFilter<"Plan"> | boolean
   created_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"Plan"> | Date | string
 }
 
 export type PlanCreateManyOwnerInput = {
@@ -970,6 +1003,7 @@ export type PlanCreateManyOwnerInput = {
   status?: $Enums.PlanStatus
   is_completed?: boolean
   created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanUpdateWithoutOwnerInput = {
@@ -987,6 +1021,7 @@ export type PlanUpdateWithoutOwnerInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUpdateManyWithoutPlanNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutPlanNestedInput
 }
@@ -1006,6 +1041,7 @@ export type PlanUncheckedUpdateWithoutOwnerInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   buddies?: Prisma.PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutPlanNestedInput
 }
@@ -1025,6 +1061,7 @@ export type PlanUncheckedUpdateManyWithoutOwnerInput = {
   status?: Prisma.EnumPlanStatusFieldUpdateOperationsInput | $Enums.PlanStatus
   is_completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1083,6 +1120,7 @@ export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   is_completed?: boolean
   created_at?: boolean
+  updated_at?: boolean
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   buddies?: boolean | Prisma.Plan$buddiesArgs<ExtArgs>
   reviews?: boolean | Prisma.Plan$reviewsArgs<ExtArgs>
@@ -1105,6 +1143,7 @@ export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   is_completed?: boolean
   created_at?: boolean
+  updated_at?: boolean
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["plan"]>
 
@@ -1124,6 +1163,7 @@ export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   is_completed?: boolean
   created_at?: boolean
+  updated_at?: boolean
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["plan"]>
 
@@ -1143,9 +1183,10 @@ export type PlanSelectScalar = {
   status?: boolean
   is_completed?: boolean
   created_at?: boolean
+  updated_at?: boolean
 }
 
-export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "title" | "destination" | "google_map" | "budget" | "start_date" | "end_date" | "tour_type" | "slug" | "itinerary" | "tag" | "status" | "is_completed" | "created_at", ExtArgs["result"]["plan"]>
+export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "owner_id" | "title" | "destination" | "google_map" | "budget" | "start_date" | "end_date" | "tour_type" | "slug" | "itinerary" | "tag" | "status" | "is_completed" | "created_at" | "updated_at", ExtArgs["result"]["plan"]>
 export type PlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   owner?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   buddies?: boolean | Prisma.Plan$buddiesArgs<ExtArgs>
@@ -1182,6 +1223,7 @@ export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     status: $Enums.PlanStatus
     is_completed: boolean
     created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["plan"]>
   composites: {}
 }
@@ -1623,6 +1665,7 @@ export interface PlanFieldRefs {
   readonly status: Prisma.FieldRef<"Plan", 'PlanStatus'>
   readonly is_completed: Prisma.FieldRef<"Plan", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Plan", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"Plan", 'DateTime'>
 }
     
 

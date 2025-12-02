@@ -160,7 +160,8 @@ export const PlanScalarFieldEnum = {
   tag: 'tag',
   status: 'status',
   is_completed: 'is_completed',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
@@ -168,7 +169,10 @@ export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof Plan
 
 export const PlanBuddyScalarFieldEnum = {
   traveler_id: 'traveler_id',
-  plan_id: 'plan_id'
+  plan_id: 'plan_id',
+  request_type: 'request_type',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type PlanBuddyScalarFieldEnum = (typeof PlanBuddyScalarFieldEnum)[keyof typeof PlanBuddyScalarFieldEnum]
@@ -180,7 +184,8 @@ export const ReviewScalarFieldEnum = {
   plan_id: 'plan_id',
   rating: 'rating',
   comment: 'comment',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -259,6 +264,7 @@ export const TravelerScalarFieldEnum = {
   is_subscribed: 'is_subscribed',
   created_at: 'created_at',
   updated_at: 'updated_at',
+  is_deleted: 'is_deleted',
   user_id: 'user_id'
 } as const
 
@@ -276,7 +282,6 @@ export type TravelerToInterestsScalarFieldEnum = (typeof TravelerToInterestsScal
 export const InterestsScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

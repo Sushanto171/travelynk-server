@@ -27,16 +27,25 @@ export type AggregatePlanBuddy = {
 export type PlanBuddyMinAggregateOutputType = {
   traveler_id: string | null
   plan_id: string | null
+  request_type: $Enums.RequestType | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type PlanBuddyMaxAggregateOutputType = {
   traveler_id: string | null
   plan_id: string | null
+  request_type: $Enums.RequestType | null
+  created_at: Date | null
+  updated_at: Date | null
 }
 
 export type PlanBuddyCountAggregateOutputType = {
   traveler_id: number
   plan_id: number
+  request_type: number
+  created_at: number
+  updated_at: number
   _all: number
 }
 
@@ -44,16 +53,25 @@ export type PlanBuddyCountAggregateOutputType = {
 export type PlanBuddyMinAggregateInputType = {
   traveler_id?: true
   plan_id?: true
+  request_type?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type PlanBuddyMaxAggregateInputType = {
   traveler_id?: true
   plan_id?: true
+  request_type?: true
+  created_at?: true
+  updated_at?: true
 }
 
 export type PlanBuddyCountAggregateInputType = {
   traveler_id?: true
   plan_id?: true
+  request_type?: true
+  created_at?: true
+  updated_at?: true
   _all?: true
 }
 
@@ -132,6 +150,9 @@ export type PlanBuddyGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type PlanBuddyGroupByOutputType = {
   traveler_id: string
   plan_id: string
+  request_type: $Enums.RequestType
+  created_at: Date
+  updated_at: Date
   _count: PlanBuddyCountAggregateOutputType | null
   _min: PlanBuddyMinAggregateOutputType | null
   _max: PlanBuddyMaxAggregateOutputType | null
@@ -158,6 +179,9 @@ export type PlanBuddyWhereInput = {
   NOT?: Prisma.PlanBuddyWhereInput | Prisma.PlanBuddyWhereInput[]
   traveler_id?: Prisma.StringFilter<"PlanBuddy"> | string
   plan_id?: Prisma.StringFilter<"PlanBuddy"> | string
+  request_type?: Prisma.EnumRequestTypeFilter<"PlanBuddy"> | $Enums.RequestType
+  created_at?: Prisma.DateTimeFilter<"PlanBuddy"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"PlanBuddy"> | Date | string
   traveler?: Prisma.XOR<Prisma.TravelerScalarRelationFilter, Prisma.TravelerWhereInput>
   plan?: Prisma.XOR<Prisma.PlanScalarRelationFilter, Prisma.PlanWhereInput>
 }
@@ -165,6 +189,9 @@ export type PlanBuddyWhereInput = {
 export type PlanBuddyOrderByWithRelationInput = {
   traveler_id?: Prisma.SortOrder
   plan_id?: Prisma.SortOrder
+  request_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   traveler?: Prisma.TravelerOrderByWithRelationInput
   plan?: Prisma.PlanOrderByWithRelationInput
 }
@@ -176,6 +203,9 @@ export type PlanBuddyWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PlanBuddyWhereInput | Prisma.PlanBuddyWhereInput[]
   traveler_id?: Prisma.StringFilter<"PlanBuddy"> | string
   plan_id?: Prisma.StringFilter<"PlanBuddy"> | string
+  request_type?: Prisma.EnumRequestTypeFilter<"PlanBuddy"> | $Enums.RequestType
+  created_at?: Prisma.DateTimeFilter<"PlanBuddy"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"PlanBuddy"> | Date | string
   traveler?: Prisma.XOR<Prisma.TravelerScalarRelationFilter, Prisma.TravelerWhereInput>
   plan?: Prisma.XOR<Prisma.PlanScalarRelationFilter, Prisma.PlanWhereInput>
 }, "traveler_id_plan_id">
@@ -183,6 +213,9 @@ export type PlanBuddyWhereUniqueInput = Prisma.AtLeast<{
 export type PlanBuddyOrderByWithAggregationInput = {
   traveler_id?: Prisma.SortOrder
   plan_id?: Prisma.SortOrder
+  request_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
   _count?: Prisma.PlanBuddyCountOrderByAggregateInput
   _max?: Prisma.PlanBuddyMaxOrderByAggregateInput
   _min?: Prisma.PlanBuddyMinOrderByAggregateInput
@@ -194,9 +227,15 @@ export type PlanBuddyScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PlanBuddyScalarWhereWithAggregatesInput | Prisma.PlanBuddyScalarWhereWithAggregatesInput[]
   traveler_id?: Prisma.StringWithAggregatesFilter<"PlanBuddy"> | string
   plan_id?: Prisma.StringWithAggregatesFilter<"PlanBuddy"> | string
+  request_type?: Prisma.EnumRequestTypeWithAggregatesFilter<"PlanBuddy"> | $Enums.RequestType
+  created_at?: Prisma.DateTimeWithAggregatesFilter<"PlanBuddy"> | Date | string
+  updated_at?: Prisma.DateTimeWithAggregatesFilter<"PlanBuddy"> | Date | string
 }
 
 export type PlanBuddyCreateInput = {
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
   traveler: Prisma.TravelerCreateNestedOneWithoutJoined_plansInput
   plan: Prisma.PlanCreateNestedOneWithoutBuddiesInput
 }
@@ -204,9 +243,15 @@ export type PlanBuddyCreateInput = {
 export type PlanBuddyUncheckedCreateInput = {
   traveler_id: string
   plan_id: string
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanBuddyUpdateInput = {
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   traveler?: Prisma.TravelerUpdateOneRequiredWithoutJoined_plansNestedInput
   plan?: Prisma.PlanUpdateOneRequiredWithoutBuddiesNestedInput
 }
@@ -214,20 +259,31 @@ export type PlanBuddyUpdateInput = {
 export type PlanBuddyUncheckedUpdateInput = {
   traveler_id?: Prisma.StringFieldUpdateOperationsInput | string
   plan_id?: Prisma.StringFieldUpdateOperationsInput | string
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanBuddyCreateManyInput = {
   traveler_id: string
   plan_id: string
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanBuddyUpdateManyMutationInput = {
-
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanBuddyUncheckedUpdateManyInput = {
   traveler_id?: Prisma.StringFieldUpdateOperationsInput | string
   plan_id?: Prisma.StringFieldUpdateOperationsInput | string
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanBuddyListRelationFilter = {
@@ -248,16 +304,25 @@ export type PlanBuddyTraveler_idPlan_idCompoundUniqueInput = {
 export type PlanBuddyCountOrderByAggregateInput = {
   traveler_id?: Prisma.SortOrder
   plan_id?: Prisma.SortOrder
+  request_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type PlanBuddyMaxOrderByAggregateInput = {
   traveler_id?: Prisma.SortOrder
   plan_id?: Prisma.SortOrder
+  request_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type PlanBuddyMinOrderByAggregateInput = {
   traveler_id?: Prisma.SortOrder
   plan_id?: Prisma.SortOrder
+  request_type?: Prisma.SortOrder
+  created_at?: Prisma.SortOrder
+  updated_at?: Prisma.SortOrder
 }
 
 export type PlanBuddyCreateNestedManyWithoutPlanInput = {
@@ -300,6 +365,10 @@ export type PlanBuddyUncheckedUpdateManyWithoutPlanNestedInput = {
   update?: Prisma.PlanBuddyUpdateWithWhereUniqueWithoutPlanInput | Prisma.PlanBuddyUpdateWithWhereUniqueWithoutPlanInput[]
   updateMany?: Prisma.PlanBuddyUpdateManyWithWhereWithoutPlanInput | Prisma.PlanBuddyUpdateManyWithWhereWithoutPlanInput[]
   deleteMany?: Prisma.PlanBuddyScalarWhereInput | Prisma.PlanBuddyScalarWhereInput[]
+}
+
+export type EnumRequestTypeFieldUpdateOperationsInput = {
+  set?: $Enums.RequestType
 }
 
 export type PlanBuddyCreateNestedManyWithoutTravelerInput = {
@@ -345,11 +414,17 @@ export type PlanBuddyUncheckedUpdateManyWithoutTravelerNestedInput = {
 }
 
 export type PlanBuddyCreateWithoutPlanInput = {
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
   traveler: Prisma.TravelerCreateNestedOneWithoutJoined_plansInput
 }
 
 export type PlanBuddyUncheckedCreateWithoutPlanInput = {
   traveler_id: string
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanBuddyCreateOrConnectWithoutPlanInput = {
@@ -384,14 +459,23 @@ export type PlanBuddyScalarWhereInput = {
   NOT?: Prisma.PlanBuddyScalarWhereInput | Prisma.PlanBuddyScalarWhereInput[]
   traveler_id?: Prisma.StringFilter<"PlanBuddy"> | string
   plan_id?: Prisma.StringFilter<"PlanBuddy"> | string
+  request_type?: Prisma.EnumRequestTypeFilter<"PlanBuddy"> | $Enums.RequestType
+  created_at?: Prisma.DateTimeFilter<"PlanBuddy"> | Date | string
+  updated_at?: Prisma.DateTimeFilter<"PlanBuddy"> | Date | string
 }
 
 export type PlanBuddyCreateWithoutTravelerInput = {
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
   plan: Prisma.PlanCreateNestedOneWithoutBuddiesInput
 }
 
 export type PlanBuddyUncheckedCreateWithoutTravelerInput = {
   plan_id: string
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanBuddyCreateOrConnectWithoutTravelerInput = {
@@ -422,34 +506,58 @@ export type PlanBuddyUpdateManyWithWhereWithoutTravelerInput = {
 
 export type PlanBuddyCreateManyPlanInput = {
   traveler_id: string
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanBuddyUpdateWithoutPlanInput = {
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   traveler?: Prisma.TravelerUpdateOneRequiredWithoutJoined_plansNestedInput
 }
 
 export type PlanBuddyUncheckedUpdateWithoutPlanInput = {
   traveler_id?: Prisma.StringFieldUpdateOperationsInput | string
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanBuddyUncheckedUpdateManyWithoutPlanInput = {
   traveler_id?: Prisma.StringFieldUpdateOperationsInput | string
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanBuddyCreateManyTravelerInput = {
   plan_id: string
+  request_type: $Enums.RequestType
+  created_at?: Date | string
+  updated_at?: Date | string
 }
 
 export type PlanBuddyUpdateWithoutTravelerInput = {
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   plan?: Prisma.PlanUpdateOneRequiredWithoutBuddiesNestedInput
 }
 
 export type PlanBuddyUncheckedUpdateWithoutTravelerInput = {
   plan_id?: Prisma.StringFieldUpdateOperationsInput | string
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PlanBuddyUncheckedUpdateManyWithoutTravelerInput = {
   plan_id?: Prisma.StringFieldUpdateOperationsInput | string
+  request_type?: Prisma.EnumRequestTypeFieldUpdateOperationsInput | $Enums.RequestType
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -457,6 +565,9 @@ export type PlanBuddyUncheckedUpdateManyWithoutTravelerInput = {
 export type PlanBuddySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   traveler_id?: boolean
   plan_id?: boolean
+  request_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   traveler?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["planBuddy"]>
@@ -464,6 +575,9 @@ export type PlanBuddySelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type PlanBuddySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   traveler_id?: boolean
   plan_id?: boolean
+  request_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   traveler?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["planBuddy"]>
@@ -471,6 +585,9 @@ export type PlanBuddySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type PlanBuddySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   traveler_id?: boolean
   plan_id?: boolean
+  request_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
   traveler?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["planBuddy"]>
@@ -478,9 +595,12 @@ export type PlanBuddySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type PlanBuddySelectScalar = {
   traveler_id?: boolean
   plan_id?: boolean
+  request_type?: boolean
+  created_at?: boolean
+  updated_at?: boolean
 }
 
-export type PlanBuddyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"traveler_id" | "plan_id", ExtArgs["result"]["planBuddy"]>
+export type PlanBuddyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"traveler_id" | "plan_id" | "request_type" | "created_at" | "updated_at", ExtArgs["result"]["planBuddy"]>
 export type PlanBuddyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   traveler?: boolean | Prisma.TravelerDefaultArgs<ExtArgs>
   plan?: boolean | Prisma.PlanDefaultArgs<ExtArgs>
@@ -503,6 +623,9 @@ export type $PlanBuddyPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     traveler_id: string
     plan_id: string
+    request_type: $Enums.RequestType
+    created_at: Date
+    updated_at: Date
   }, ExtArgs["result"]["planBuddy"]>
   composites: {}
 }
@@ -930,6 +1053,9 @@ export interface Prisma__PlanBuddyClient<T, Null = never, ExtArgs extends runtim
 export interface PlanBuddyFieldRefs {
   readonly traveler_id: Prisma.FieldRef<"PlanBuddy", 'String'>
   readonly plan_id: Prisma.FieldRef<"PlanBuddy", 'String'>
+  readonly request_type: Prisma.FieldRef<"PlanBuddy", 'RequestType'>
+  readonly created_at: Prisma.FieldRef<"PlanBuddy", 'DateTime'>
+  readonly updated_at: Prisma.FieldRef<"PlanBuddy", 'DateTime'>
 }
     
 

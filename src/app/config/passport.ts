@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { BcryptHelper } from "../app/helpers/bcrypt.helper";
-import { Provider } from "../generated/prisma/enums";
+import { Provider, UserStatus } from "../../generated/prisma/enums";
+import { BcryptHelper } from "../helpers/bcrypt.helper";
 import { prisma } from "./prisma.config";
 
 passport.use(
@@ -16,7 +16,7 @@ passport.use(
         const user = await prisma.user.findFirst({
           where: {
             email,
-            is_deleted: false,
+            status: UserStatus.ACTIVE
           },
           include: {
             auths: {
@@ -29,6 +29,10 @@ passport.use(
 
         if (!user) {
           return done("Invalid email or password");
+        }
+
+        if (user.is_deleted) {
+          return done("Your account is temporary deleted");
         }
 
         const hasCredentialProvider = user.auths.some(

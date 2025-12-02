@@ -46,13 +46,11 @@ model Traveler {
   is_subscribed    Boolean   @default(false)
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
-
+  is_deleted       Boolean             @default(false)
   user_id          String @unique
   user             User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
   interests         TravelerToInterests[]
   visited_countries travelerCountries[]
-
   owned_plans      Plan[]         @relation("plan_owner")
   joined_plans     PlanBuddy[]
   subscriptions    Subscription[]
@@ -75,7 +73,6 @@ model TravelerToInterests {
 model Interests {
   id                  String                @id @default(uuid())
   name                String                @unique
-  description         String?
   created_at          DateTime              @default(now())
   updated_at          DateTime              @updatedAt
   travelerToInterests TravelerToInterests[]

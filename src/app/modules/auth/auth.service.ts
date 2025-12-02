@@ -1,5 +1,5 @@
 import { JwtPayload } from "jsonwebtoken"
-import { prisma } from "../../../config/prisma.config"
+import { prisma } from "../../config/prisma.config"
 
 const getMe = async (user: JwtPayload) => {
 
