@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { v2 as cloudinary } from 'cloudinary';
+import { Request } from 'express';
 import fs from "fs";
 import multer from "multer";
 import path from 'path';
@@ -43,8 +44,15 @@ const uploadFileToCloudinary = async (file: Express.Multer.File) => {
 }
 
 //delete uploaded from cloudinary
-const destroyFileFormCloudinary = async (url: string) => {
-  if (typeof url !== "string") return null;
+const destroyFileFormCloudinary = async (req: Request) => {
+
+  const url = Object.values(req.body).find((value: unknown) =>
+    typeof value === 'string' && value.startsWith("http://res.cloudinary.com")
+  ) as string | undefined;
+
+  if (!url) {
+    return; // Exit if no URL is found
+  }
 
   const regex = /\/upload\/(?:v\d+\/)?(.+?)\.[A-Za-z0-9]+(?:\?.*)?$/;
   const match = url.match(regex);

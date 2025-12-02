@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
+import { fileUploadHelper } from "../helpers/fileUploader";
 import { httpStatus } from "../helpers/httpStatus";
 
 const globalErrorHandler = async (
@@ -14,7 +15,9 @@ const globalErrorHandler = async (
   const success = false;
   const message = err.message || "Something went wrong!";
   const error = err;
-
+  if (req.body) {
+    await fileUploadHelper.destroyFileFormCloudinary(req)
+  }
   console.log(err);
   res.status(statusCode).json({
     success,
