@@ -17,8 +17,13 @@ router.patch("/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest(PlanVa
 
 router.patch("/status/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest(PlanValidator.updatePlanStatusSchema), PlanController.updateStatus)
 
-router.delete("/:id",auth(UserRole.USER, UserRole.ADMIN), PlanController.deleteById)
+router.delete("/:id", auth(UserRole.USER, UserRole.ADMIN), PlanController.deleteById)
 
+
+
+
+// Plan (JOIN/BUDDIES) management here
+router.post("/join", auth(UserRole.USER), PlanController.requestToJoin)
 
 
 export const PlanRoutes = router

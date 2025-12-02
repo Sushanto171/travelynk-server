@@ -53,12 +53,18 @@ const updatePlanStatusSchema = z.object({
   status: z.enum(Object.values(PlanStatus))
 })
 
+const requestJoinSchema = z.object({
+  plan_id: z.uuid().nonempty("Plan id required"),
+})
+
 export const PlanValidator = {
   createPlanSchema,
   updatePlanSchema,
-  updatePlanStatusSchema
+  updatePlanStatusSchema,
+  requestJoinSchema
 }
 
 export type CreatePlanInput = z.infer<typeof createPlanSchema>
 export type UpdatePlanInput = z.infer<typeof updatePlanSchema>
 export type UpdatePlanStatus = z.infer<typeof updatePlanStatusSchema>
+export type RequestJoinInput = z.infer<typeof requestJoinSchema>
