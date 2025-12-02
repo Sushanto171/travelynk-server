@@ -1,27 +1,74 @@
-const getAllFormDB = async () => {
-  return
+import { JwtPayload } from "jsonwebtoken"
+import { PlanStatus, UserRole } from "../../../generated/prisma/enums"
+import { prisma } from "../../config/prisma.config"
+import { ApiError } from "../../helpers/ApiError"
+import { httpStatus } from "../../helpers/httpStatus"
+import { CreateReviewInput, UpdateReviewInput } from "./review.validation"
+
+const insertIntoDB = async (user: JwtPayload, plan_id: string, payload: CreateReviewInput) => {
+  const planInfo = await prisma.plan.findFirstOrThrow({
+    where: {
+      id: plan_id,
+      buddies: {
+        some: {
+          traveler_id: user.id
+        }
+      }
+    }
+
+  })
+
+  if (planInfo.status !== PlanStatus.COMPLETED) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "The plan is not yet complete")
+  }
+
+  const result = await prisma.review.create({
+    data: {
+      rating: payload.rating,
+      comment: payload.comment,
+      plan_id: planInfo.id,
+      reviewer_id: user.id
+    }
+  })
+
+
+  return result
 }
 
-const getById = async () => {
-  return
+
+const updateById = async (user: JwtPayload, id: string, payload: UpdateReviewInput) => {
+  return await prisma.review.update({
+    where: {
+      id,
+      reviewer_id: user.id
+    },
+    data: payload
+  })
 }
 
-const updateById = async () => {
-  return
-}
 
-const softDelete = async () => {
-  return
-}
+const deleteById = async (user: JwtPayload, id: string) => {
 
-const deleteById = async () => {
-  return
+  // verify plan owner / reviewer /admin
+  if (user.role !== UserRole.ADMIN) {
+    await prisma.review.findFirstOrThrow({
+      where: {
+        id,
+        OR: [
+          { reviewer_id: user.id },
+          { plan: { owner_id: user.id } }
+        ]
+      }
+    })
+  }
+
+  return await prisma.review.delete({
+    where: { id },
+  })
 }
 
 export const ReviewService = {
-  getAllFormDB,
-  getById,
+  insertIntoDB,
   updateById,
-  softDelete,
   deleteById
 }

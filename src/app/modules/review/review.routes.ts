@@ -1,17 +1,19 @@
 import { Router } from "express";
+import { UserRole } from "../../../generated/prisma/enums";
+import { auth } from "../../middlewares/auth";
+import { validateRequest } from "../../middlewares/validateRequest";
 import { ReviewController } from "./review.controller";
+import { createReviewSchema, updateReviewSchema } from "./review.validation";
 
 const router = Router()
 
-router.get("/", ReviewController.getAllFormDB)
+router.post("/:plan_id", auth(UserRole.USER), validateRequest(createReviewSchema), ReviewController.insertIntoDB)
 
-router.get("/:id", ReviewController.getById)
 
-router.patch("/:id", ReviewController.updateById)
+router.patch("/:id", auth(UserRole.USER), validateRequest(updateReviewSchema), ReviewController.updateById)
 
-router.delete("/soft/:id", ReviewController.softDelete)
-
-router.delete("/:id", ReviewController.deleteById)
+// can delete admin, plan owner, reviewer
+router.delete("/:id", auth(UserRole.USER, UserRole.ADMIN), ReviewController.deleteById)
 
 
 
