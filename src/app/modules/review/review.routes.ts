@@ -1,9 +1,13 @@
 import { Router } from "express";
+import { UserRole } from "../../../generated/prisma/enums";
+import { auth } from "../../middlewares/auth";
+import { validateRequest } from "../../middlewares/validateRequest";
 import { ReviewController } from "./review.controller";
+import { createReviewSchema } from "./review.validation";
 
 const router = Router()
 
-router.get("/", ReviewController.getAllFormDB)
+router.post("/:plan_id", auth(UserRole.USER), validateRequest(createReviewSchema), ReviewController.insertIntoDB)
 
 router.get("/:id", ReviewController.getById)
 

@@ -1,13 +1,16 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { httpStatus } from "../../helpers/httpStatus"
 import catchAsync from "../../utils/catchAsync"
 import sendResponse from "../../utils/sendResponse"
+import { ReviewService } from "./review.service"
 
-const getAllFormDB = catchAsync(async (req, res) => {
+const insertIntoDB = catchAsync(async (req, res) => {
+  const result = await ReviewService.insertIntoDB(req.user!, req.params.plan_id, req.body)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "message",
-    data: ""
+    data: result
   })
 })
 
@@ -48,7 +51,7 @@ const deleteById = catchAsync(async (req, res) => {
 })
 
 export const ReviewController = {
-  getAllFormDB,
+  insertIntoDB,
   getById,
   updateById,
   softDelete,
