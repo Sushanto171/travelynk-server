@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken"
+import { UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
-import { CreatePlanInput } from "./plan.validation"
+import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
 
 const getAllFormDB = async () => {
   const now = new Date(Date.now()).toISOString()
@@ -59,9 +60,6 @@ const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
           ...payload,
           slug: `${baseSlug}-${attempts}`
         },
-        include: {
-          owner: true
-        }
       })
       return result
     } catch (error: any) {
@@ -72,19 +70,94 @@ const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
 
 }
 
-const getById = async () => {
-  return
+const getById = async (id: string) => {
+  const result = await prisma.plan.findFirstOrThrow({
+    where: { id },
+    include: {
+      owner: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        }
+      },
+      buddies: {
+        select: {
+          request_type: true,
+          traveler: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            }
+          }
+        },
+      },
+      reviews: true
+    }
+  })
+  return result
 }
 
-const updateById = async () => {
-  return
+const updateById = async (user: JwtPayload, id: string, payload: UpdatePlanInput) => {
+
+  // verify plan owner
+  if (user.role !== UserRole.ADMIN) {
+    await prisma.plan.findFirstOrThrow({
+      where: {
+        id,
+        owner_id: user.id
+      }
+    })
+  }
+
+  const result = await prisma.plan.update({
+    where: {
+      id
+    },
+    data: payload
+  })
+  return result
 }
 
-const softDelete = async () => {
-  return
+const updatePlanStatus = async (user: JwtPayload, id: string, payload: UpdatePlanStatus) => {
+  const { status } = payload
+
+  // verify plan owner
+  if (user.role !== UserRole.ADMIN) {
+    await prisma.plan.findFirstOrThrow({
+      where: {
+        id,
+        owner_id: user.id
+      }
+    })
+  }
+
+  return await prisma.plan.update({
+    where: { id },
+    data: {
+      status
+    }
+  })
 }
 
-const deleteById = async () => {
+const deleteById = async (user: JwtPayload, id: string,) => {
+
+  // verify plan owner
+  if (user.role !== UserRole.ADMIN) {
+    await prisma.plan.findFirstOrThrow({
+      where: {
+        id,
+        owner_id: user.id
+      }
+    })
+  }
+
+  await prisma.plan.delete({
+    where: {
+      id
+    }
+  })
   return
 }
 
@@ -93,6 +166,6 @@ export const PlanService = {
   insertIntoDB,
   getById,
   updateById,
-  softDelete,
+  updatePlanStatus,
   deleteById
 }

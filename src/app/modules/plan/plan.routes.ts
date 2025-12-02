@@ -13,11 +13,11 @@ router.post("/", auth(UserRole.USER), validateRequest(PlanValidator.createPlanSc
 
 router.get("/:id", PlanController.getById)
 
-router.patch("/:id", PlanController.updateById)
+router.patch("/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest(PlanValidator.updatePlanSchema), PlanController.updateById)
 
-router.delete("/soft/:id", PlanController.softDelete)
+router.patch("/status/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest(PlanValidator.updatePlanStatusSchema), PlanController.updateStatus)
 
-router.delete("/:id", PlanController.deleteById)
+router.delete("/:id",auth(UserRole.USER, UserRole.ADMIN), PlanController.deleteById)
 
 
 
