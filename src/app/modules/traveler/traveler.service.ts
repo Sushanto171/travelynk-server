@@ -34,6 +34,7 @@ const updateById = async (req: Request) => {
   if (file) {
     const res = await fileUploadHelper.uploadFileToCloudinary(file)
     req.body.profile_photo = res.url
+    fileUploadHelper.cleanUpDiskFile(file)
   }
 
   const result = await prisma.traveler.update({
