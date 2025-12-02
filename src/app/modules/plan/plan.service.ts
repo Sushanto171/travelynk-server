@@ -22,19 +22,6 @@ const getAllFormDB = async () => {
           email: true,
         }
       }
-      , buddies: {
-        select: {
-          request_type: true,
-          traveler: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-            }
-          }
-        },
-      },
-      reviews: true
     }
   })
 
@@ -79,9 +66,9 @@ const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
 }
 
 const getById = async (id: string) => {
-  const result = await prisma.plan.findFirstOrThrow({
+  const [plan, ratings] = await Promise.all([prisma.plan.findFirstOrThrow({
     where: { id },
-    include: {
+    select: {
       owner: {
         select: {
           id: true,
@@ -90,8 +77,12 @@ const getById = async (id: string) => {
         }
       },
       buddies: {
+        orderBy: {
+          created_at: "desc"
+        },
         select: {
           request_type: true,
+          created_at: true,
           traveler: {
             select: {
               id: true,
@@ -101,10 +92,47 @@ const getById = async (id: string) => {
           }
         },
       },
-      reviews: true
+      reviews: {
+        orderBy: {
+          created_at: "desc"
+        },
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          created_at: true,
+          reviewer: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              profile_photo: true
+            }
+          }
+        }
+      }
     }
-  })
-  return result
+  }),
+
+  await prisma.review.aggregate({
+    where: {
+      plan_id: id
+    },
+    _avg: {
+      rating: true,
+    },
+    _count: {
+      rating: true
+    }
+
+  })])
+  return {
+    ...plan,
+    rating: {
+      average: ratings._avg.rating ?? 0,
+      total: ratings._count.rating
+    }
+  }
 }
 
 const getMyPlans = async (user: JwtPayload,) => {
