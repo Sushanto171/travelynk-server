@@ -20,6 +20,7 @@ enum Provider {
 
 enum PlanStatus {
   PENDING
+  ONGOING
   COMPLETED
   CANCELLED
 }
@@ -65,5 +66,5 @@ enum MessageStatus {
 enum RequestType{
   REQUESTED
   ACCEPTED
-  CANCELED
+  REMOVE
 }

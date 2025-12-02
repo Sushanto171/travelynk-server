@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthRoutes } from "../modules/auth/auth.routes";
 import { CountryRoutes } from "../modules/country/country.routes";
 import { InterestRoutes } from "../modules/interest/interest.routes";
+import { PlanJoinRoutes } from "../modules/plan-join/plan-join.routes";
 import { PlanRoutes } from "../modules/plan/plan.routes";
 import { ReviewRoutes } from "../modules/review/review.routes";
 import { UserRoutes } from "../modules/user/user.routes";
@@ -30,6 +31,10 @@ const routes: Route[] = [
   {
     path: "/plan",
     router: PlanRoutes
+  },
+  {
+    path: "/plan-join",
+    router: PlanJoinRoutes
   },
   {
     path: "/review",

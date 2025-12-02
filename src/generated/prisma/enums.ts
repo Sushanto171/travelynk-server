@@ -39,6 +39,7 @@ export type Provider = (typeof Provider)[keyof typeof Provider]
 
 export const PlanStatus = {
   PENDING: 'PENDING',
+  ONGOING: 'ONGOING',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
@@ -102,7 +103,7 @@ export type MessageStatus = (typeof MessageStatus)[keyof typeof MessageStatus]
 export const RequestType = {
   REQUESTED: 'REQUESTED',
   ACCEPTED: 'ACCEPTED',
-  CANCELED: 'CANCELED'
+  REMOVE: 'REMOVE'
 } as const
 
 export type RequestType = (typeof RequestType)[keyof typeof RequestType]

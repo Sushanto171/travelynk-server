@@ -1,52 +1,64 @@
 model Plan {
-  id            String        @id @default(uuid())
+  id            String   @id @default(uuid())
+
   owner_id      String
-  owner         Traveler     @relation("plan_owner", fields: [owner_id], references: [id])
+  owner         Traveler @relation("plan_owner", fields: [owner_id], references: [id], onDelete: Cascade)
+
   title         String
   destination   String
-  google_map    String?
-  budget        Float?
+  latitude      Float?
+  longitude     Float?
+  place_id      String?
+  map_url       String?
+
+  budget        Decimal  @db.Decimal(10,2) @default(0)
+
   start_date    DateTime
   end_date      DateTime
-  tour_type     PlanType     @default(SOLO)
-  slug          String       @unique
+
   itinerary     String?
   tag           String?
-  status        PlanStatus   @default(PENDING)
+  slug          String   @unique
+
+  tour_type     PlanType   @default(SOLO)
+  status        PlanStatus @default(PENDING)
+
   buddies       PlanBuddy[]
   reviews       Review[]
 
-  is_completed  Boolean      @default(false)
-created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
   @@map("plans")
 }
 
-model PlanBuddy { 
-  traveler_id String
-  plan_id     String
-  request_type RequestType
-  traveler    Traveler  @relation(fields: [traveler_id], references: [id], onDelete: Cascade)
-  plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
 
-  @@id([traveler_id, plan_id])
-  @@map("TravelerToPlans")
-}
+  model PlanBuddy { 
+    traveler_id String
+    plan_id     String
+    request_type RequestType @default(REQUESTED)
+    traveler    Traveler  @relation(fields: [traveler_id], references: [id], onDelete: Cascade)
+    plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+    created_at       DateTime  @default(now())
+    updated_at       DateTime  @updatedAt
 
-model Review {
-  id          String    @id @default(uuid())
-  reviewer_id String
-  plan_id     String
-  rating      Int
-  comment     String?
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
+    @@id([traveler_id, plan_id])
+    @@map("TravelerToPlan")
+  }
 
-  reviewer    Traveler  @relation(fields: [reviewer_id], references: [id], onDelete: Cascade)
-  plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+  model Review {
+    id          String    @id @default(uuid())
+    reviewer_id String
+    plan_id     String
+    rating      Int
+    comment     String?
+    created_at       DateTime  @default(now())
+    updated_at       DateTime  @updatedAt
 
-  @@unique([reviewer_id, plan_id])
-  @@map("reviews")
-}
+    reviewer    Traveler  @relation(fields: [reviewer_id], references: [id], onDelete: Cascade)
+    plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
+
+    @@unique([reviewer_id, plan_id])
+    @@index([plan_id])
+    @@map("reviews")
+  }

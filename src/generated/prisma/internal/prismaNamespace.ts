@@ -1715,16 +1715,18 @@ export const PlanScalarFieldEnum = {
   owner_id: 'owner_id',
   title: 'title',
   destination: 'destination',
-  google_map: 'google_map',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  place_id: 'place_id',
+  map_url: 'map_url',
   budget: 'budget',
   start_date: 'start_date',
   end_date: 'end_date',
-  tour_type: 'tour_type',
-  slug: 'slug',
   itinerary: 'itinerary',
   tag: 'tag',
+  slug: 'slug',
+  tour_type: 'tour_type',
   status: 'status',
-  is_completed: 'is_completed',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -1989,6 +1991,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
