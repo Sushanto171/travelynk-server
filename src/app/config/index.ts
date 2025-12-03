@@ -30,5 +30,14 @@ export default {
     WEEKLY_PRICE: process.env.WEEKLY_PRICE,
     MONTHLY_PRICE: process.env.MONTHLY_PRICE,
     YEARLY_PRICE: process.env.YEARLY_PRICE,
-  }
+  },
+  nodemailer: {
+    APP_PASS: process.env.APP_PASS,
+    APP_USER: process.env.APP_USER,
+  },
+  redis: {
+    PASS: process.env.PASS,
+    HOST: process.env.HOST,
+    REDIS_PORT: process.env.REDIS_PORT,
+  },
 };

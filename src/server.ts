@@ -2,6 +2,7 @@
 import { Server } from "http";
 import { app } from "./app";
 import config from "./app/config";
+import { redisClient } from "./app/helpers/redis";
 import { seeAdmin } from "./app/utils/seedAdmin";
 
 const startServer = async () => {
@@ -11,6 +12,10 @@ const startServer = async () => {
     server = app.listen(config.port, () => {
       console.log(`⚡ Server is running on port ${config.port}`);
     });
+
+    await redisClient.connect();
+    console.log("Redis client connect");
+
 
     // Function to gracefully shut down the server
     const exitHandler = () => {

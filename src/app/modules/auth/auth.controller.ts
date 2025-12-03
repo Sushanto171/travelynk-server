@@ -45,7 +45,27 @@ const getMe = catchAsync(async (req, res) => {
 
 });
 
+const getOTP = catchAsync(async (req, res) => {
+  const result = await AuthService.getOTP(req.params.email)
 
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "OTP send to email",
+    data: result,
+  });
+});
+
+const verify = catchAsync(async (req, res) => {
+  const result = await AuthService.verify(req.body)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Verified successfully",
+    data: result,
+  });
+});
 
 const logout = catchAsync(async (req, res) => {
   res.clearCookie("accessToken");
@@ -62,5 +82,7 @@ const logout = catchAsync(async (req, res) => {
 export const AuthController = {
   credentialLogin,
   getMe,
-  logout
+  logout,
+  verify,
+  getOTP
 }
