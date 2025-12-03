@@ -1,16 +1,25 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+
+import { queryOptions } from "../../constant/queryOptions"
 import { httpStatus } from "../../helpers/httpStatus"
+import { pick } from "../../helpers/pick"
 import catchAsync from "../../utils/catchAsync"
 import sendResponse from "../../utils/sendResponse"
 import { PlanService } from "./plan.service"
 
 const getAllFormDB = catchAsync(async (req, res) => {
-  const result = await PlanService.getAllFormDB()
+
+  const filters = pick(req.query, ["destination,", "interests", "startDate", "endDate"]);
+  const options = pick(req.query, queryOptions);
+
+
+  const { data, meta } = await PlanService.getAllFormDB(filters, options)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "All plan retrieved successfully",
-    data: result
+    data,
+    meta
   })
 })
 

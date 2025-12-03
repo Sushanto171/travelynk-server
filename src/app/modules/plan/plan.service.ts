@@ -1,32 +1,117 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken"
+import { Prisma } from "../../../generated/prisma/client"
 import { UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
+import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
 import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
 
-const getAllFormDB = async () => {
-  const now = new Date(Date.now()).toISOString()
-  const result = await prisma.plan.findMany({
-    where: {
-      start_date: {
-        gte: now
-      }
+const getAllFormDB = async (filters: any, options: IOptions) => {
+
+  const {
+    destination,
+    interests,
+    startDate,
+    endDate,
+  } = filters;
+
+  const { limit, page, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+
+  const andConditions: Prisma.PlanWhereInput[] = [];
+
+  //  Only Public & Future Plans
+  andConditions.push({
+    start_date: {
+      gte: new Date(),
     },
+  });
+
+  //  Destination Filtering
+  if (destination) {
+    andConditions.push({
+      destination: {
+        contains: destination,
+        mode: "insensitive",
+      },
+    });
+  }
+
+  //  Date Range Overlap Filtering
+  if (startDate && endDate) {
+    andConditions.push({
+      AND: [
+        { start_date: { lte: new Date(endDate) } },
+        { end_date: { gte: new Date(startDate) } },
+      ],
+    });
+  }
+
+  //  Interest Matching via Owner → Junction → Interests
+  if (interests && interests.length > 0) {
+    const interestArray = Array.isArray(interests)
+      ? interests
+      : [interests];
+
+    andConditions.push({
+      owner: {
+        interests: {
+          some: {
+            interests: {
+              name: {
+                in: interestArray,
+                mode: "insensitive",
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
+
+  const whereConditions = andConditions.length
+    ? { AND: andConditions }
+    : {};
+
+  const result = await prisma.plan.findMany({
+    where: whereConditions,
+
     include: {
       owner: {
         select: {
           id: true,
           name: true,
           email: true,
-        }
-      }
-    }
-  })
+          interests: true,
+        },
+      },
+    },
 
-  return result
-}
+    skip,
+    take: Number(limit),
+
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+  });
+
+  const total = await prisma.plan.count({
+    where: whereConditions,
+  });
+
+  return {
+    meta: {
+      page: Number(page),
+      limit: Number(limit),
+      total,
+      totalPages: Math.ceil(total / limit)
+    },
+    data: result,
+  };
+};
 
 const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
   const now = new Date()
