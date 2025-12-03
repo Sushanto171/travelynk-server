@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefaultArgs } from "@prisma/client/runtime/client";
+import Stripe from "stripe";
 import { PrismaClient } from "../../../generated/prisma/client";
 import { GlobalOmitConfig } from "../../../generated/prisma/internal/prismaNamespace";
+import { prisma } from "../../config/prisma.config";
 import { stripe } from "../../config/stripe.config";
-import { SubscriptionPlan } from './../../../generated/prisma/enums';
+import { PaymentStatus, SubscriptionPlan } from './../../../generated/prisma/enums';
 import { IPaymentInput } from "./payment.interface";
 
 /**
@@ -31,7 +34,7 @@ const PLAN_COPY = {
     name: "Weekly Subscription Access",
     description: "Full platform access for 7 days. Auto-renews weekly. Cancel anytime."
   },
-  MONTH: {
+  MONTHLY: {
     name: "Monthly Premium Subscription",
     description: "Unlimited access for 30 days. Auto-renews monthly. Priority features unlocked."
   },
@@ -46,14 +49,14 @@ const createPaymentIntent = async ({
   userEmail,
   userName,
   paymentId,
-  subscriberId,
+  subscriptionId,
   planType
 }: {
   amount: number
   userEmail: string
   userName: string
   paymentId: string
-  subscriberId: string
+  subscriptionId: string
   planType: SubscriptionPlan
 }) => {
   const plan = PLAN_COPY[planType]
@@ -76,7 +79,7 @@ const createPaymentIntent = async ({
             interval:
               planType === "WEEKLY"
                 ? "week"
-                : planType === "MONTH"
+                : planType === "MONTHLY"
                   ? "month"
                   : "year",
           },
@@ -90,7 +93,7 @@ const createPaymentIntent = async ({
 
     metadata: {
       paymentId,
-      subscriberId,
+      subscriptionId,
       planType,
       subscriberName: userName,
     },
@@ -100,8 +103,50 @@ const createPaymentIntent = async ({
 }
 
 
+const handleWebhookEvent = async (event: Stripe.Event) => {
+  switch (event.type) {
+    case "checkout.session.completed":
+      {
+        const session = event.data.object;
+
+        const subscriptionId = session.metadata?.subscriptionId;
+        const paymentId = session.metadata?.paymentId;
+
+        await prisma.subscription.update({
+          where: {
+            id: subscriptionId,
+          },
+          data: {
+            payment_status:
+              session.payment_status === "paid"
+                ? PaymentStatus.PAID
+                : PaymentStatus.UNPAID,
+          },
+        });
+
+        await prisma.payment.update({
+          where: {
+            id: paymentId,
+          },
+          data: {
+            status:
+              session.payment_status === "paid"
+                ? PaymentStatus.PAID
+                : PaymentStatus.UNPAID,
+            paymentGatewayData: session as any,
+
+          },
+        });
+        break
+      }
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+};
+
 
 export const PaymentService = {
   createPayment,
-  createPaymentIntent
+  createPaymentIntent,
+  handleWebhookEvent
 }

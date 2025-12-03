@@ -22,15 +22,15 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
     }
   })
 
-  if (!userInfo.is_verified) {
-    throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
-  }
+  // if (!userInfo.is_verified) {
+  //   throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
+  // }
 
   // create subscription (WEEKLY,MONTHLY,YEARLY)
   const price = getSubscriptionPrice(payload)
   const { startDate, endDate } = getSubscriptionStartEndDate(payload)
 
-  await prisma.$transaction(async (tnx) => {
+ return await prisma.$transaction(async (tnx) => {
 
     const subscriptionInfo = await tnx.subscription.create({
       data: {
@@ -40,7 +40,7 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
         subscriber_id: userInfo.id,
       }
     })
-
+     console.log(subscriptionInfo);
     // create transactionId (uuid)
     const transactionId = uuidv7()
     // create payment
@@ -58,11 +58,12 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
       amount: price * 100,
       paymentId: paymentInfo.id,
       planType: payload.plan_type,
-      subscriberId: userInfo.id,
+      subscriptionId: subscriptionInfo.id,
       userEmail: userInfo.email,
       userName: userInfo.name
     })
 
+     console.log(intent);
     return { paymentUrl: intent.url }
   })
 

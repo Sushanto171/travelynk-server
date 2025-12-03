@@ -8,11 +8,18 @@ import "./app/config/passport";
 import globalErrorHandler from './app/middlewares/globalError.middleware';
 import notFound from './app/middlewares/notFound.middleware';
 import router from './app/routes';
+import { PaymentController } from "./app/modules/payment/payment.controller";
 
 dotenv.config();
 
 
 export const app: Application = express();
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  PaymentController.handleWebhookEvent
+);
 
 app.use(
   expressSession({

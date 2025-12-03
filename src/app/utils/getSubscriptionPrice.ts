@@ -10,7 +10,7 @@ export const getSubscriptionPrice = (payload: CreateSubscriptionInput) => {
   switch (payload.plan_type) {
     case SubscriptionPlan.WEEKLY:
       return WEEKLY_PRICE
-    case SubscriptionPlan.MONTH:
+    case SubscriptionPlan.MONTHLY:
       return MONTHLY_PRICE
     case SubscriptionPlan.YEARLY:
       return YEARLY_PRICE
@@ -31,7 +31,7 @@ export const getSubscriptionStartEndDate = (
       endDate.setDate(endDate.getDate() + 7)
       break
 
-    case SubscriptionPlan.MONTH:
+    case SubscriptionPlan.MONTHLY:
       endDate.setMonth(endDate.getMonth() + 1)
       break
 

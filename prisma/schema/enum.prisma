@@ -17,7 +17,6 @@ enum Provider {
   TWITTER
 }
 
-
 enum PlanStatus {
   PENDING
   ONGOING
@@ -39,14 +38,14 @@ enum PlanType {
 enum PaymentStatus {
   UNPAID
   PENDING
-  COMPLETED
+  PAID
   FAILED
   REFUNDED
 }
 
 enum SubscriptionPlan {
   WEEKLY
-  MONTH
+  MONTHLY
   YEARLY
 }
 
@@ -64,7 +63,7 @@ enum MessageStatus {
   READ
 }
 
-enum RequestType{
+enum RequestType {
   REQUESTED
   ACCEPTED
   REMOVE

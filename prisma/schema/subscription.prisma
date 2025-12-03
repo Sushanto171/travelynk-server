@@ -3,6 +3,7 @@ model Subscription {
   subscriber_id       String       
   subscriber        Traveler   @relation(fields: [subscriber_id], references: [id])
   plan_type         SubscriptionPlan
+  payment_status     PaymentStatus @default(UNPAID)
   payment_method    String?
   start_date       DateTime
   end_date         DateTime

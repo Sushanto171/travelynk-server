@@ -471,10 +471,6 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type EnumPaymentStatusFieldUpdateOperationsInput = {
-  set?: $Enums.PaymentStatus
-}
-
 export type PaymentCreateWithoutSubscriptionInput = {
   id?: string
   transactionId: string
