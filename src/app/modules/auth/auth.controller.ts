@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { JwtPayload } from "jsonwebtoken";
 import passport from "passport";
 import { ApiError } from "../../helpers/ApiError";
@@ -45,7 +46,61 @@ const getMe = catchAsync(async (req, res) => {
 
 });
 
+const getOTP = catchAsync(async (req, res) => {
+  const result = await AuthService.getOTP(req.params.email)
 
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "OTP send to email",
+    data: result,
+  });
+});
+
+const verify = catchAsync(async (req, res) => {
+  const result = await AuthService.verify(req.body)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Verified successfully",
+    data: result,
+  });
+});
+
+const forgotPassword = catchAsync(async (req, res) => {
+
+  const result = await AuthService.forgotPassword(req.params.email)
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "OTP send to email",
+    data: result,
+  });
+});
+
+
+const resetPassword = catchAsync(async (req, res) => {
+  const result = await AuthService.resetPassword(req.params.email, req.body)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Password reset successfully",
+    data: result,
+  });
+});
+
+const changePassword = catchAsync(async (req, res) => {
+  const result = await AuthService.changePassword(req.user!, req.body)
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Password changed successfully",
+    data: result,
+  });
+});
 
 const logout = catchAsync(async (req, res) => {
   res.clearCookie("accessToken");
@@ -62,5 +117,10 @@ const logout = catchAsync(async (req, res) => {
 export const AuthController = {
   credentialLogin,
   getMe,
-  logout
+  logout,
+  verify,
+  getOTP,
+  forgotPassword,
+  resetPassword,
+  changePassword,
 }

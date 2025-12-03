@@ -40,7 +40,6 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
         subscriber_id: userInfo.id,
       }
     })
-    console.log(subscriptionInfo);
     // create transactionId (uuid)
     const transactionId = uuidv7()
     // create payment
@@ -63,7 +62,6 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
       userName: userInfo.name
     })
 
-    console.log(intent);
     return { paymentUrl: intent.url }
   })
 
