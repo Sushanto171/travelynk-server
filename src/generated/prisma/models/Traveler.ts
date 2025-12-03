@@ -34,6 +34,7 @@ export type TravelerMinAggregateOutputType = {
   date_of_birth: Date | null
   address: string | null
   current_location: string | null
+  has_verified_badge: boolean | null
   is_verified: boolean | null
   last_active_at: Date | null
   is_subscribed: boolean | null
@@ -53,6 +54,7 @@ export type TravelerMaxAggregateOutputType = {
   date_of_birth: Date | null
   address: string | null
   current_location: string | null
+  has_verified_badge: boolean | null
   is_verified: boolean | null
   last_active_at: Date | null
   is_subscribed: boolean | null
@@ -72,6 +74,7 @@ export type TravelerCountAggregateOutputType = {
   date_of_birth: number
   address: number
   current_location: number
+  has_verified_badge: number
   is_verified: number
   last_active_at: number
   is_subscribed: number
@@ -93,6 +96,7 @@ export type TravelerMinAggregateInputType = {
   date_of_birth?: true
   address?: true
   current_location?: true
+  has_verified_badge?: true
   is_verified?: true
   last_active_at?: true
   is_subscribed?: true
@@ -112,6 +116,7 @@ export type TravelerMaxAggregateInputType = {
   date_of_birth?: true
   address?: true
   current_location?: true
+  has_verified_badge?: true
   is_verified?: true
   last_active_at?: true
   is_subscribed?: true
@@ -131,6 +136,7 @@ export type TravelerCountAggregateInputType = {
   date_of_birth?: true
   address?: true
   current_location?: true
+  has_verified_badge?: true
   is_verified?: true
   last_active_at?: true
   is_subscribed?: true
@@ -223,6 +229,7 @@ export type TravelerGroupByOutputType = {
   date_of_birth: Date | null
   address: string | null
   current_location: string | null
+  has_verified_badge: boolean
   is_verified: boolean
   last_active_at: Date | null
   is_subscribed: boolean
@@ -263,6 +270,7 @@ export type TravelerWhereInput = {
   date_of_birth?: Prisma.DateTimeNullableFilter<"Traveler"> | Date | string | null
   address?: Prisma.StringNullableFilter<"Traveler"> | string | null
   current_location?: Prisma.StringNullableFilter<"Traveler"> | string | null
+  has_verified_badge?: Prisma.BoolFilter<"Traveler"> | boolean
   is_verified?: Prisma.BoolFilter<"Traveler"> | boolean
   last_active_at?: Prisma.DateTimeNullableFilter<"Traveler"> | Date | string | null
   is_subscribed?: Prisma.BoolFilter<"Traveler"> | boolean
@@ -289,6 +297,7 @@ export type TravelerOrderByWithRelationInput = {
   date_of_birth?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   current_location?: Prisma.SortOrderInput | Prisma.SortOrder
+  has_verified_badge?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   last_active_at?: Prisma.SortOrderInput | Prisma.SortOrder
   is_subscribed?: Prisma.SortOrder
@@ -319,6 +328,7 @@ export type TravelerWhereUniqueInput = Prisma.AtLeast<{
   date_of_birth?: Prisma.DateTimeNullableFilter<"Traveler"> | Date | string | null
   address?: Prisma.StringNullableFilter<"Traveler"> | string | null
   current_location?: Prisma.StringNullableFilter<"Traveler"> | string | null
+  has_verified_badge?: Prisma.BoolFilter<"Traveler"> | boolean
   is_verified?: Prisma.BoolFilter<"Traveler"> | boolean
   last_active_at?: Prisma.DateTimeNullableFilter<"Traveler"> | Date | string | null
   is_subscribed?: Prisma.BoolFilter<"Traveler"> | boolean
@@ -344,6 +354,7 @@ export type TravelerOrderByWithAggregationInput = {
   date_of_birth?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   current_location?: Prisma.SortOrderInput | Prisma.SortOrder
+  has_verified_badge?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   last_active_at?: Prisma.SortOrderInput | Prisma.SortOrder
   is_subscribed?: Prisma.SortOrder
@@ -369,6 +380,7 @@ export type TravelerScalarWhereWithAggregatesInput = {
   date_of_birth?: Prisma.DateTimeNullableWithAggregatesFilter<"Traveler"> | Date | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Traveler"> | string | null
   current_location?: Prisma.StringNullableWithAggregatesFilter<"Traveler"> | string | null
+  has_verified_badge?: Prisma.BoolWithAggregatesFilter<"Traveler"> | boolean
   is_verified?: Prisma.BoolWithAggregatesFilter<"Traveler"> | boolean
   last_active_at?: Prisma.DateTimeNullableWithAggregatesFilter<"Traveler"> | Date | string | null
   is_subscribed?: Prisma.BoolWithAggregatesFilter<"Traveler"> | boolean
@@ -388,6 +400,7 @@ export type TravelerCreateInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -413,6 +426,7 @@ export type TravelerUncheckedCreateInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -438,6 +452,7 @@ export type TravelerUpdateInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -463,6 +478,7 @@ export type TravelerUncheckedUpdateInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -488,6 +504,7 @@ export type TravelerCreateManyInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -507,6 +524,7 @@ export type TravelerUpdateManyMutationInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -525,6 +543,7 @@ export type TravelerUncheckedUpdateManyInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -554,6 +573,7 @@ export type TravelerCountOrderByAggregateInput = {
   date_of_birth?: Prisma.SortOrder
   address?: Prisma.SortOrder
   current_location?: Prisma.SortOrder
+  has_verified_badge?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   last_active_at?: Prisma.SortOrder
   is_subscribed?: Prisma.SortOrder
@@ -573,6 +593,7 @@ export type TravelerMaxOrderByAggregateInput = {
   date_of_birth?: Prisma.SortOrder
   address?: Prisma.SortOrder
   current_location?: Prisma.SortOrder
+  has_verified_badge?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   last_active_at?: Prisma.SortOrder
   is_subscribed?: Prisma.SortOrder
@@ -592,6 +613,7 @@ export type TravelerMinOrderByAggregateInput = {
   date_of_birth?: Prisma.SortOrder
   address?: Prisma.SortOrder
   current_location?: Prisma.SortOrder
+  has_verified_badge?: Prisma.SortOrder
   is_verified?: Prisma.SortOrder
   last_active_at?: Prisma.SortOrder
   is_subscribed?: Prisma.SortOrder
@@ -731,6 +753,7 @@ export type TravelerCreateWithoutVisited_countriesInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -755,6 +778,7 @@ export type TravelerUncheckedCreateWithoutVisited_countriesInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -795,6 +819,7 @@ export type TravelerUpdateWithoutVisited_countriesInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -819,6 +844,7 @@ export type TravelerUncheckedUpdateWithoutVisited_countriesInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -843,6 +869,7 @@ export type TravelerCreateWithoutOwned_plansInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -867,6 +894,7 @@ export type TravelerUncheckedCreateWithoutOwned_plansInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -907,6 +935,7 @@ export type TravelerUpdateWithoutOwned_plansInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -931,6 +960,7 @@ export type TravelerUncheckedUpdateWithoutOwned_plansInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -955,6 +985,7 @@ export type TravelerCreateWithoutJoined_plansInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -979,6 +1010,7 @@ export type TravelerUncheckedCreateWithoutJoined_plansInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1019,6 +1051,7 @@ export type TravelerUpdateWithoutJoined_plansInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1043,6 +1076,7 @@ export type TravelerUncheckedUpdateWithoutJoined_plansInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1067,6 +1101,7 @@ export type TravelerCreateWithoutReviewsInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1091,6 +1126,7 @@ export type TravelerUncheckedCreateWithoutReviewsInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1131,6 +1167,7 @@ export type TravelerUpdateWithoutReviewsInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1155,6 +1192,7 @@ export type TravelerUncheckedUpdateWithoutReviewsInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1179,6 +1217,7 @@ export type TravelerCreateWithoutSubscriptionsInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1203,6 +1242,7 @@ export type TravelerUncheckedCreateWithoutSubscriptionsInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1243,6 +1283,7 @@ export type TravelerUpdateWithoutSubscriptionsInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1267,6 +1308,7 @@ export type TravelerUncheckedUpdateWithoutSubscriptionsInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1291,6 +1333,7 @@ export type TravelerCreateWithoutUserInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1315,6 +1358,7 @@ export type TravelerUncheckedCreateWithoutUserInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1355,6 +1399,7 @@ export type TravelerUpdateWithoutUserInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1379,6 +1424,7 @@ export type TravelerUncheckedUpdateWithoutUserInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1403,6 +1449,7 @@ export type TravelerCreateWithoutInterestsInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1427,6 +1474,7 @@ export type TravelerUncheckedCreateWithoutInterestsInput = {
   date_of_birth?: Date | string | null
   address?: string | null
   current_location?: string | null
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: Date | string | null
   is_subscribed?: boolean
@@ -1467,6 +1515,7 @@ export type TravelerUpdateWithoutInterestsInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1491,6 +1540,7 @@ export type TravelerUncheckedUpdateWithoutInterestsInput = {
   date_of_birth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   current_location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  has_verified_badge?: Prisma.BoolFieldUpdateOperationsInput | boolean
   is_verified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   last_active_at?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   is_subscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1591,6 +1641,7 @@ export type TravelerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   date_of_birth?: boolean
   address?: boolean
   current_location?: boolean
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: boolean
   is_subscribed?: boolean
@@ -1618,6 +1669,7 @@ export type TravelerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   date_of_birth?: boolean
   address?: boolean
   current_location?: boolean
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: boolean
   is_subscribed?: boolean
@@ -1638,6 +1690,7 @@ export type TravelerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   date_of_birth?: boolean
   address?: boolean
   current_location?: boolean
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: boolean
   is_subscribed?: boolean
@@ -1658,6 +1711,7 @@ export type TravelerSelectScalar = {
   date_of_birth?: boolean
   address?: boolean
   current_location?: boolean
+  has_verified_badge?: boolean
   is_verified?: boolean
   last_active_at?: boolean
   is_subscribed?: boolean
@@ -1667,7 +1721,7 @@ export type TravelerSelectScalar = {
   user_id?: boolean
 }
 
-export type TravelerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profile_photo" | "bio" | "contact_number" | "date_of_birth" | "address" | "current_location" | "is_verified" | "last_active_at" | "is_subscribed" | "created_at" | "updated_at" | "is_deleted" | "user_id", ExtArgs["result"]["traveler"]>
+export type TravelerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "profile_photo" | "bio" | "contact_number" | "date_of_birth" | "address" | "current_location" | "has_verified_badge" | "is_verified" | "last_active_at" | "is_subscribed" | "created_at" | "updated_at" | "is_deleted" | "user_id", ExtArgs["result"]["traveler"]>
 export type TravelerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   interests?: boolean | Prisma.Traveler$interestsArgs<ExtArgs>
@@ -1706,6 +1760,7 @@ export type $TravelerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     date_of_birth: Date | null
     address: string | null
     current_location: string | null
+    has_verified_badge: boolean
     is_verified: boolean
     last_active_at: Date | null
     is_subscribed: boolean
@@ -2152,6 +2207,7 @@ export interface TravelerFieldRefs {
   readonly date_of_birth: Prisma.FieldRef<"Traveler", 'DateTime'>
   readonly address: Prisma.FieldRef<"Traveler", 'String'>
   readonly current_location: Prisma.FieldRef<"Traveler", 'String'>
+  readonly has_verified_badge: Prisma.FieldRef<"Traveler", 'Boolean'>
   readonly is_verified: Prisma.FieldRef<"Traveler", 'Boolean'>
   readonly last_active_at: Prisma.FieldRef<"Traveler", 'DateTime'>
   readonly is_subscribed: Prisma.FieldRef<"Traveler", 'Boolean'>

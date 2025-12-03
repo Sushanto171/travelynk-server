@@ -261,6 +261,7 @@ export const TravelerScalarFieldEnum = {
   date_of_birth: 'date_of_birth',
   address: 'address',
   current_location: 'current_location',
+  has_verified_badge: 'has_verified_badge',
   is_verified: 'is_verified',
   last_active_at: 'last_active_at',
   is_subscribed: 'is_subscribed',

@@ -7,6 +7,8 @@ import { createSubscriptionSchema } from "./subscription.validation";
 
 const router = Router()
 
+router.get("/", auth(UserRole.ADMIN), SubscriptionController.getAllFormDB)
+
 router.post("/", auth(UserRole.USER), validateRequest(createSubscriptionSchema), SubscriptionController.createSubscription)
 
 

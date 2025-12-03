@@ -112,7 +112,7 @@ const handleWebhookEvent = async (event: Stripe.Event) => {
         const subscriptionId = session.metadata?.subscriptionId;
         const paymentId = session.metadata?.paymentId;
 
-        await prisma.subscription.update({
+      await prisma.subscription.update({
           where: {
             id: subscriptionId,
           },
@@ -121,6 +121,11 @@ const handleWebhookEvent = async (event: Stripe.Event) => {
               session.payment_status === "paid"
                 ? PaymentStatus.PAID
                 : PaymentStatus.UNPAID,
+            subscriber:{
+              update:{
+                has_verified_badge: true
+              }
+            }
           },
         });
 

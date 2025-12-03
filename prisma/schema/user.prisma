@@ -41,6 +41,7 @@ model Traveler {
   date_of_birth    DateTime?
   address          String?
   current_location String?
+  has_verified_badge      Boolean   @default(false)
   is_verified      Boolean   @default(false)
   last_active_at   DateTime?
   is_subscribed    Boolean   @default(false)

@@ -16,6 +16,19 @@ const createSubscription = catchAsync(async (req, res) => {
   });
 });
 
+const getAllFormDB = catchAsync(async (req, res) => {
+
+  const result = await SubscriptionService.getAllFormDB()
+
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Subscriptions data retrieved successfully",
+    data: result,
+  });
+});
+
 export const SubscriptionController = {
-  createSubscription
+  createSubscription,
+  getAllFormDB
 }

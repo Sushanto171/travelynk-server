@@ -22,15 +22,15 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
     }
   })
 
-  // if (!userInfo.is_verified) {
-  //   throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
-  // }
+  if (!userInfo.is_verified) {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
+  }
 
   // create subscription (WEEKLY,MONTHLY,YEARLY)
   const price = getSubscriptionPrice(payload)
   const { startDate, endDate } = getSubscriptionStartEndDate(payload)
 
- return await prisma.$transaction(async (tnx) => {
+  return await prisma.$transaction(async (tnx) => {
 
     const subscriptionInfo = await tnx.subscription.create({
       data: {
@@ -40,7 +40,7 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
         subscriber_id: userInfo.id,
       }
     })
-     console.log(subscriptionInfo);
+    console.log(subscriptionInfo);
     // create transactionId (uuid)
     const transactionId = uuidv7()
     // create payment
@@ -63,13 +63,27 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
       userName: userInfo.name
     })
 
-     console.log(intent);
+    console.log(intent);
     return { paymentUrl: intent.url }
   })
 
 
 }
 
+const getAllFormDB = async () => {
+  return await prisma.subscription.findMany({
+    include: {
+      payments: true,
+      subscriber: {
+        select: {
+          name: true
+        }
+      }
+    }
+  })
+}
+
 export const SubscriptionService = {
-  createSubscription
+  createSubscription,
+  getAllFormDB
 }
