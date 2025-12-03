@@ -24,5 +24,11 @@ export default {
     NAME: process.env.NAME,
     API_KEY: process.env.API_KEY,
     API_SECRET: process.env.API_SECRET,
+  },
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+  subscription: {
+    WEEKLY_PRICE: process.env.WEEKLY_PRICE,
+    MONTHLY_PRICE: process.env.MONTHLY_PRICE,
+    YEARLY_PRICE: process.env.YEARLY_PRICE,
   }
 };

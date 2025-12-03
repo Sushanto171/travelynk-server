@@ -29,6 +29,7 @@ model Plan {
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
 
+  @@index([owner_id, created_at])
   @@map("plans")
 }
 
@@ -59,6 +60,6 @@ model Plan {
     plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
 
     @@unique([reviewer_id, plan_id])
-    @@index([plan_id])
+    @@index([plan_id, created_at])
     @@map("reviews")
   }

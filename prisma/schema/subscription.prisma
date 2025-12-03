@@ -1,9 +1,10 @@
 model Subscription {
   id                 String        @id @default(uuid())
-  subscriber_id       String        @unique
+  subscriber_id       String       
   subscriber        Traveler   @relation(fields: [subscriber_id], references: [id])
-  plan_type         SubscriptionPlan @default(BASIC)
-  payment_method    String
+  plan_type         SubscriptionPlan
+  payment_status     PaymentStatus @default(UNPAID)
+  payment_method    String?
   start_date       DateTime
   end_date         DateTime
   is_active        Boolean       @default(true)
@@ -20,11 +21,9 @@ model Payment {
   id                 String        @id @default(uuid())
   subscription_id      String        @unique
   subscription        Subscription   @relation(fields: [subscription_id], references: [id])
-  transaction_id      String
-  traveler_id        String 
-  traveler          Traveler     @relation(fields: [traveler_id], references: [id])
+  transactionId      String
   amount             Float
-  status             PaymentStatus @default(PENDING)
+  status             PaymentStatus @default(UNPAID)
   paymentGatewayData Json?
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt

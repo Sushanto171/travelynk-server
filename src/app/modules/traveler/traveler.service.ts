@@ -7,26 +7,100 @@ const getAllFormDB = async () => {
     include: {
       interests: true,
       visited_countries: true,
-    }
+    },
+
   })
+
+
   return result
 }
 
 const getById = async (id: string) => {
-  return await prisma.traveler.findUniqueOrThrow({
-    where: {
-      id
+  const [traveler, ratings] = await Promise.all([
+    prisma.traveler.findUniqueOrThrow({
+      where: { id },
+
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        profile_photo: true,
+
+        interests: true,
+        visited_countries: true,
+
+        owned_plans: {
+          orderBy: { created_at: "asc" },
+          take: 3,
+
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            created_at: true,
+
+            buddies: {
+              select: {
+                traveler: {
+                  select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    profile_photo: true,
+                  },
+                },
+              },
+            },
+
+            reviews: {
+              orderBy: { created_at: "desc" },
+              take: 3,
+
+              select: {
+                id: true,
+                rating: true,
+                comment: true,
+                created_at: true,
+
+                reviewer: {
+                  select: {
+                    id: true,
+                    name: true,
+                    profile_photo: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    }),
+
+    prisma.review.aggregate({
+      where: {
+        plan: {
+          owner_id: id,
+        },
+      },
+      _avg: {
+        rating: true,
+      },
+      _count: {
+        rating: true,
+      },
+    }),
+  ]);
+
+  return {
+    ...traveler,
+
+    rating: {
+      average: ratings._avg.rating ?? 0,  // ✅ null-safe
+      total: ratings._count.rating,
     },
-    include: {
-      interests: true,
-      visited_countries: true,
-      owned_plans: true,
-      reviews: true,
-    }
-  })
+  };
+};
 
-
-}
 
 const updateById = async (req: Request) => {
   const id = req.params.id

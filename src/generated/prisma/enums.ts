@@ -62,8 +62,9 @@ export type PlanType = (typeof PlanType)[keyof typeof PlanType]
 
 
 export const PaymentStatus = {
+  UNPAID: 'UNPAID',
   PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
+  PAID: 'PAID',
   FAILED: 'FAILED',
   REFUNDED: 'REFUNDED'
 } as const
@@ -72,9 +73,9 @@ export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
 
 
 export const SubscriptionPlan = {
-  BASIC: 'BASIC',
-  PREMIUM: 'PREMIUM',
-  PRO: 'PRO'
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
 } as const
 
 export type SubscriptionPlan = (typeof SubscriptionPlan)[keyof typeof SubscriptionPlan]

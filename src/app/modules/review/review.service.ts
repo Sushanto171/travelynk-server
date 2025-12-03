@@ -5,6 +5,11 @@ import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
 import { CreateReviewInput, UpdateReviewInput } from "./review.validation"
 
+const getAllFormDB = async () => {
+  const result = await prisma.review.findMany()
+  return result
+}
+
 const insertIntoDB = async (user: JwtPayload, plan_id: string, payload: CreateReviewInput) => {
   const planInfo = await prisma.plan.findFirstOrThrow({
     where: {
@@ -49,6 +54,7 @@ const updateById = async (user: JwtPayload, id: string, payload: UpdateReviewInp
 
 const deleteById = async (user: JwtPayload, id: string) => {
 
+
   // verify plan owner / reviewer /admin
   if (user.role !== UserRole.ADMIN) {
     await prisma.review.findFirstOrThrow({
@@ -68,6 +74,7 @@ const deleteById = async (user: JwtPayload, id: string) => {
 }
 
 export const ReviewService = {
+  getAllFormDB,
   insertIntoDB,
   updateById,
   deleteById
