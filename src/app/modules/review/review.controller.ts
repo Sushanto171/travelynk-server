@@ -4,11 +4,20 @@ import catchAsync from "../../utils/catchAsync"
 import sendResponse from "../../utils/sendResponse"
 import { ReviewService } from "./review.service"
 
+const getAllFormDB = catchAsync(async (req, res) => {
+  const result = await ReviewService.getAllFormDB()
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Review retrieved successfully",
+    data: result
+  })
+})
 const insertIntoDB = catchAsync(async (req, res) => {
   const result = await ReviewService.insertIntoDB(req.user!, req.params.plan_id, req.body)
   sendResponse(res, {
     success: true,
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     message: "Review created successfully",
     data: result
   })
@@ -37,6 +46,7 @@ const deleteById = catchAsync(async (req, res) => {
 })
 
 export const ReviewController = {
+  getAllFormDB,
   insertIntoDB,
   updateById,
   deleteById
