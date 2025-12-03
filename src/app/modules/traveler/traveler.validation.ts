@@ -10,11 +10,15 @@ const updateTravelerSchema = z.object({
   date_of_birth: z.date().optional(),
   address: z.string("Address must be a string.").nonempty("Address cannot be empty.").optional(),
   current_location: z.string("Current location must be a string.").optional(),
+  interests: z.array(z.string()).optional(),
+  remove_interests: z.array(z.string()).optional(),
+  visited_countries: z.array(z.string()).optional(),
+  remove_visited_countries: z.array(z.string()).optional(),
 });
 
 export const TravelerValidation = {
   updateTravelerSchema
 }
 
-export type UpdateTravelerInput = z.infer<typeof updateTravelerSchema >
+export type UpdateTravelerInput = z.infer<typeof updateTravelerSchema>
 

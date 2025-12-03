@@ -1,6 +1,9 @@
 import { Request } from "express"
 import { prisma } from "../../config/prisma.config"
+import { ApiError } from "../../helpers/ApiError"
 import { fileUploadHelper } from "../../helpers/fileUploader"
+import { httpStatus } from "../../helpers/httpStatus"
+import { UpdateTravelerInput } from "./traveler.validation"
 
 const getAllFormDB = async () => {
   const result = await prisma.traveler.findMany({
@@ -95,7 +98,7 @@ const getById = async (id: string) => {
     ...traveler,
 
     rating: {
-      average: ratings._avg.rating ?? 0,  // ✅ null-safe
+      average: ratings._avg.rating ?? 0,
       total: ratings._count.rating,
     },
   };
@@ -111,13 +114,174 @@ const updateById = async (req: Request) => {
     fileUploadHelper.cleanUpDiskFile(file)
   }
 
-  const result = await prisma.traveler.update({
-    where: {
-      id
-    },
-    data: req.body
+
+  const { remove_interests, visited_countries, remove_visited_countries, interests, ...data } = req.body as UpdateTravelerInput
+  return await prisma.$transaction(async (tnx) => {
+
+    // remove interest
+    if (remove_interests && Array.isArray(remove_interests) && remove_interests.length) {
+      const existingInterests = await tnx.interests.findMany({
+        where: { id },
+        select: { id: true }
+      })
+
+      if (existingInterests.length !== remove_interests.length) {
+        const notFound = existingInterests.filter(ing => !remove_interests.includes(ing.id))
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Cannot remove non-existent interest: ${notFound.join(", ")}`
+        );
+      }
+
+      await prisma.travelerToInterests.deleteMany({
+        where: {
+          traveler_id: id,
+          interests_id: {
+            in: remove_interests
+          }
+        },
+      })
+    }
+
+    // remove countries
+    if (remove_visited_countries && Array.isArray(remove_visited_countries) && remove_visited_countries.length) {
+      const existingCountries = await tnx.countries.findMany({
+        where: {
+          id: {
+            in: remove_visited_countries
+          }
+        },
+        select: { id: true }
+      })
+
+      if (existingCountries.length !== remove_visited_countries.length) {
+        const notFound = existingCountries.filter(ex => !remove_visited_countries.includes(ex.id))
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Cannot remove non-existent countries: ${notFound.join(", ")}`
+        );
+      }
+
+      await prisma.travelerCountries.deleteMany({
+        where: {
+          traveler_id: id,
+          country_id: {
+            in: remove_visited_countries
+          }
+        }
+      })
+    }
+
+    // add interest
+    if (interests && Array.isArray(interests) && interests.length) {
+      const existingInterests = await tnx.interests.findMany({
+        where: {
+          id: { in: interests }
+        },
+        select: { id: true }
+      })
+
+      const existingInterestIds = existingInterests.map(ex => ex.id)
+
+      const invalidInterestId = interests.filter(
+        ins => !existingInterestIds.includes(ins)
+      )
+
+      if (invalidInterestId.length) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Invalid interest id: ${invalidInterestId.join(", ")}`
+        )
+      }
+
+      const alreadyLinked = await tnx.travelerToInterests.findMany({
+        where: {
+          traveler_id: id,
+          interests_id: {
+            in: interests
+          }
+        },
+        select: {
+          interests_id: true
+        }
+      })
+
+      const alreadyLinkedIds = alreadyLinked.map(i => i.interests_id)
+
+      const newInterestIds = interests.filter(
+        ins => !alreadyLinkedIds.includes(ins)
+      )
+
+      if (newInterestIds.length) {
+        await tnx.travelerToInterests.createMany({
+          data: newInterestIds.map((interestId) => ({
+            traveler_id: id,
+            interests_id: interestId
+          })),
+          skipDuplicates: true
+        })
+      }
+    }
+
+    // add visited_countries
+    if (visited_countries && Array.isArray(visited_countries) && visited_countries.length) {
+
+      const existingCountries = await tnx.countries.findMany({
+        where: {
+          id: { in: visited_countries }
+        },
+        select: { id: true }
+      });
+
+      const existingCountryIds = existingCountries.map(c => c.id);
+
+      const invalidCountryIds = visited_countries.filter(
+        c => !existingCountryIds.includes(c)
+      );
+
+      if (invalidCountryIds.length) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Invalid country id: ${invalidCountryIds.join(", ")}`
+        );
+      }
+
+      const alreadyLinked = await tnx.travelerCountries.findMany({
+        where: {
+          traveler_id: id,
+          country_id: {
+            in: visited_countries
+          }
+        },
+        select: {
+          country_id: true
+        }
+      });
+
+      const alreadyLinkedIds = alreadyLinked.map(c => c.country_id);
+
+      const newCountryIds = visited_countries.filter(
+        c => !alreadyLinkedIds.includes(c)
+      );
+
+      if (newCountryIds.length) {
+        await tnx.travelerCountries.createMany({
+          data: newCountryIds.map((countryId) => ({
+            traveler_id: id,
+            country_id: countryId
+          })),
+          skipDuplicates: true
+        });
+      }
+    }
+
+    return await prisma.traveler.update({
+      where: {
+        id
+      },
+      data
+    })
   })
-  return result
 }
 
 const softDelete = async (id: string) => {
