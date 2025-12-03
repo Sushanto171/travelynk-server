@@ -3,7 +3,7 @@ import { UserRole } from "../../../generated/prisma/enums";
 import { auth } from "../../middlewares/auth";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { AuthController } from "./auth.controller";
-import { verifySchema } from "./auth.validation";
+import { resetPassSchema, verifySchema } from "./auth.validation";
 
 const router = Router()
 
@@ -14,6 +14,12 @@ router.post('/login', AuthController.credentialLogin);
 router.post("/verify", validateRequest(verifySchema), AuthController.verify);
 
 router.get("/get-otp/:email", AuthController.getOTP);
+
+router.get("/forgot-password/:email", AuthController.forgotPassword);
+
+router.post("/reset-password/:email",validateRequest(resetPassSchema), AuthController.resetPassword);
+
+router.patch("/change-password", auth(...Object.values(UserRole)), AuthController.changePassword);
 
 router.post('/login', AuthController.credentialLogin);
 
