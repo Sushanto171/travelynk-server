@@ -54,7 +54,6 @@ model Traveler {
   owned_plans      Plan[]         @relation("plan_owner")
   joined_plans     PlanBuddy[]
   subscriptions    Subscription[]
-  payments         Payment[]
   reviews          Review[]
 
   @@map("travelers")

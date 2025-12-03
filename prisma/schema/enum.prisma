@@ -37,6 +37,7 @@ enum PlanType {
 }
 
 enum PaymentStatus {
+  UNPAID
   PENDING
   COMPLETED
   FAILED
@@ -44,9 +45,9 @@ enum PaymentStatus {
 }
 
 enum SubscriptionPlan {
-  BASIC
-  PREMIUM
-  PRO
+  WEEKLY
+  MONTH
+  YEARLY
 }
 
 enum MessageType {

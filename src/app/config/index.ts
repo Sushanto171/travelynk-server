@@ -24,5 +24,6 @@ export default {
     NAME: process.env.NAME,
     API_KEY: process.env.API_KEY,
     API_SECRET: process.env.API_SECRET,
-  }
+  },
+  STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
 };

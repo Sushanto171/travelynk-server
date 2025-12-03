@@ -1776,8 +1776,7 @@ export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[k
 export const PaymentScalarFieldEnum = {
   id: 'id',
   subscription_id: 'subscription_id',
-  transaction_id: 'transaction_id',
-  traveler_id: 'traveler_id',
+  transactionId: 'transactionId',
   amount: 'amount',
   status: 'status',
   paymentGatewayData: 'paymentGatewayData',
