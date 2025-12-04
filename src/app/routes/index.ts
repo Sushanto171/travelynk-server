@@ -8,6 +8,7 @@ import { ReviewRoutes } from "../modules/review/review.routes";
 import { UserRoutes } from "../modules/user/user.routes";
 import { TravelerRoutes } from './../modules/traveler/traveler.routes';
 import { SubscriptionRoutes } from "../modules/subscription/subscription.routes";
+import { AdminRoutes } from "../modules/admin/admin.routes";
 
 export const router = Router()
 
@@ -52,6 +53,10 @@ const routes: Route[] = [
   {
     path: "/subscription",
     router: SubscriptionRoutes
+  },
+  {
+    path: "/admin",
+    router: AdminRoutes
   },
 ]
 

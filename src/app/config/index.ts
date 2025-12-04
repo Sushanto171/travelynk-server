@@ -40,4 +40,5 @@ export default {
     HOST: process.env.HOST,
     REDIS_PORT: process.env.REDIS_PORT,
   },
+  FRONTEND_URL: process.env.FRONTEND_URL,
 };

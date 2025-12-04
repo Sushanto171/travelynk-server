@@ -22,8 +22,10 @@ model Admin {
   name           String
   email          String   @unique
   user_id        String   @unique
+    profile_photo    String?
   user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   contact_number String?
+  is_deleted Boolean @default(false)
   address        String?
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt
