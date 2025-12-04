@@ -2,9 +2,10 @@ import { JwtPayload } from "jsonwebtoken"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { BcryptHelper } from "../../helpers/bcrypt.helper"
+import { sendEmail } from "../../helpers/brevo.emailSender"
 import { httpStatus } from "../../helpers/httpStatus"
-import { sendMail } from "../../helpers/nodemailer.config"
 import { redisClient } from "../../helpers/redis"
+import { generateEmailHtml } from "../../utils/generateEmailHTML"
 import { generateOTP } from "../../utils/generateOTP"
 import { Provider } from ".././../../generated/prisma/enums"
 import { ChangePassInput, ResetPassInput, VerifyInput } from "./auth.validation"
@@ -45,12 +46,19 @@ const getOTP = async (email: string) => {
     }
   })
 
-  await sendMail({
-    email: email,
-    subject: "Your 6-Digit Verification Code",
-    otp,
-  });
-  console.log("Message send: ", email);
+  const html = generateEmailHtml(
+    "Verify Your Account",
+    "Use the code below to complete verification. This code expires in 5 minutes.",
+    otp
+  );
+
+
+  await sendEmail({
+    to: email,
+    subject: "Your Verification Code",
+    html
+  })
+
   return null
 }
 
@@ -97,10 +105,17 @@ const forgotPassword = async (email: string) => {
     }
   })
 
-  await sendMail({
-    email: email,
+  const html = generateEmailHtml(
+    "Reset Your Password",
+    "Use the code below to complete verification. This code expires in 5 minutes.",
+    otp // No OTP needed
+  );
+
+
+  await sendEmail({
+    to: email,
     subject: "Your 6-Digit Verification Code",
-    otp,
+    html,
   });
 
 

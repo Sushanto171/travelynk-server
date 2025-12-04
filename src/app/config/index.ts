@@ -42,4 +42,9 @@ export default {
     REDIS_PORT: process.env.REDIS_PORT,
   },
   FRONTEND_URL: process.env.FRONTEND_URL,
+  brevo: {
+    BREVO_API_KEY: process.env.BREVO_API_KEY,
+    BREVO_SENDER_EMAIL: process.env.BREVO_SENDER_EMAIL,
+    BREVO_SENDER_NAME: process.env.BREVO_SENDER_NAME,
+  }
 };
