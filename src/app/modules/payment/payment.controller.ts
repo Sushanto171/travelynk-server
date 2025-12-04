@@ -12,7 +12,7 @@ const handleWebhookEvent = catchAsync(async (req, res) => {
     sig as string,
     config.STRIPE_WEBHOOK_SECRET as string
   );
-
+  console.log(event);
   const result = await PaymentService.handleWebhookEvent(event);
 
   sendResponse(res, {
