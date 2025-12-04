@@ -2,10 +2,12 @@
 dist
 node_modules
 
-# Logs
-logs  
-*.log
-npm-debug.log*    
-/src/generated/prisma
+/generated/prisma
 
-uploads
+.vercel
+
+dist/
+.env.local
+uploads/*
+!uploads/.gitkeep
+*.log

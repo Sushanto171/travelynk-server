@@ -27,7 +27,7 @@ const createTraveler = catchAsync(async (req, res) => {
 })
 
 const createAdmin = catchAsync(async (req, res) => {
-  const result = await UserService.createAdmin();
+  const result = await UserService.createAdmin(req.body);
 
   sendResponse(res, {
     success: true,
