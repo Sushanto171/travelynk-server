@@ -1,8 +1,6 @@
 import { JwtPayload } from "jsonwebtoken"
-import { v7 as uuidv7 } from "uuid"
+import { v4 as uuidv7 } from "uuid"
 import { prisma } from "../../config/prisma.config"
-import { ApiError } from "../../helpers/ApiError"
-import { httpStatus } from "../../helpers/httpStatus"
 import { getSubscriptionPrice, getSubscriptionStartEndDate } from "../../utils/getSubscriptionPrice"
 import { PaymentService } from "../payment/payment.service"
 import { CreateSubscriptionInput } from "./subscription.validation"
@@ -22,9 +20,9 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
     }
   })
 
-  if (!userInfo.is_verified) {
-    throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
-  }
+  // if (!userInfo.is_verified) {
+  //   throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
+  // }
 
   // create subscription (WEEKLY,MONTHLY,YEARLY)
   const price = getSubscriptionPrice(payload)
