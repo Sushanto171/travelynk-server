@@ -4,8 +4,8 @@ import config from "../config";
 // Create a test account or replace with real credentials.
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // true for 465, false for other ports
+  port:  config.node_env ==="development"? 465: 587,
+  secure: config.node_env ==="development", // true for 465, false for other ports
   auth: {
     user: config.nodemailer.APP_USER,
     pass: config.nodemailer.APP_PASS,
