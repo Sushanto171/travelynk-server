@@ -26,6 +26,7 @@ export default {
     API_SECRET: process.env.API_SECRET,
   },
   STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+  STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
   subscription: {
     WEEKLY_PRICE: process.env.WEEKLY_PRICE,
     MONTHLY_PRICE: process.env.MONTHLY_PRICE,
