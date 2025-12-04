@@ -48,7 +48,7 @@ const getMe = catchAsync(async (req, res) => {
 
 const getOTP = catchAsync(async (req, res) => {
 
-  const result = await AuthService.getOTP(req.params.email)
+  await AuthService.getOTP(req.params.email)
 
   // res.redirect(`${config.FRONTEND_URL}/verify?email=${req.params.email}`)
 
@@ -56,7 +56,7 @@ const getOTP = catchAsync(async (req, res) => {
     success: true,
     statusCode: httpStatus.OK,
     message: "OTP send to email",
-    data: result,
+    data: null
   });
 });
 
@@ -74,14 +74,14 @@ const verify = catchAsync(async (req, res) => {
 const forgotPassword = catchAsync(async (req, res) => {
 
 
-  const result = await AuthService.forgotPassword(req.params.email)
+  await AuthService.forgotPassword(req.params.email)
 
   // res.redirect(`${config.FRONTEND_URL}/reset?email=${req.params.email}`)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "OTP send to email",
-    data: result,
+    data: null,
   });
 });
 
