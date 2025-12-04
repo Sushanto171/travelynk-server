@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
 import { Prisma } from "../../generated/prisma/client";
-import config from "../config";
 import { fileUploadHelper } from "../helpers/fileUploader";
 import { httpStatus } from "../helpers/httpStatus";
 
@@ -14,7 +13,8 @@ const globalErrorHandler = async (
   _next: NextFunction
 ) => {
 
-  console.log(config.node_env === "production" ? err.message : err)
+  // console.log(config.node_env === "production" ? err.message : err)
+  console.log(err);
 
   if (req.body) {
     const res = await fileUploadHelper.destroyFileFormCloudinary(req);
