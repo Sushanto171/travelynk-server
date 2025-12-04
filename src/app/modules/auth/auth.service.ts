@@ -102,7 +102,7 @@ const forgotPassword = async (email: string) => {
     subject: "Your 6-Digit Verification Code",
     otp,
   });
-  console.log("Message send: ", email);
+
 
 }
 

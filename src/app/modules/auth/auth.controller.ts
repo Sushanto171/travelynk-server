@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { JwtPayload } from "jsonwebtoken";
 import passport from "passport";
-import config from "../../config";
 import { ApiError } from "../../helpers/ApiError";
 import { httpStatus } from "../../helpers/httpStatus";
 import { jwtHelper } from "../../helpers/jwt.helper";
@@ -48,9 +47,10 @@ const getMe = catchAsync(async (req, res) => {
 });
 
 const getOTP = catchAsync(async (req, res) => {
+
   const result = await AuthService.getOTP(req.params.email)
 
-  res.redirect(`${config.FRONTEND_URL}/verify?email=${req.params.email}`)
+  // res.redirect(`${config.FRONTEND_URL}/verify?email=${req.params.email}`)
 
   sendResponse(res, {
     success: true,
@@ -76,7 +76,7 @@ const forgotPassword = catchAsync(async (req, res) => {
 
   const result = await AuthService.forgotPassword(req.params.email)
 
-  res.redirect(`${config.FRONTEND_URL}/reset?email=${req.params.email}`)
+  // res.redirect(`${config.FRONTEND_URL}/reset?email=${req.params.email}`)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

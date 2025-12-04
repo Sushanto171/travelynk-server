@@ -100,6 +100,8 @@ export const sendMail = async (payload: ISendEmail) => {
         : undefined),
   });
 
+  console.log("Message send: ", email);
+
   return {
     messageId: info.messageId,
     accepted: info.accepted,
