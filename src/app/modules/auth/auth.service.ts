@@ -52,7 +52,6 @@ const getOTP = async (email: string) => {
     otp
   );
 
-
   await sendEmail({
     to: email,
     subject: "Your Verification Code",

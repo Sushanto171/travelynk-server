@@ -1,11 +1,10 @@
 import { JwtPayload } from "jsonwebtoken"
-import { v4 as uuidv7 } from "uuid"
 import { prisma } from "../../config/prisma.config"
+import { ApiError } from "../../helpers/ApiError"
+import { httpStatus } from "../../helpers/httpStatus"
 import { getSubscriptionPrice, getSubscriptionStartEndDate } from "../../utils/getSubscriptionPrice"
 import { PaymentService } from "../payment/payment.service"
 import { CreateSubscriptionInput } from "./subscription.validation"
-import { ApiError } from "../../helpers/ApiError"
-import { httpStatus } from "../../helpers/httpStatus"
 
 const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionInput) => {
 
@@ -41,7 +40,7 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
       }
     })
     // create transactionId (uuid)
-    const transactionId = uuidv7()
+    const transactionId = String(new Date())
     // create payment
 
     const paymentInfo = await PaymentService.createPayment(tnx, {
