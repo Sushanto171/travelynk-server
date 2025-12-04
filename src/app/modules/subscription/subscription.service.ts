@@ -4,6 +4,8 @@ import { prisma } from "../../config/prisma.config"
 import { getSubscriptionPrice, getSubscriptionStartEndDate } from "../../utils/getSubscriptionPrice"
 import { PaymentService } from "../payment/payment.service"
 import { CreateSubscriptionInput } from "./subscription.validation"
+import { ApiError } from "../../helpers/ApiError"
+import { httpStatus } from "../../helpers/httpStatus"
 
 const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionInput) => {
 
@@ -20,9 +22,9 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
     }
   })
 
-  // if (!userInfo.is_verified) {
-  //   throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
-  // }
+  if (!userInfo.is_verified) {
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, "Email is not verified")
+  }
 
   // create subscription (WEEKLY,MONTHLY,YEARLY)
   const price = getSubscriptionPrice(payload)
