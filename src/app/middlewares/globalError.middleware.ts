@@ -17,7 +17,7 @@ const globalErrorHandler = async (
   console.log(config.node_env === "production" ? err.message : err)
 
   if (req.body) {
-    const res = await fileUploadHelper.destroyFileFormCloudinary(req.body.file);
+    const res = await fileUploadHelper.destroyFileFormCloudinary(req);
     console.log("destroy", res);
   }
   let statusCode = err.statusCode || httpStatus.INTERNAL_SERVER_ERROR;
