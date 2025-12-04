@@ -27,6 +27,8 @@ export const sendMail = async (payload: ISendEmail) => {
     throw new Error("Email and Subject are required");
   }
 
+  console.log("email sending start....");
+
   const info = await transporter.sendMail({
     from: '"Travelynk Security" <no-reply@travelynk.com>',
     to: email,
@@ -100,7 +102,7 @@ export const sendMail = async (payload: ISendEmail) => {
         : undefined),
   });
 
-  console.log("Message send: ", email);
+  console.log("Message send: ", info);
 
   return {
     messageId: info.messageId,
