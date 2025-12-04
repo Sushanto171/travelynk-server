@@ -123,7 +123,8 @@ const handleWebhookEvent = async (event: Stripe.Event) => {
                 : PaymentStatus.UNPAID,
             subscriber: {
               update: {
-                has_verified_badge: true
+                has_verified_badge: true,
+                subscription_active: true
               }
             }
           },
