@@ -1,5 +1,5 @@
 import z from "zod";
-import { UserRole } from "../../../generated/prisma/enums";
+import { UserRole } from ".././../../generated/prisma/enums";
 
 const createTravelerSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters long"),

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken"
-import { Prisma } from "../../../generated/prisma/client"
-import { UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
 import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
+import { Prisma } from ".././../../generated/prisma/client"
+import { UserRole } from ".././../../generated/prisma/enums"
 import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
 
 const getAllFormDB = async (filters: any, options: IOptions) => {

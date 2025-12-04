@@ -1,5 +1,5 @@
 import z from "zod";
-import { SubscriptionPlan } from "../../../generated/prisma/enums";
+import { SubscriptionPlan } from ".././../../generated/prisma/enums";
 
 export const createSubscriptionSchema = z.object({
   plan_type: z.enum(Object.values(SubscriptionPlan))

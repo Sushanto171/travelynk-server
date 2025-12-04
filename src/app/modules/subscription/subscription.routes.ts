@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { UserRole } from "../../../generated/prisma/enums";
 import { auth } from "../../middlewares/auth";
 import { validateRequest } from "../../middlewares/validateRequest";
+import { UserRole } from ".././../../generated/prisma/enums";
 import { SubscriptionController } from "./subscription.controller";
 import { createSubscriptionSchema } from "./subscription.validation";
 

@@ -1,6 +1,6 @@
-import { Provider, UserRole, UserStatus } from "../../../generated/prisma/enums";
 import { prisma } from "../../config/prisma.config";
 import { BcryptHelper } from "../../helpers/bcrypt.helper";
+import { Provider, UserRole, UserStatus } from ".././../../generated/prisma/enums";
 import { createAdminInput, createTravelerInput } from "./user.validation";
 
 const getAllFromDB = async () => {

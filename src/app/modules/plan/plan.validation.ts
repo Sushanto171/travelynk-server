@@ -1,5 +1,5 @@
 import z from "zod";
-import { PlanStatus, PlanType } from "../../../generated/prisma/enums";
+import { PlanStatus, PlanType } from ".././../../generated/prisma/enums";
 
 const createPlanSchema = z.object({
   title: z.string("Title is required").nonempty("Title is required"),

@@ -1,9 +1,9 @@
 
 import { JwtPayload } from "jsonwebtoken"
-import { PlanStatus, RequestType } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
+import { PlanStatus, RequestType } from ".././../../generated/prisma/enums"
 import { RequestJoinInput, UpdateRequestedStatus } from "./plan-join.validation"
 
 // for traveler not owner route

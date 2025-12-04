@@ -1,5 +1,4 @@
 import { JwtPayload } from "jsonwebtoken"
-import { Provider } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { BcryptHelper } from "../../helpers/bcrypt.helper"
@@ -7,6 +6,7 @@ import { httpStatus } from "../../helpers/httpStatus"
 import { sendMail } from "../../helpers/nodemailer.config"
 import { redisClient } from "../../helpers/redis"
 import { generateOTP } from "../../utils/generateOTP"
+import { Provider } from ".././../../generated/prisma/enums"
 import { ChangePassInput, ResetPassInput, VerifyInput } from "./auth.validation"
 
 const getMe = async (user: JwtPayload) => {

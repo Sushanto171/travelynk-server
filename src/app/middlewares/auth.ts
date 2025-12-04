@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { UserRole } from "../../generated/prisma/enums";
 import config from "../config";
 import { ApiError } from "../helpers/ApiError";
 import { httpStatus } from "../helpers/httpStatus";
 import { jwtHelper } from "../helpers/jwt.helper";
+import { UserRole } from "./../../generated/prisma/enums";
 
 export const auth = (...role: UserRole[]) => {
   return (req: Request, res: Response, next: NextFunction) => {

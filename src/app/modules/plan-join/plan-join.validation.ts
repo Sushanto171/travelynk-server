@@ -1,5 +1,5 @@
 import z from "zod"
-import { RequestType } from "../../../generated/prisma/enums"
+import { RequestType } from ".././../../generated/prisma/enums"
 
 const requestJoinSchema = z.object({
   plan_id: z.uuid().nonempty("Plan id required"),

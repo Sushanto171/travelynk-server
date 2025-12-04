@@ -1,8 +1,8 @@
 import { JwtPayload } from "jsonwebtoken"
-import { PlanStatus, UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
+import { PlanStatus, UserRole } from ".././../../generated/prisma/enums"
 import { CreateReviewInput, UpdateReviewInput } from "./review.validation"
 
 const getAllFormDB = async () => {

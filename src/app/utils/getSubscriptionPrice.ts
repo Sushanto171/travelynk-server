@@ -1,6 +1,6 @@
-import { SubscriptionPlan } from "../../generated/prisma/enums";
 import config from "../config";
 import { CreateSubscriptionInput } from "../modules/subscription/subscription.validation";
+import { SubscriptionPlan } from "./../../generated/prisma/enums";
 
 export const getSubscriptionPrice = (payload: CreateSubscriptionInput) => {
   const WEEKLY_PRICE = Number(config.subscription.WEEKLY_PRICE) || 5

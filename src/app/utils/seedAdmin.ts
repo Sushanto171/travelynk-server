@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Provider, UserRole } from "../../generated/prisma/enums"
 import config from "../config"
 import { prisma } from "../config/prisma.config"
 import { ApiError } from "../helpers/ApiError"
 import { BcryptHelper } from "../helpers/bcrypt.helper"
+import { Provider, UserRole } from "./../../generated/prisma/enums"
 
 export const seeAdmin = async () => {
   try {

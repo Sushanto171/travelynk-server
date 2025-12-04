@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { UserRole } from "../../../generated/prisma/enums";
 import { auth } from "../../middlewares/auth";
 import { validateRequest } from "../../middlewares/validateRequest";
+import { UserRole } from ".././../../generated/prisma/enums";
 import { PlanJoinController } from "./plan-join.controller";
 import { PlanJoinValidator } from './plan-join.validation';
 

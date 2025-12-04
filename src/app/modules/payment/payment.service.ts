@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefaultArgs } from "@prisma/client/runtime/client";
 import Stripe from "stripe";
-import { PrismaClient } from "../../../generated/prisma/client";
-import { GlobalOmitConfig } from "../../../generated/prisma/internal/prismaNamespace";
 import { prisma } from "../../config/prisma.config";
 import { stripe } from "../../config/stripe.config";
-import { PaymentStatus, SubscriptionPlan } from './../../../generated/prisma/enums';
+import { PrismaClient } from ".././../../generated/prisma/client";
+import { GlobalOmitConfig } from ".././../../generated/prisma/internal/prismaNamespace";
+import { PaymentStatus, SubscriptionPlan } from './.././../../generated/prisma/enums';
 import { IPaymentInput } from "./payment.interface";
 
 /**

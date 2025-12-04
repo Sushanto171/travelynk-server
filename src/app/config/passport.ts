@@ -1,8 +1,8 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { Provider, UserRole, UserStatus } from "../../generated/prisma/enums";
 import { BcryptHelper } from "../helpers/bcrypt.helper";
 import { prisma } from "./prisma.config";
+import { UserStatus, Provider, UserRole } from './../../generated/prisma/enums';
 
 passport.use(
   new LocalStrategy(

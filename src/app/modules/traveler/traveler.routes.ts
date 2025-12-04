@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { UserRole } from "../../../generated/prisma/enums";
 import { fileUploadHelper } from "../../helpers/fileUploader";
 import { auth } from "../../middlewares/auth";
 import { validateRequest } from "../../middlewares/validateRequest";
+import { UserRole } from ".././../../generated/prisma/enums";
 import { TravelerController } from "./traveler.controller";
 import { TravelerValidation } from "./traveler.validation";
 
