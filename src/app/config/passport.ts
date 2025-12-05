@@ -1,8 +1,8 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { BcryptHelper } from "../helpers/bcrypt.helper";
+import { Provider, UserRole, UserStatus } from './../../generated/prisma/enums';
 import { prisma } from "./prisma.config";
-import { UserStatus, Provider, UserRole } from './../../generated/prisma/enums';
 
 passport.use(
   new LocalStrategy(
@@ -21,12 +21,12 @@ passport.use(
           include: {
             traveler: {
               select: {
-                id: true
+                id: true,
               }
             },
             admin: {
               select: {
-                id: true
+                id: true,
               }
             },
             auths: {
@@ -43,6 +43,10 @@ passport.use(
 
         if (user.is_deleted) {
           return done("Your account is temporary deleted");
+        }
+
+        if (!user.is_verified) {
+          return done(["User is not verified", user.email],)
         }
 
         const hasCredentialProvider = user.auths.some(

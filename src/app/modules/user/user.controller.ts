@@ -1,6 +1,8 @@
+import config from "../../config";
 import { httpStatus } from "../../helpers/httpStatus";
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
+import { AuthService } from "../auth/auth.service";
 import { UserService } from "./user.service";
 
 const getAllFormDB = catchAsync(async (req, res) => {
@@ -18,6 +20,15 @@ const createTraveler = catchAsync(async (req, res) => {
 
   const result = await UserService.createTraveler(req.body);
 
+  // verify email
+  const password = req.body.password
+  const email = req.body.traveler.email
+
+  const token = await AuthService.sendVerificationEmail(email, password,)
+
+  if (token) {
+    return res.redirect(`${config.FRONTEND_URL}/verify?email=${email}&token=${token}`)
+  }
   sendResponse(res, {
     success: true,
     message: "Users Created Successfully",

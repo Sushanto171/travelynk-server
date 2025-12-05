@@ -1,9 +1,11 @@
 import { JwtPayload } from "jsonwebtoken"
+import config from "../../config"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { BcryptHelper } from "../../helpers/bcrypt.helper"
 import { sendEmail } from "../../helpers/brevo.emailSender"
 import { httpStatus } from "../../helpers/httpStatus"
+import { jwtHelper } from "../../helpers/jwt.helper"
 import { redisClient } from "../../helpers/redis"
 import { generateEmailHtml } from "../../utils/generateEmailHTML"
 import { generateOTP } from "../../utils/generateOTP"
@@ -23,6 +25,7 @@ const getMe = async (user: JwtPayload) => {
       email: true,
       status: true,
       role: true,
+      is_verified: true,
       created_at: true,
       updated_at: true,
       admin: true,
@@ -36,7 +39,8 @@ const getMe = async (user: JwtPayload) => {
   })
 }
 
-const getOTP = async (email: string) => {
+const sendVerificationEmail = async (email: string, password?: string) => {
+
   const otp = generateOTP();
 
   await redisClient.set(`email_v-${email}-otp`, otp, {
@@ -57,6 +61,14 @@ const getOTP = async (email: string) => {
     subject: "Your Verification Code",
     html
   })
+  // from register ===>auto login
+  if (password) {
+    const payload = {
+      email,
+      password
+    }
+    return jwtHelper.generateToken(payload, config.jwt.JWT_LOGIN_SECRET as string, "5min", "HS256")
+  }
 
   return null
 }
@@ -64,6 +76,7 @@ const getOTP = async (email: string) => {
 const verify = async (payload: VerifyInput) => {
 
   const otp = await redisClient.get(`email_v-${payload.email}-otp`)
+
   if (otp) {
     if ((String(payload.otp) === "123456") || String(payload.otp) === otp) {
       await prisma.user.update({
@@ -71,11 +84,7 @@ const verify = async (payload: VerifyInput) => {
           email: payload.email
         },
         data: {
-          traveler: {
-            update: {
-              is_verified: true
-            }
-          }
+          is_verified: true
         }
       })
 
@@ -193,7 +202,7 @@ const changePassword = async (user: JwtPayload, payload: ChangePassInput) => {
 
 export const AuthService = {
   getMe,
-  getOTP,
+  sendVerificationEmail,
   verify,
   forgotPassword,
   resetPassword,

@@ -13,8 +13,6 @@ router.post('/login', AuthController.credentialLogin);
 
 router.post("/verify", validateRequest(verifySchema), AuthController.verify);
 
-router.get("/get-otp/:email", AuthController.getOTP);
-
 router.get("/forgot-password/:email", AuthController.forgotPassword);
 
 router.post("/reset-password/:email", validateRequest(resetPassSchema), AuthController.resetPassword);

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { JwtPayload } from "jsonwebtoken";
 import passport from "passport";
+import config from "../../config";
 import { ApiError } from "../../helpers/ApiError";
 import { httpStatus } from "../../helpers/httpStatus";
 import { jwtHelper } from "../../helpers/jwt.helper";
@@ -14,6 +15,13 @@ const credentialLogin = catchAsync(async (req, res, next) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   passport.authenticate("local", { session: false }, async (err: any, user: any, info: any) => {
     if (err) {
+
+      // forcefully email verification
+      if (Array.isArray(err) && err[0] === "User is not verified" && err[1]) {
+        await AuthService.sendVerificationEmail(err[1])
+        return res.redirect(`${config.FRONTEND_URL}/verify?email=${err[1]}`)
+      }
+
       return next(new ApiError(err.statusCode || 401, err));
     }
     if (!user) {
@@ -44,20 +52,6 @@ const getMe = catchAsync(async (req, res) => {
     data: result,
   });
 
-});
-
-const getOTP = catchAsync(async (req, res) => {
-
-  await AuthService.getOTP(req.params.email)
-
-  // res.redirect(`${config.FRONTEND_URL}/verify?email=${req.params.email}`)
-
-  sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: "OTP send to email",
-    data: null
-  });
 });
 
 const verify = catchAsync(async (req, res) => {
@@ -125,7 +119,7 @@ export const AuthController = {
   getMe,
   logout,
   verify,
-  getOTP,
+  // getOTP,
   forgotPassword,
   resetPassword,
   changePassword,
