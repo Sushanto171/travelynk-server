@@ -55,13 +55,14 @@ const getMe = catchAsync(async (req, res) => {
 });
 
 const verify = catchAsync(async (req, res) => {
-  const result = await AuthService.verify(req.body)
+  const token = req.query.token
+  await AuthService.verify(req.body)
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: "Verified successfully",
-    data: result,
+    data: {token},
   });
 });
 
