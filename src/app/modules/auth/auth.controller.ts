@@ -19,13 +19,15 @@ const credentialLogin = catchAsync(async (req, res, next) => {
       // forcefully email verification
       if (Array.isArray(err) && err[0] === "User is not verified" && err[1]) {
         await AuthService.sendVerificationEmail(err[1])
-        return res.redirect(`${config.FRONTEND_URL}/verify?email=${err[1]}`)
+        return res.json({
+          redirectTo: (`${config.FRONTEND_URL}/verify?email=${err[1]}`)
+        })
       }
 
-      return next(new ApiError(err.statusCode || 401, err));
+      return next(new ApiError(err?.statusCode || 401, err));
     }
     if (!user) {
-      return next(new ApiError(err.statusCode || 401, info.message));
+      return next(new ApiError(err?.statusCode || 401, info.message));
     }
 
     const tokens = jwtHelper.getTokens(user as JwtPayload)
@@ -62,7 +64,7 @@ const verify = catchAsync(async (req, res) => {
     success: true,
     statusCode: httpStatus.OK,
     message: "Verified successfully",
-    data: {token},
+    data: { token },
   });
 });
 

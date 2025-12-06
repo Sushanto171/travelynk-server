@@ -3,8 +3,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from "express";
 import { Prisma } from "../../generated/prisma/client";
+import { ApiError } from "../helpers/ApiError";
 import { fileUploadHelper } from "../helpers/fileUploader";
+import { handlerCastError } from "../helpers/handlerCastError";
+import { handlerDuplicateError } from "../helpers/handlerDuplicateError";
+import { handlerValidationError } from "../helpers/handlerValidationError";
+import { handlerZodError } from "../helpers/handlerZodError";
 import { httpStatus } from "../helpers/httpStatus";
+import { TErrorSource } from "../interface/ErrorTypes";
 
 const globalErrorHandler = async (
   err: any,
@@ -25,6 +31,7 @@ const globalErrorHandler = async (
   let message = err.message || "Something went wrong!";
   let error = err;
 
+  // prisma
   if (err instanceof Prisma.PrismaClientKnownRequestError) {
     if (err.code === "P2002") {
       message = "Duplicate key error";
@@ -58,6 +65,48 @@ const globalErrorHandler = async (
     error = err.message;
   }
 
+  // zod
+  // castError
+  if (err.name === "CastError") {
+    console.log("cast");
+    const simplifiedError = handlerCastError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+  }
+  // Zod error
+  else if (err.name === "ZodError") {
+    const simplifiedError = handlerZodError(err);
+    message = simplifiedError.message;
+    statusCode = simplifiedError.statusCode;
+    error = simplifiedError.errorSource as TErrorSource[];
+  }
+  // validation error
+  else if (err.name === "ValidationError") {
+    console.log("validationError");
+    const simplifiedError = handlerValidationError(err);
+    message = simplifiedError.message;
+    statusCode = simplifiedError.statusCode;
+    error = simplifiedError.errorSource as TErrorSource[];
+  }
+  // duplicate error
+  else if (err.code === 11000) {
+    const simplifiedError = handlerDuplicateError(err);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+  } 
+  // else if (err instanceof ApiError) {
+  //   statusCode = err.statusCode;
+  //   message = err.message;
+  // } else if (err instanceof Error) {
+  //   statusCode = 500;
+  //   message = err.message;
+  // }
+
+  console.log({
+    success,
+    message,
+    error,
+  });
 
   res.status(statusCode).json({
     success,

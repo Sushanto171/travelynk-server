@@ -91,7 +91,9 @@ const verify = async (payload: VerifyInput) => {
       await redisClient.del(`email_v-${payload.email}-otp`)
       return
     }
-    throw new ApiError(httpStatus.BAD_REQUEST, "OTP is expired or invalid")
+    throw new ApiError(httpStatus.BAD_REQUEST, "OTP is invalid")
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, "OTP is expired ")
   }
 }
 

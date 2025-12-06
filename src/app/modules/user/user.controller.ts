@@ -27,7 +27,9 @@ const createTraveler = catchAsync(async (req, res) => {
   const token = await AuthService.sendVerificationEmail(email, password,)
 
   if (token) {
-    return res.redirect(`${config.FRONTEND_URL}/verify?email=${email}&token=${token}`)
+    return res.json({
+      redirectTo: `${config.FRONTEND_URL}/verify?email=${email}&token=${token}`
+    })
   }
   sendResponse(res, {
     success: true,

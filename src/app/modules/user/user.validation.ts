@@ -6,6 +6,7 @@ const createTravelerSchema = z.object({
   traveler: z.object({
     name: z.string().min(1, "Name is required").nonempty("Name cannot be empty"),
     email: z.email("Invalid email format"),
+    address: z.string().optional()
   }),
 });
 
@@ -14,6 +15,8 @@ const createAdminSchema = z.object({
   admin: z.object({
     name: z.string().min(1, "Name is required").nonempty("Name cannot be empty"),
     email: z.email("Invalid email format"),
+    address: z.string().optional()
+
   }),
 });
 

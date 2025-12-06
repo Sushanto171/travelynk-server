@@ -3,7 +3,7 @@ import { auth } from "../../middlewares/auth";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { UserRole } from ".././../../generated/prisma/enums";
 import { AuthController } from "./auth.controller";
-import { resetPassSchema, verifySchema } from "./auth.validation";
+import { loginValidationZodSchema, resetPassSchema, verifySchema } from "./auth.validation";
 
 const router = Router()
 
@@ -19,6 +19,6 @@ router.post("/reset-password/:email", validateRequest(resetPassSchema), AuthCont
 
 router.patch("/change-password", auth(...Object.values(UserRole)), AuthController.changePassword);
 
-router.post('/login', AuthController.credentialLogin);
+router.post('/login', validateRequest(loginValidationZodSchema), AuthController.credentialLogin);
 
 export const AuthRoutes = router

@@ -25,6 +25,15 @@ export const changePassSchema = z.object({
   oldPassword: z.string().min(6, "Password must be at least 8 characters long"),
 })
 
+
+export const loginValidationZodSchema = z.object({
+  emails: z.email(),
+  password: z
+    .string("Password is required.")
+    .trim()
+    .min(6, "Password must be at least 6 character or long"),
+});
+
 export type VerifyInput = z.infer<typeof verifySchema>
 export type ResetPassInput = z.infer<typeof resetPassSchema>
 export type ChangePassInput = z.infer<typeof changePassSchema>

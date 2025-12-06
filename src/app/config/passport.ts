@@ -45,6 +45,7 @@ passport.use(
           return done("Your account is temporary deleted");
         }
 
+        console.log({ user });
         if (!user.is_verified) {
           return done(["User is not verified", user.email],)
         }
