@@ -13,7 +13,7 @@ const startServer = async () => {
       console.log(`⚡ Server is running on port ${config.port}`);
     });
 
-    // await redisClient.connect();
+    await redisClient.connect();
     console.log("Redis client connect");
 
 
@@ -39,7 +39,7 @@ const startServer = async () => {
     // Handle unhandled promise rejections
     process.on("unhandledRejection", (error) => {
       console.log(
-        "Unhandled Rejection is detected, we are closing our server..."
+        "Unhandled Rejection is detected, we are closing our server...", error
       );
       if (server) {
         server.close(() => {
