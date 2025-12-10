@@ -32,7 +32,7 @@ const credentialLogin = catchAsync(async (req, res, next) => {
 
     const tokens = jwtHelper.getTokens(user as JwtPayload)
 
-    setCookie(res, tokens)
+     setCookie(res, tokens)
 
     sendResponse(res, {
       success: true,

@@ -50,7 +50,7 @@ const deleteById = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "interest delete successfully",
+    message: "interest deleted successfully",
     data: null
   })
 })

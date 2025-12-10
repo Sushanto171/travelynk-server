@@ -120,7 +120,11 @@ const updateById = async (req: Request) => {
     // remove interest
     if (remove_interests && Array.isArray(remove_interests) && remove_interests.length) {
       const existingInterests = await tnx.interests.findMany({
-        where: { id },
+        where: { 
+          id:{
+            in: remove_interests
+          }
+         },
         select: { id: true }
       })
 

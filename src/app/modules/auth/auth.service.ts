@@ -12,13 +12,14 @@ import { generateOTP } from "../../utils/generateOTP"
 import { Provider } from ".././../../generated/prisma/enums"
 import { ChangePassInput, ResetPassInput, VerifyInput } from "./auth.validation"
 
-const getMe = async (user: JwtPayload) => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-  return await prisma.user.findUniqueOrThrow({
+
+export const getMe = async (user: JwtPayload) => {
+  const raw = await prisma.user.findUniqueOrThrow({
     where: {
       email: user.email,
-      is_deleted: false
-
+      is_deleted: false,
     },
     select: {
       id: true,
@@ -29,15 +30,74 @@ const getMe = async (user: JwtPayload) => {
       created_at: true,
       updated_at: true,
       admin: true,
-      traveler: true,
+
+      traveler: {
+        include: {
+          interests: {
+            select: {
+              interests: {
+                select: { id: true, name: true },
+              },
+            },
+          },
+          visited_countries: {
+            select: {
+              country: {
+                select: { id: true, name: true, code: true },
+              },
+            },
+          },
+        },
+      },
+
       auths: {
         select: {
-          auth_providers: true
-        }
-      }
-    }
-  })
-}
+          auth_providers: true,
+        },
+      },
+    },
+  });
+
+  // ---------------------------------
+  // Normalize Traveler
+  // ---------------------------------
+  let traveler
+
+  if (raw.traveler) {
+    const interests = raw.traveler.interests.map(
+      (i: any) => i.interests
+    );
+
+    const visitedCountries =
+      raw.traveler.visited_countries.map((c: any) => c.country);
+
+    traveler = {
+      ...raw.traveler,
+      interests,
+      visited_countries: visitedCountries,
+    };
+  }
+
+  // ---------------------------------
+  // Return Clean IUser Format
+  // ---------------------------------
+  const result = {
+    id: raw.id,
+    email: raw.email,
+    status: raw.status,
+    role: raw.role,
+    is_verified: raw.is_verified,
+    created_at: raw.created_at,
+    updated_at: raw.updated_at,
+
+    admin: raw.admin || undefined,
+    traveler: traveler || undefined,
+
+    auths: raw.auths,
+  };
+
+  return result;
+};
 
 const sendVerificationEmail = async (email: string, password?: string) => {
 

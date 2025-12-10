@@ -9,6 +9,8 @@ const router = Router()
 
 router.get("/", auth(UserRole.ADMIN), ReviewController.getAllFormDB)
 
+router.get("/:id", auth(UserRole.ADMIN), ReviewController.getAllFormDB)
+
 router.post("/:plan_id", auth(UserRole.USER), validateRequest(createReviewSchema), ReviewController.insertIntoDB)
 
 

@@ -3,9 +3,8 @@ import { CreateCountryInput, UpdateCountryInput } from "./country.validator"
 
 const getAllFormDB = async () => {
   return await prisma.countries.findMany({
-    select: {
-      name: true,
-      code: true
+    orderBy: {
+      created_at: "desc"
     }
   })
 }
@@ -29,9 +28,9 @@ const updateById = async (id: string, payload: UpdateCountryInput) => {
   return await prisma.countries.update({
     where: {
       id,
-      code: payload.code
     },
     data: {
+      code: payload.code,
       name: payload.name
     }
   })

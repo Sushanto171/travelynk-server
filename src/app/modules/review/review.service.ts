@@ -9,6 +9,16 @@ const getAllFormDB = async () => {
   const result = await prisma.review.findMany()
   return result
 }
+const getByOwnerID = async (id:string) => {
+  const result = await prisma.review.findMany(
+    {
+      where:{
+        reviewer_id: id
+      }
+    }
+  )
+  return result
+}
 
 const insertIntoDB = async (user: JwtPayload, plan_id: string, payload: CreateReviewInput) => {
   const planInfo = await prisma.plan.findFirstOrThrow({
@@ -75,6 +85,7 @@ const deleteById = async (user: JwtPayload, id: string) => {
 
 export const ReviewService = {
   getAllFormDB,
+  getByOwnerID,
   insertIntoDB,
   updateById,
   deleteById

@@ -20,7 +20,7 @@ const globalErrorHandler = async (
 ) => {
 
   // console.log(config.node_env === "production" ? err.message : err)
-  console.log(err);
+  console.log((err));
 
   if (req.body) {
     const res = await fileUploadHelper.destroyFileFormCloudinary(req);

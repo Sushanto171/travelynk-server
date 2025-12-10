@@ -3,9 +3,8 @@ import { CreateInterestInput, UpdateInterestInput } from "./interest.validator"
 
 const getAllFormDB = async () => {
   return await prisma.interests.findMany({
-    select: {
-      id: true,
-      name: true,
+    orderBy: {
+      created_at: "desc"
     }
   })
 }
@@ -14,7 +13,7 @@ const insertIntoDB = async (payload: CreateInterestInput) => {
 
   return await prisma.interests.createMany({
     data: payload,
-    skipDuplicates: true
+    // skipDuplicates: true
   })
 
 }
