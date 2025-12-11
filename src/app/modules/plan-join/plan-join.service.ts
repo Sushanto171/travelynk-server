@@ -46,9 +46,15 @@ const getMyRequestedPlan = async (user: JwtPayload) => {
     },
     include: {
       plan: {
-
         include: {
-          owner: true
+          owner: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+              profile_photo: true
+            }
+          }
         }
       },
 
