@@ -9,12 +9,12 @@ import { UserRole } from ".././../../generated/prisma/enums"
 import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
 
 const getAllFormDB = async (filters: any, options: IOptions) => {
-
   const {
     destination,
     interests,
     startDate,
     endDate,
+    ...restFilters
   } = filters;
 
   const { limit, page, skip, sortBy, sortOrder } =
@@ -22,14 +22,14 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
 
   const andConditions: Prisma.PlanWhereInput[] = [];
 
-  //  Only Public & Future Plans
+  // Only Public & Future Plans
   andConditions.push({
     start_date: {
       gte: new Date(),
     },
   });
 
-  //  Destination Filtering
+  // Destination
   if (destination) {
     andConditions.push({
       destination: {
@@ -39,7 +39,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     });
   }
 
-  //  Date Range Overlap Filtering
+  // Date Range Overlap
   if (startDate && endDate) {
     andConditions.push({
       AND: [
@@ -49,7 +49,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     });
   }
 
-  //  Interest Matching via Owner → Junction → Interests
+  // Owner Interests
   if (interests && interests.length > 0) {
     const interestArray = Array.isArray(interests)
       ? interests
@@ -60,10 +60,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
         interests: {
           some: {
             interests: {
-              name: {
-                in: interestArray,
-                mode: "insensitive",
-              },
+              name: { in: interestArray, mode: "insensitive" },
             },
           },
         },
@@ -71,22 +68,47 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     });
   }
 
+  // Dynamic filters
+  if (Object.keys(restFilters).length > 0) {
+    Object.entries(restFilters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        andConditions.push({
+          [key]: { equals: value },
+        });
+      }
+    });
+  }
 
   const whereConditions = andConditions.length
     ? { AND: andConditions }
     : {};
 
+  // Query with built-in relation count
   const result = await prisma.plan.findMany({
     where: whereConditions,
-
     include: {
       owner: {
         select: {
           id: true,
           name: true,
           email: true,
-          interests: true,
         },
+      },
+      reviews: {
+        select: {
+          rating: true,
+          comment: true,
+          reviewer: {
+            select: {
+              id: true,
+              name: true,
+              profile_photo: true,
+            },
+          },
+        },
+      },
+      _count: {
+        select: { buddies: true }, // <-- total_joined
       },
     },
 
@@ -102,16 +124,24 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     where: whereConditions,
   });
 
+
+  // Transform output → attach total_joined as a top-level field
+   const data = result.map(({ _count, ...plan }) => ({
+    ...plan,
+    total_joined: _count.buddies,
+  }));
+
   return {
     meta: {
       page: Number(page),
       limit: Number(limit),
       total,
-      totalPages: Math.ceil(total / limit)
+      totalPages: Math.ceil(total / limit),
     },
-    data: result,
+    data,
   };
 };
+
 
 const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
   const now = new Date()
@@ -150,21 +180,21 @@ const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
 
 }
 
-const getById = async (id: string) => {
-  const [plan, ratings] = await Promise.all([prisma.plan.findFirstOrThrow({
-    where: { id },
-    select: {
+
+export const getBySlug = async (slug: string) => {
+  // Fetch plan details including owner, buddies, and reviews
+  const plan = await prisma.plan.findFirstOrThrow({
+    where: { slug },
+    include: {
       owner: {
         select: {
           id: true,
           name: true,
           email: true,
-        }
+        },
       },
       buddies: {
-        orderBy: {
-          created_at: "desc"
-        },
+        orderBy: { created_at: "desc" },
         select: {
           request_type: true,
           created_at: true,
@@ -173,14 +203,13 @@ const getById = async (id: string) => {
               id: true,
               name: true,
               email: true,
-            }
-          }
+              profile_photo: true
+            },
+          },
         },
       },
       reviews: {
-        orderBy: {
-          created_at: "desc"
-        },
+        orderBy: { created_at: "desc" },
         select: {
           id: true,
           rating: true,
@@ -191,34 +220,36 @@ const getById = async (id: string) => {
               id: true,
               name: true,
               email: true,
-              profile_photo: true
-            }
-          }
-        }
-      }
-    }
-  }),
-
-  await prisma.review.aggregate({
-    where: {
-      plan_id: id
+              profile_photo: true,
+            },
+          },
+        },
+      },
     },
-    _avg: {
-      rating: true,
-    },
-    _count: {
-      rating: true
-    }
+  });
 
-  })])
+  // Aggregate rating
+  const ratings = await prisma.review.aggregate({
+    where: { plan_id: plan.id },
+    _avg: { rating: true },
+    _count: { rating: true },
+  });
+
+  // Count total joined (buddies)
+  const total_joined = await prisma.planBuddy.count({
+    where: { plan_id: plan.id },
+  });
+
   return {
     ...plan,
     rating: {
       average: ratings._avg.rating ?? 0,
-      total: ratings._count.rating
-    }
-  }
-}
+      total: ratings._count.rating,
+    },
+    total_joined,
+  };
+};
+
 
 const getMyPlans = async (user: JwtPayload,) => {
   const result = await prisma.plan.findFirstOrThrow({
@@ -317,7 +348,7 @@ const deleteById = async (user: JwtPayload, id: string,) => {
 export const PlanService = {
   getAllFormDB,
   insertIntoDB,
-  getById,
+  getBySlug,
   getMyPlans,
   updateById,
   updatePlanStatus,

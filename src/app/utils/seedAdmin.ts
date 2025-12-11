@@ -5,7 +5,7 @@ import { ApiError } from "../helpers/ApiError"
 import { BcryptHelper } from "../helpers/bcrypt.helper"
 import { Provider, UserRole } from "./../../generated/prisma/enums"
 
-export const seeAdmin = async () => {
+export const seedAdmin = async () => {
   try {
 
     const hashedPassword = await BcryptHelper.generateHashPassword(config.seedAdmin.SEED_ADMIN_PASSWORD as string)

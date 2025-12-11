@@ -3,7 +3,7 @@ import { Server } from "http";
 import { app } from "./app";
 import config from "./app/config";
 import { redisClient } from "./app/helpers/redis";
-import { seeAdmin } from "./app/utils/seedAdmin";
+import { seedAdmin } from "./app/utils/seedAdmin";
 
 const startServer = async () => {
   let server: Server;
@@ -29,7 +29,7 @@ const startServer = async () => {
       }
     };
     // seed admin
-    await seeAdmin()
+    await seedAdmin()
 
     // Handle termination signals
     process.on("SIGINT", exitHandler);

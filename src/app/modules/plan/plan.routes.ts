@@ -21,6 +21,6 @@ router.patch("/status/:id", auth(UserRole.USER, UserRole.ADMIN), validateRequest
 router.delete("/:id", auth(UserRole.USER, UserRole.ADMIN), PlanController.deleteById)
 
 // Prevents shadowing
-router.get("/:id", PlanController.getById)
+router.get("/:slug", PlanController.getBySlug)
 
 export const PlanRoutes = router

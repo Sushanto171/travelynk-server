@@ -9,9 +9,8 @@ import { PlanService } from "./plan.service"
 
 const getAllFormDB = catchAsync(async (req, res) => {
 
-  const filters = pick(req.query, ["destination,", "interests", "startDate", "endDate"]);
+  const filters = pick(req.query, ["destination,", "interests", "startDate", "endDate","owner_id"]);
   const options = pick(req.query, queryOptions);
-
 
   const { data, meta } = await PlanService.getAllFormDB(filters, options)
   sendResponse(res, {
@@ -33,8 +32,8 @@ const insertIntoDB = catchAsync(async (req, res) => {
   })
 })
 
-const getById = catchAsync(async (req, res) => {
-  const result = await PlanService.getById(req.params.id)
+const getBySlug = catchAsync(async (req, res) => {
+  const result = await PlanService.getBySlug(req.params.slug)
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -89,7 +88,7 @@ export const PlanController = {
   getAllFormDB,
   insertIntoDB,
   getMyPlans,
-  getById,
+  getBySlug,
   updateById,
   updateStatus,
   deleteById,
