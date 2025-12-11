@@ -16,6 +16,17 @@ const getAllFormDB = catchAsync(async (req, res) => {
   })
 })
 
+const getUserById = catchAsync(async (req, res) => {
+  const result = await UserService.getUserById(req.params.id);
+
+  sendResponse(res, {
+    success: true,
+    message: "User retrieved Successfully",
+    statusCode: httpStatus.OK,
+    data: result
+  })
+})
+
 const createTraveler = catchAsync(async (req, res) => {
 
   const result = await UserService.createTraveler(req.body);
@@ -65,6 +76,7 @@ const changeProfileStatus = catchAsync(async (req, res) => {
 
 export const UserController = {
   getAllFormDB,
+  getUserById,
   createTraveler,
   createAdmin,
   changeProfileStatus

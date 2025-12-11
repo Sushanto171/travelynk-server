@@ -7,7 +7,7 @@ import { PlanJoinValidator } from './plan-join.validation';
 
 const router = Router()
 
-router.post("/join", auth(UserRole.USER), validateRequest(PlanJoinValidator.requestJoinSchema), PlanJoinController.requestToJoin)
+router.post("/", auth(UserRole.USER), validateRequest(PlanJoinValidator.requestJoinSchema), PlanJoinController.requestToJoin)
 
 router.get("/my-requested", auth(UserRole.USER), PlanJoinController.getMyRequestedPlan)
 

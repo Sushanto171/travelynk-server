@@ -7,7 +7,7 @@ const updateTravelerSchema = z.object({
     /^(\+\d{1,3})?\s?(\d{10,14})$/,
     "Invalid phone number format."
   ).optional(),
-  date_of_birth: z.date().optional(),
+  date_of_birth: z.string().optional(),
   address: z.string("Address must be a string.").nonempty("Address cannot be empty.").optional(),
   current_location: z.string("Current location must be a string.").optional(),
   interests: z.array(z.string()).optional(),

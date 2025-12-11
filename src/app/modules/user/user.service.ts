@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "../../config/prisma.config";
 import { BcryptHelper } from "../../helpers/bcrypt.helper";
 import { Provider, UserRole, UserStatus } from ".././../../generated/prisma/enums";
@@ -19,6 +20,99 @@ const getAllFromDB = async () => {
     }
   );
   return users;
+};
+
+export const getUserById = async (id: string) => {
+  const raw = await prisma.user.findFirst({
+    where: {
+      is_deleted: false,
+      OR: [
+        { id },
+        { traveler: { id } },
+        { admin: { id } },
+      ],
+    },
+    select: {
+      id: true,
+      email: true,
+      status: true,
+      role: true,
+      is_verified: true,
+      created_at: true,
+      updated_at: true,
+      admin: true,
+
+      traveler: {
+        include: {
+          interests: {
+            select: {
+              interests: {
+                select: { id: true, name: true },
+              },
+            },
+          },
+          visited_countries: {
+            select: {
+              country: {
+                select: { id: true, name: true, code: true },
+              },
+            },
+          },
+        },
+      },
+
+      auths: {
+        select: {
+          auth_providers: true,
+        },
+      },
+    },
+  });
+
+
+  if (!raw) {
+    throw new Error("User not found");
+  }
+
+  // ---------------------------------
+  // Normalize Traveler
+  // ---------------------------------
+  let traveler
+
+  if (raw.traveler) {
+    const interests = raw.traveler.interests.map(
+      (i: any) => i.interests
+    );
+
+    const visitedCountries =
+      raw.traveler.visited_countries.map((c: any) => c.country);
+
+    traveler = {
+      ...raw.traveler,
+      interests,
+      visited_countries: visitedCountries,
+    };
+  }
+
+  // ---------------------------------
+  // Return Clean IUser Format
+  // ---------------------------------
+  const result = {
+    id: raw.id,
+    email: raw.email,
+    status: raw.status,
+    role: raw.role,
+    is_verified: raw.is_verified,
+    created_at: raw.created_at,
+    updated_at: raw.updated_at,
+
+    admin: raw.admin || undefined,
+    traveler: traveler || undefined,
+
+    auths: raw.auths,
+  };
+
+  return result;
 };
 
 const createTraveler = async (payload: createTravelerInput) => {
@@ -116,6 +210,7 @@ const changeProfileStatus = async (
 
 export const UserService = {
   getAllFromDB,
+  getUserById,
   createTraveler,
   createAdmin,
   changeProfileStatus

@@ -11,7 +11,7 @@ const requestToJoin = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Join request successfully",
+    message: "Join request sent",
     data: null
   })
 })
@@ -55,7 +55,7 @@ const updateRequestedStatus = catchAsync(async (req, res) => {
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
-    message: "Requested removed successfully",
+    message: "Status updated successfully",
     data: result
   })
 })

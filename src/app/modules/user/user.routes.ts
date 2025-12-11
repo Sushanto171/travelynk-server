@@ -9,6 +9,8 @@ const router = Router()
 
 router.get('/', UserController.getAllFormDB)
 
+router.get('/:id', UserController.getUserById)
+
 router.post('/create-traveler', validateRequest(UserValidation.createTravelerSchema), UserController.createTraveler)
 
 router.post('/create-admin', auth(UserRole.ADMIN), validateRequest(UserValidation.createAdminSchema), UserController.createAdmin)
