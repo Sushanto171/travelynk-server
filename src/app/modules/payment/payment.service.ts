@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DefaultArgs } from "@prisma/client/runtime/client";
 import Stripe from "stripe";
+import config from "../../config";
 import { prisma } from "../../config/prisma.config";
 import { stripe } from "../../config/stripe.config";
 import { PrismaClient } from ".././../../generated/prisma/client";
@@ -88,8 +89,8 @@ const createPaymentIntent = async ({
       },
     ],
 
-    success_url: `https://sushantokumar.vercel.app`,
-    cancel_url: `https://sushantokumar.vercel.app/projects`,
+    success_url: `${config.FRONTEND_URL}/success`,
+    cancel_url: `${config.FRONTEND_URL}/cancel`,
 
     metadata: {
       paymentId,
