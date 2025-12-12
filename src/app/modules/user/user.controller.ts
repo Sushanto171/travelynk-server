@@ -61,6 +61,17 @@ const createAdmin = catchAsync(async (req, res) => {
   })
 })
 
+const updateProfilePhoto = catchAsync(async (req, res) => {
+  const result = await UserService.updateProfilePhoto(req);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Profile photo updated",
+    data: result,
+  });
+});
+
 const changeProfileStatus = catchAsync(async (req, res) => {
   const id = req.params.id;
 
@@ -78,6 +89,7 @@ export const UserController = {
   getAllFormDB,
   getUserById,
   createTraveler,
+  updateProfilePhoto,
   createAdmin,
   changeProfileStatus
 }

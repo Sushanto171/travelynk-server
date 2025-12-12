@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { fileUploadHelper } from "../../helpers/fileUploader";
 import { auth } from "../../middlewares/auth";
 import { validateRequest } from "../../middlewares/validateRequest";
 import { UserRole } from ".././../../generated/prisma/enums";
@@ -14,6 +15,13 @@ router.get('/:id', UserController.getUserById)
 router.post('/create-traveler', validateRequest(UserValidation.createTravelerSchema), UserController.createTraveler)
 
 router.post('/create-admin', auth(UserRole.ADMIN), validateRequest(UserValidation.createAdminSchema), UserController.createAdmin)
+
+router.patch(
+  "/update-profile-photo",
+  auth(...Object.values(UserRole)),
+  fileUploadHelper.upload.single("file"),
+  UserController.updateProfilePhoto
+);
 
 router.patch(
   "/change-profile-status/:id",

@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Request } from "express";
+import { JwtPayload } from "jsonwebtoken";
 import { prisma } from "../../config/prisma.config";
+import { ApiError } from "../../helpers/ApiError";
 import { BcryptHelper } from "../../helpers/bcrypt.helper";
+import { fileUploadHelper } from "../../helpers/fileUploader";
+import { httpStatus } from "../../helpers/httpStatus";
 import { Provider, UserRole, UserStatus } from ".././../../generated/prisma/enums";
 import { createAdminInput, createTravelerInput } from "./user.validation";
 
@@ -189,6 +194,61 @@ const createAdmin = async (payload: createAdminInput) => {
   })
 };
 
+const updateProfilePhoto = async (req: Request) => {
+  const user = req.user as JwtPayload
+
+  if (!user) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Invalid user context");
+  }
+
+  const file = req.file;
+
+  // Handle file upload
+  if (file) {
+    const uploaded = await fileUploadHelper.uploadFileToCloudinary(file);
+    req.body.profile_photo = uploaded.url;
+    fileUploadHelper.cleanUpDiskFile(file);
+  }
+
+  if (!req.body.profile_photo) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No profile photo provided");
+  }
+
+  const isAdmin = user.role === UserRole.ADMIN;      // Adjust based on your enum
+  const isTraveler = user.role === UserRole.USER;
+
+  if (!isAdmin && !isTraveler) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Unknown user role");
+  }
+
+  const updated = await prisma.user.update({
+    where: { email: user.email },
+    data: {
+      ...(isAdmin && {
+        admin: {
+          update: {
+            profile_photo: req.body.profile_photo,
+          },
+        },
+      }),
+      ...(isTraveler && {
+        traveler: {
+          update: {
+            profile_photo: req.body.profile_photo,
+          },
+        },
+      }),
+    },
+  });
+
+  return {
+    success: true,
+    message: "Profile photo updated successfully",
+    data: updated,
+  };
+};
+
+
 const changeProfileStatus = async (
   id: string,
   payload: {
@@ -213,5 +273,6 @@ export const UserService = {
   getUserById,
   createTraveler,
   createAdmin,
+  updateProfilePhoto,
   changeProfileStatus
 }
