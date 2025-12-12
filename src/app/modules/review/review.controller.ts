@@ -24,6 +24,16 @@ const insertIntoDB = catchAsync(async (req, res) => {
 })
 
 
+const getReviewsByOwner = catchAsync(async (req, res) => {
+  const result = await ReviewService.getReviewsByOwner(req.params.ownerId)
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Review retrieved successfully",
+    data: result
+  })
+})
+
 const getByOwnerId = catchAsync(async (req, res) => {
   const result = await ReviewService.getByOwnerID(req.params.id)
   sendResponse(res, {
@@ -57,6 +67,7 @@ const deleteById = catchAsync(async (req, res) => {
 export const ReviewController = {
   getAllFormDB,
   getByOwnerId,
+  getReviewsByOwner,
   insertIntoDB,
   updateById,
   deleteById
