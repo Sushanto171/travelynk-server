@@ -1,13 +1,52 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
+import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
 import { PlanStatus, UserRole } from ".././../../generated/prisma/enums"
 import { CreateReviewInput, UpdateReviewInput } from "./review.validation"
 
-const getAllFormDB = async () => {
-  const result = await prisma.review.findMany()
-  return result
+const getAllFormDB = async (_filters: any, options: IOptions) => {
+  const { limit, page, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+  const data = await prisma.review.findMany(
+    {
+      include: {
+        plan: {
+          select: {
+            slug: true,
+            title: true,
+          }
+        },
+        reviewer: {
+          select: {
+            name: true,
+            id: true,
+            email: true,
+            profile_photo: true
+          }
+        }
+      },
+      take: limit,
+      skip,
+      orderBy: {
+        [sortBy]: sortOrder
+      }
+    }
+  )
+
+  const total = await prisma.review.count()
+
+  return {
+    meta: {
+      page: Number(page),
+      limit: Number(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data,
+  };
 }
 const getByOwnerID = async (id: string) => {
   const result = await prisma.review.findMany(

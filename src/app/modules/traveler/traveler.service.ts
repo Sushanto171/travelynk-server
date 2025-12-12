@@ -1,20 +1,40 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request } from "express"
 import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { fileUploadHelper } from "../../helpers/fileUploader"
 import { httpStatus } from "../../helpers/httpStatus"
+import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
 import { UpdateTravelerInput } from "./traveler.validation"
 
-const getAllFormDB = async () => {
+const getAllFormDB = async (filters: any, options: IOptions) => {
+
+  const { limit, page, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+
   const result = await prisma.traveler.findMany({
     include: {
       interests: true,
       visited_countries: true,
     },
-
+    take: limit,
+    skip,
+    orderBy: {
+      [sortBy]: sortOrder
+    }
   })
 
-  return result
+  const total = await prisma.traveler.count()
+
+  return {
+    meta: {
+      page: Number(page),
+      limit: Number(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  };
 }
 
 const getById = async (id: string) => {
@@ -120,11 +140,11 @@ const updateById = async (req: Request) => {
     // remove interest
     if (remove_interests && Array.isArray(remove_interests) && remove_interests.length) {
       const existingInterests = await tnx.interests.findMany({
-        where: { 
-          id:{
+        where: {
+          id: {
             in: remove_interests
           }
-         },
+        },
         select: { id: true }
       })
 

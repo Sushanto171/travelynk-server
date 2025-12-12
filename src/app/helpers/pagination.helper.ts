@@ -14,10 +14,10 @@ export interface IOptionsResult {
 }
 
 const calculatePagination = (options: IOptions): IOptionsResult => {
-  const page = Number(options.page) || 1;
-  const limit = Number(options.limit) || 10;
-  const sortOrder = options.sortOrder || "desc";
-  const sortBy = options.sortBy || "created_at";
+  const page = Number(options?.page) || 1;
+  const limit = Number(options?.limit) || 10;
+  const sortOrder = options?.sortOrder || "desc";
+  const sortBy = options?.sortBy || "created_at";
   const skip = (page - 1) * limit;
   return {
     page,
