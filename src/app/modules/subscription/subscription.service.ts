@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { JwtPayload } from "jsonwebtoken"
 import { prisma } from "../../config/prisma.config"
+import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
 import { getSubscriptionPrice, getSubscriptionStartEndDate } from "../../utils/getSubscriptionPrice"
 import { PaymentService } from "../payment/payment.service"
 import { CreateSubscriptionInput } from "./subscription.validation"
@@ -61,17 +63,43 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
 
 }
 
-const getAllFormDB = async () => {
-  return await prisma.subscription.findMany({
+const getAllFormDB = async (_filters: any, options: IOptions) => {
+  const { limit, page, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+
+  const data = await prisma.subscription.findMany({
     include: {
-      payments: true,
+      payments: {
+        omit: { paymentGatewayData: true },
+      },
       subscriber: {
         select: {
-          name: true
+          name: true,
+          id: true,
+          email: true,
+          profile_photo: true
         }
       }
+    },
+
+
+    take: limit,
+    skip,
+    orderBy: {
+      [sortBy === "created_at" ? "createdAt" : sortBy]: sortOrder
     }
   })
+
+  const total = await prisma.subscription.count()
+  return {
+    meta: {
+      page: Number(page),
+      limit: Number(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data,
+  };
 }
 
 export const SubscriptionService = {
