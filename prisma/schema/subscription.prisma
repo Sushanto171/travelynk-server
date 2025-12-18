@@ -8,11 +8,9 @@ model Subscription {
   start_date       DateTime
   end_date         DateTime
   is_active        Boolean       @default(true)
-  created_at        DateTime      @default(now())
-  updated_at        DateTime      @updatedAt
+  created_at        DateTime         @default(now()) @map("created_at")
+  updated_at        DateTime         @updatedAt      @map("updated_at")
   payments         Payment[]
-  
-
   @@map("subscriptions")
 }
 
@@ -25,8 +23,8 @@ model Payment {
   amount             Float
   status             PaymentStatus @default(UNPAID)
   paymentGatewayData Json?
-  created_at          DateTime      @default(now())
-  updated_at          DateTime      @updatedAt
+  created_at        DateTime         @default(now()) @map("created_at")
+  updated_at        DateTime         @updatedAt      @map("updated_at")
 
   @@map("payments")
 }

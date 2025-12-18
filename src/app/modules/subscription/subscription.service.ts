@@ -86,7 +86,7 @@ const getAllFormDB = async (_filters: any, options: IOptions) => {
     take: limit,
     skip,
     orderBy: {
-      [sortBy === "created_at" ? "createdAt" : sortBy]: sortOrder
+      [sortBy]: sortOrder
     }
   })
 
