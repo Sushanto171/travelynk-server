@@ -59,7 +59,6 @@ model Plan {
     reviewer    Traveler  @relation(fields: [reviewer_id], references: [id], onDelete: Cascade)
     plan        Plan      @relation(fields: [plan_id], references: [id], onDelete: Cascade)
 
-    @@unique([reviewer_id, plan_id])
     @@index([plan_id, created_at])
     @@map("reviews")
   }

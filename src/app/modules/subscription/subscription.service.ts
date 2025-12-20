@@ -36,7 +36,7 @@ const createSubscription = async (user: JwtPayload, payload: CreateSubscriptionI
       }
     })
     // create transactionId (uuid)
-    const transactionId = String(new Date())
+    const transactionId = String(Date.now())
     // create payment
 
     const paymentInfo = await PaymentService.createPayment(tnx, {

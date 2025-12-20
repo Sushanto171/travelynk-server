@@ -34,7 +34,8 @@ const uploadFileToCloudinary = async (file: Express.Multer.File) => {
     // upload file
     const uploadResult = await cloudinary.uploader.upload(file.path, {
       folder: "travelynk",
-      public_id: file.filename
+      public_id: file.filename,
+      
     })
     return uploadResult
   } catch (error: any) {

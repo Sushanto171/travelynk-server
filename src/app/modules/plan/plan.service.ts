@@ -5,7 +5,7 @@ import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
 import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
 import { Prisma } from ".././../../generated/prisma/client"
-import { UserRole } from ".././../../generated/prisma/enums"
+import { RequestType, UserRole } from ".././../../generated/prisma/enums"
 import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
 
 const getAllFormDB = async (filters: any, options: IOptions) => {
@@ -107,9 +107,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
           },
         },
       },
-      _count: {
-        select: { buddies: true }, // <-- total_joined
-      },
+      buddies: true
     },
 
     skip,
@@ -124,12 +122,27 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     where: whereConditions,
   });
 
-
   // Transform output → attach total_joined as a top-level field
-   const data = result.map(({ _count, ...plan }) => ({
-    ...plan,
-    total_joined: _count.buddies,
-  }));
+
+  const data = result.map(({ buddies, ...plan }) => {
+    let joinedCount = 0;
+    let requestedCount = 0;
+
+    buddies.forEach((buddy) => {
+      if (buddy.request_type === RequestType.REQUESTED) {
+        requestedCount++;
+      }
+      if (buddy.request_type === RequestType.ACCEPTED) {
+        joinedCount++;
+      }
+    });
+
+    return {
+      ...plan,
+      total_joined: joinedCount,
+      total_requested: requestedCount,
+    };
+  })
 
   return {
     meta: {
@@ -180,8 +193,8 @@ const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {
 
 }
 
-
 export const getBySlug = async (slug: string) => {
+
   // Fetch plan details including owner, buddies, and reviews
   const plan = await prisma.plan.findFirstOrThrow({
     where: { slug },
@@ -198,6 +211,7 @@ export const getBySlug = async (slug: string) => {
         select: {
           request_type: true,
           created_at: true,
+          updated_at:true,
           traveler: {
             select: {
               id: true,
@@ -236,7 +250,7 @@ export const getBySlug = async (slug: string) => {
   });
 
   // Count total joined (buddies)
-  const total_joined = await prisma.planBuddy.count({
+  const buddies = await prisma.planBuddy.findMany({
     where: { plan_id: plan.id },
   });
 
@@ -246,13 +260,14 @@ export const getBySlug = async (slug: string) => {
       average: ratings._avg.rating ?? 0,
       total: ratings._count.rating,
     },
-    total_joined,
+    total_joined: buddies.filter(buddy => buddy.request_type === RequestType.ACCEPTED).length,
+    total_requested: buddies.filter(buddy => buddy.request_type === RequestType.REQUESTED).length,
   };
 };
 
 
 const getMyPlans = async (user: JwtPayload,) => {
-  const result = await prisma.plan.findFirstOrThrow({
+  const result = await prisma.plan.findMany({
     where: {
       owner_id: user.id
     },
@@ -279,9 +294,27 @@ const getMyPlans = async (user: JwtPayload,) => {
       reviews: true
     }
   })
-  return result
-}
+ 
+  const data = result.map(({ buddies, ...plan }) => {
+    let joinedCount = 0;
+    let requestedCount = 0;
 
+    buddies.forEach((buddy) => {
+      if (buddy.request_type === RequestType.REQUESTED) {
+        requestedCount++;
+      }
+      if (buddy.request_type === RequestType.ACCEPTED) {
+        joinedCount++;
+      }
+    });
+    return {
+      ...plan,
+      total_joined: joinedCount,
+      total_requested: requestedCount,
+    };
+  });
+  return data
+}
 const updateById = async (user: JwtPayload, id: string, payload: UpdatePlanInput) => {
 
   // verify plan owner

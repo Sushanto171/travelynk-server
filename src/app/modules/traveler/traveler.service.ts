@@ -65,311 +65,335 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
       },
       data: travelers,
     };
-  }};
+  }
+};
 
-  const getById = async (id: string) => {
-    const [traveler, ratings] = await Promise.all([
-      prisma.traveler.findUniqueOrThrow({
-        where: { id },
+const getById = async (id: string) => {
+  const [traveler, ratings] = await Promise.all([
+    prisma.traveler.findUniqueOrThrow({
+      where: { id },
 
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          profile_photo: true,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        profile_photo: true,
 
-          interests: true,
-          visited_countries: true,
+        interests: true,
+        visited_countries: true,
 
-          owned_plans: {
-            orderBy: { created_at: "asc" },
-            take: 3,
+        owned_plans: {
+          orderBy: { created_at: "asc" },
+          take: 3,
 
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              created_at: true,
+          select: {
+            id: true,
+            title: true,
+            slug: true,
+            created_at: true,
 
-              buddies: {
-                select: {
-                  traveler: {
-                    select: {
-                      id: true,
-                      name: true,
-                      email: true,
-                      profile_photo: true,
-                    },
+            buddies: {
+              select: {
+                traveler: {
+                  select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    profile_photo: true,
                   },
                 },
               },
+            },
 
-              reviews: {
-                orderBy: { created_at: "desc" },
-                take: 3,
+            reviews: {
+              orderBy: { created_at: "desc" },
+              take: 3,
 
-                select: {
-                  id: true,
-                  rating: true,
-                  comment: true,
-                  created_at: true,
+              select: {
+                id: true,
+                rating: true,
+                comment: true,
+                created_at: true,
 
-                  reviewer: {
-                    select: {
-                      id: true,
-                      name: true,
-                      profile_photo: true,
-                    },
+                reviewer: {
+                  select: {
+                    id: true,
+                    name: true,
+                    profile_photo: true,
                   },
                 },
               },
             },
           },
         },
-      }),
-
-      prisma.review.aggregate({
-        where: {
-          plan: {
-            owner_id: id,
-          },
-        },
-        _avg: {
-          rating: true,
-        },
-        _count: {
-          rating: true,
-        },
-      }),
-    ]);
-
-    return {
-      ...traveler,
-
-      rating: {
-        average: ratings._avg.rating ?? 0,
-        total: ratings._count.rating,
       },
-    };
+    }),
+
+    prisma.review.aggregate({
+      where: {
+        plan: {
+          owner_id: id,
+        },
+      },
+      _avg: {
+        rating: true,
+      },
+      _count: {
+        rating: true,
+      },
+    }),
+  ]);
+
+  return {
+    ...traveler,
+
+    rating: {
+      average: ratings._avg.rating ?? 0,
+      total: ratings._count.rating,
+    },
   };
+};
 
 
-  const updateById = async (req: Request) => {
-    const id = req.params.id
-    const file = req.file
-    if (file) {
-      const res = await fileUploadHelper.uploadFileToCloudinary(file)
-      req.body.profile_photo = res.url
-      fileUploadHelper.cleanUpDiskFile(file)
+const updateById = async (req: Request) => {
+  const id = req.params.id
+  const file = req.file
+  if (file) {
+    const res = await fileUploadHelper.uploadFileToCloudinary(file)
+    req.body.profile_photo = res.url
+    fileUploadHelper.cleanUpDiskFile(file)
+  }
+
+
+  const { remove_interests, visited_countries, remove_visited_countries, interests, ...data } = req.body as UpdateTravelerInput
+  return await prisma.$transaction(async (tnx) => {
+
+    // remove interest
+    if (remove_interests && Array.isArray(remove_interests) && remove_interests.length) {
+      const existingInterests = await tnx.interests.findMany({
+        where: {
+          id: {
+            in: remove_interests
+          }
+        },
+        select: { id: true }
+      })
+
+      if (existingInterests.length !== remove_interests.length) {
+        const notFound = existingInterests.filter(ing => !remove_interests.includes(ing.id))
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Cannot remove non-existent interest: ${notFound.join(", ")}`
+        );
+      }
+
+      await prisma.travelerToInterests.deleteMany({
+        where: {
+          traveler_id: id,
+          interests_id: {
+            in: remove_interests
+          }
+        },
+      })
     }
 
-
-    const { remove_interests, visited_countries, remove_visited_countries, interests, ...data } = req.body as UpdateTravelerInput
-    return await prisma.$transaction(async (tnx) => {
-
-      // remove interest
-      if (remove_interests && Array.isArray(remove_interests) && remove_interests.length) {
-        const existingInterests = await tnx.interests.findMany({
-          where: {
-            id: {
-              in: remove_interests
-            }
-          },
-          select: { id: true }
-        })
-
-        if (existingInterests.length !== remove_interests.length) {
-          const notFound = existingInterests.filter(ing => !remove_interests.includes(ing.id))
-          throw new ApiError(
-            httpStatus.BAD_REQUEST,
-            `Cannot remove non-existent interest: ${notFound.join(", ")}`
-          );
-        }
-
-        await prisma.travelerToInterests.deleteMany({
-          where: {
-            traveler_id: id,
-            interests_id: {
-              in: remove_interests
-            }
-          },
-        })
-      }
-
-      // remove countries
-      if (remove_visited_countries && Array.isArray(remove_visited_countries) && remove_visited_countries.length) {
-        const existingCountries = await tnx.countries.findMany({
-          where: {
-            id: {
-              in: remove_visited_countries
-            }
-          },
-          select: { id: true }
-        })
-
-        if (existingCountries.length !== remove_visited_countries.length) {
-          const notFound = existingCountries.filter(ex => !remove_visited_countries.includes(ex.id))
-          throw new ApiError(
-            httpStatus.BAD_REQUEST,
-            `Cannot remove non-existent countries: ${notFound.join(", ")}`
-          );
-        }
-
-        await prisma.travelerCountries.deleteMany({
-          where: {
-            traveler_id: id,
-            country_id: {
-              in: remove_visited_countries
-            }
-          }
-        })
-      }
-
-      // add interest
-      if (interests && Array.isArray(interests) && interests.length) {
-        const existingInterests = await tnx.interests.findMany({
-          where: {
-            id: { in: interests }
-          },
-          select: { id: true }
-        })
-
-        const existingInterestIds = existingInterests.map(ex => ex.id)
-
-        const invalidInterestId = interests.filter(
-          ins => !existingInterestIds.includes(ins)
-        )
-
-        if (invalidInterestId.length) {
-          throw new ApiError(
-            httpStatus.BAD_REQUEST,
-            `Invalid interest id: ${invalidInterestId.join(", ")}`
-          )
-        }
-
-        const alreadyLinked = await tnx.travelerToInterests.findMany({
-          where: {
-            traveler_id: id,
-            interests_id: {
-              in: interests
-            }
-          },
-          select: {
-            interests_id: true
-          }
-        })
-
-        const alreadyLinkedIds = alreadyLinked.map(i => i.interests_id)
-
-        const newInterestIds = interests.filter(
-          ins => !alreadyLinkedIds.includes(ins)
-        )
-
-        if (newInterestIds.length) {
-          await tnx.travelerToInterests.createMany({
-            data: newInterestIds.map((interestId) => ({
-              traveler_id: id,
-              interests_id: interestId
-            })),
-            skipDuplicates: true
-          })
-        }
-      }
-
-      // add visited_countries
-      if (visited_countries && Array.isArray(visited_countries) && visited_countries.length) {
-
-        const existingCountries = await tnx.countries.findMany({
-          where: {
-            id: { in: visited_countries }
-          },
-          select: { id: true }
-        });
-
-        const existingCountryIds = existingCountries.map(c => c.id);
-
-        const invalidCountryIds = visited_countries.filter(
-          c => !existingCountryIds.includes(c)
-        );
-
-        if (invalidCountryIds.length) {
-          throw new ApiError(
-            httpStatus.BAD_REQUEST,
-            `Invalid country id: ${invalidCountryIds.join(", ")}`
-          );
-        }
-
-        const alreadyLinked = await tnx.travelerCountries.findMany({
-          where: {
-            traveler_id: id,
-            country_id: {
-              in: visited_countries
-            }
-          },
-          select: {
-            country_id: true
-          }
-        });
-
-        const alreadyLinkedIds = alreadyLinked.map(c => c.country_id);
-
-        const newCountryIds = visited_countries.filter(
-          c => !alreadyLinkedIds.includes(c)
-        );
-
-        if (newCountryIds.length) {
-          await tnx.travelerCountries.createMany({
-            data: newCountryIds.map((countryId) => ({
-              traveler_id: id,
-              country_id: countryId
-            })),
-            skipDuplicates: true
-          });
-        }
-      }
-
-      return await prisma.traveler.update({
+    // remove countries
+    if (remove_visited_countries && Array.isArray(remove_visited_countries) && remove_visited_countries.length) {
+      const existingCountries = await tnx.countries.findMany({
         where: {
-          id
-        },
-        data
-      })
-    })
-  }
-
-  const softDelete = async (id: string) => {
-    const result = await prisma.traveler.update({
-      where: { id },
-      data: {
-        is_deleted: true,
-        user: {
-          update: {
-            is_deleted: true
+          id: {
+            in: remove_visited_countries
           }
+        },
+        select: { id: true }
+      })
+
+      if (existingCountries.length !== remove_visited_countries.length) {
+        const notFound = existingCountries.filter(ex => !remove_visited_countries.includes(ex.id))
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Cannot remove non-existent countries: ${notFound.join(", ")}`
+        );
+      }
+
+      await prisma.travelerCountries.deleteMany({
+        where: {
+          traveler_id: id,
+          country_id: {
+            in: remove_visited_countries
+          }
+        }
+      })
+    }
+
+    // add interest
+    if (interests && Array.isArray(interests) && interests.length) {
+      const existingInterests = await tnx.interests.findMany({
+        where: {
+          id: { in: interests }
+        },
+        select: { id: true }
+      })
+
+      const existingInterestIds = existingInterests.map(ex => ex.id)
+
+      const invalidInterestId = interests.filter(
+        ins => !existingInterestIds.includes(ins)
+      )
+
+      if (invalidInterestId.length) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Invalid interest id: ${invalidInterestId.join(", ")}`
+        )
+      }
+
+      const alreadyLinked = await tnx.travelerToInterests.findMany({
+        where: {
+          traveler_id: id,
+          interests_id: {
+            in: interests
+          }
+        },
+        select: {
+          interests_id: true
+        }
+      })
+
+      const alreadyLinkedIds = alreadyLinked.map(i => i.interests_id)
+
+      const newInterestIds = interests.filter(
+        ins => !alreadyLinkedIds.includes(ins)
+      )
+
+      if (newInterestIds.length) {
+        await tnx.travelerToInterests.createMany({
+          data: newInterestIds.map((interestId) => ({
+            traveler_id: id,
+            interests_id: interestId
+          })),
+          skipDuplicates: true
+        })
+      }
+    }
+
+    // add visited_countries
+    if (visited_countries && Array.isArray(visited_countries) && visited_countries.length) {
+
+      const existingCountries = await tnx.countries.findMany({
+        where: {
+          id: { in: visited_countries }
+        },
+        select: { id: true }
+      });
+
+      const existingCountryIds = existingCountries.map(c => c.id);
+
+      const invalidCountryIds = visited_countries.filter(
+        c => !existingCountryIds.includes(c)
+      );
+
+      if (invalidCountryIds.length) {
+        throw new ApiError(
+          httpStatus.BAD_REQUEST,
+          `Invalid country id: ${invalidCountryIds.join(", ")}`
+        );
+      }
+
+      const alreadyLinked = await tnx.travelerCountries.findMany({
+        where: {
+          traveler_id: id,
+          country_id: {
+            in: visited_countries
+          }
+        },
+        select: {
+          country_id: true
+        }
+      });
+
+      const alreadyLinkedIds = alreadyLinked.map(c => c.country_id);
+
+      const newCountryIds = visited_countries.filter(
+        c => !alreadyLinkedIds.includes(c)
+      );
+
+      if (newCountryIds.length) {
+        await tnx.travelerCountries.createMany({
+          data: newCountryIds.map((countryId) => ({
+            traveler_id: id,
+            country_id: countryId
+          })),
+          skipDuplicates: true
+        });
+      }
+    }
+
+    return await prisma.traveler.update({
+      where: {
+        id
+      },
+      data
+    })
+  })
+}
+
+const softDelete = async (id: string) => {
+  const result = await prisma.traveler.update({
+    where: { id },
+    data: {
+      is_deleted: true,
+      user: {
+        update: {
+          is_deleted: true
+        }
+      }
+    }
+  })
+  return result
+}
+
+const deleteById = async (id: string) => {
+
+  return await prisma.$transaction(async (tnx) => {
+    const user = await tnx.traveler.findUniqueOrThrow({
+      where: { id }
+    })
+    await tnx.travelerToInterests.deleteMany({
+      where: { traveler_id: user.id }
+    })
+    await tnx.travelerCountries.deleteMany({
+      where: { traveler_id: user.id }
+    })
+
+    await tnx.payment.deleteMany({
+      where: {
+        subscription: {
+          subscriber_id: user.id
         }
       }
     })
-    return result
-  }
 
-  const deleteById = async (id: string) => {
 
-    return await prisma.$transaction(async (tnx) => {
-      const user = await tnx.traveler.delete({
-        where:
-          { id }
-      })
-      return await tnx.user.delete({
-        where: { id: user.user_id }
-      })
-
+    await tnx.subscription.deleteMany({
+      where: { subscriber_id: user.id }
     })
-  }
 
-  export const TravelerService = {
-    getAllFormDB,
-    getById,
-    updateById,
-    softDelete,
-    deleteById
-  }
+
+    await tnx.traveler.delete({
+      where: { id }
+    })
+
+    return await tnx.user.delete({
+      where: { id: user.user_id }
+    })
+  })
+}
+
+export const TravelerService = {
+  getAllFormDB,
+  getById,
+  updateById,
+  softDelete,
+  deleteById
+}
