@@ -11,10 +11,9 @@ import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.valid
 
 const getAllFormDB = async (filters: any, options: IOptions) => {
   const {
-    destination,
-    interests,
     startDate,
     endDate,
+    searchTerm,
     ...restFilters
   } = filters;
 
@@ -23,24 +22,30 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
 
   const andConditions: Prisma.PlanWhereInput[] = [];
 
-  // Only Public & Future Plans
-  andConditions.push({
-    start_date: {
-      gte: new Date(),
-    },
-  });
+  if (searchTerm) {
+    const fields = ["destination", "title", "itinerary"] as const;
 
-  // Destination
-  if (destination) {
-    andConditions.push({
-      destination: {
-        contains: destination,
+    const orConditions: Prisma.PlanWhereInput[] = fields.map(field => ({
+      [field]: {
+        contains: searchTerm,
         mode: "insensitive",
       },
+    }));
+
+    orConditions.push({
+      owner: {
+        name: {
+          contains: searchTerm,
+          mode: "insensitive",
+        },
+      },
+
     });
+
+    andConditions.push({ OR: orConditions });
+
   }
 
-  // Date Range Overlap
   if (startDate && endDate) {
     andConditions.push({
       AND: [
@@ -50,45 +55,14 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     });
   }
 
-  // Owner Interests
-  if (interests && interests.length > 0) {
-    const interestArray = Array.isArray(interests)
-      ? interests
-      : [interests];
 
-    andConditions.push({
-      owner: {
-        interests: {
-          some: {
-            interests: {
-              name: { in: interestArray, mode: "insensitive" },
-            },
-          },
-        },
-      },
-    });
-  }
-
-  // Dynamic filters
   if (Object.keys(restFilters).length > 0) {
-    Object.entries(restFilters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== "") {
-        andConditions.push({
-          [key]: { equals: value },
-        });
-      }
-    });
+    andConditions.push(...buildAndConditions(restFilters));
   }
 
-  // 🔥 Dynamic enum-safe filters
-  andConditions.push(...buildAndConditions(restFilters));
+  const whereConditions: Prisma.PlanWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
 
-
-  const whereConditions = andConditions.length
-    ? { AND: andConditions }
-    : {};
-
-  // Query with built-in relation count
   const result = await prisma.plan.findMany({
     where: whereConditions,
     include: {
@@ -97,6 +71,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
           id: true,
           name: true,
           email: true,
+          profile_photo: true,
         },
       },
       reviews: {
@@ -112,22 +87,17 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
           },
         },
       },
-      buddies: true
+      buddies: true,
     },
-
     skip,
     take: Number(limit),
-
     orderBy: {
       [sortBy]: sortOrder,
     },
   });
-
   const total = await prisma.plan.count({
     where: whereConditions,
   });
-
-  // Transform output → attach total_joined as a top-level field
 
   const data = result.map(({ buddies, ...plan }) => {
     let joinedCount = 0;
@@ -147,7 +117,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
       total_joined: joinedCount,
       total_requested: requestedCount,
     };
-  })
+  });
 
   return {
     meta: {
@@ -158,7 +128,7 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     },
     data,
   };
-};
+}
 
 
 const insertIntoDB = async (user: JwtPayload, payload: CreatePlanInput) => {

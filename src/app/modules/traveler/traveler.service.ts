@@ -40,32 +40,30 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
 
   let travelers = []
 
-  if (raw) {
-    travelers = []
-    for (const r of raw) {
-      const interests = r.interests.map(
-        (i: any) => i.interests
-      );
+  travelers = []
+  for (const r of raw) {
+    const interests = r.interests.map(
+      (i: any) => i.interests
+    );
 
-      const visitedCountries =
-        r.visited_countries.map((c: any) => c.country);
+    const visitedCountries =
+      r.visited_countries.map((c: any) => c.country);
 
-      travelers.push({
-        ...r,
-        interests,
-        visited_countries: visitedCountries,
-      });
-    }
-    return {
-      meta: {
-        page: Number(page),
-        limit: Number(limit),
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
-      data: travelers,
-    };
+    travelers.push({
+      ...r,
+      interests,
+      visited_countries: visitedCountries,
+    });
   }
+  return {
+    meta: {
+      page: Number(page),
+      limit: Number(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: travelers,
+  };
 };
 
 const getById = async (id: string) => {

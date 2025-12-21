@@ -9,7 +9,7 @@ import { PlanService } from "./plan.service"
 
 const getAllFormDB = catchAsync(async (req, res) => {
 
-  const filters = pick(req.query, ["destination,", "interests", "startDate", "endDate", "owner_id", "status", "tour_type"]);
+  const filters = pick(req.query, ["startDate", "endDate", "owner_id", "status", "tour_type", "searchTerm"]);
   const options = pick(req.query, queryOptions);
 
   const { data, meta } = await PlanService.getAllFormDB(filters, options)
