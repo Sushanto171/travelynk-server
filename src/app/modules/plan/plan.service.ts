@@ -4,6 +4,7 @@ import { prisma } from "../../config/prisma.config"
 import { ApiError } from "../../helpers/ApiError"
 import { httpStatus } from "../../helpers/httpStatus"
 import { IOptions, paginationHelper } from "../../helpers/pagination.helper"
+import { buildAndConditions } from "../../utils/buildPrismaFilter"
 import { Prisma } from ".././../../generated/prisma/client"
 import { RequestType, UserRole } from ".././../../generated/prisma/enums"
 import { CreatePlanInput, UpdatePlanInput, UpdatePlanStatus } from "./plan.validation"
@@ -78,6 +79,10 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
       }
     });
   }
+
+  // 🔥 Dynamic enum-safe filters
+  andConditions.push(...buildAndConditions(restFilters));
+
 
   const whereConditions = andConditions.length
     ? { AND: andConditions }
@@ -211,7 +216,7 @@ export const getBySlug = async (slug: string) => {
         select: {
           request_type: true,
           created_at: true,
-          updated_at:true,
+          updated_at: true,
           traveler: {
             select: {
               id: true,
@@ -294,7 +299,7 @@ const getMyPlans = async (user: JwtPayload,) => {
       reviews: true
     }
   })
- 
+
   const data = result.map(({ buddies, ...plan }) => {
     let joinedCount = 0;
     let requestedCount = 0;
