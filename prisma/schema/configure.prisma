@@ -1,0 +1,19 @@
+model NewsLatter {
+  id                String              @id @default(uuid())
+  email              String               @unique
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  @@map("newslatter")
+}
+
+// model Support {
+//   id                String              @id @default(uuid())
+//   name              String               
+//   email              String               
+//   subject              String               
+//   body String
+//   created_at        DateTime            @default(now())
+//   updated_at        DateTime            @updatedAt
+//   @@map("support")
+// }
+

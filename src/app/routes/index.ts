@@ -1,14 +1,15 @@
 import { Router } from "express";
+import { AdminRoutes } from "../modules/admin/admin.routes";
 import { AuthRoutes } from "../modules/auth/auth.routes";
 import { CountryRoutes } from "../modules/country/country.routes";
 import { InterestRoutes } from "../modules/interest/interest.routes";
+import { NewsLatterRoutes } from "../modules/newslatter/newslatter.routes";
 import { PlanJoinRoutes } from "../modules/plan-join/plan-join.routes";
 import { PlanRoutes } from "../modules/plan/plan.routes";
 import { ReviewRoutes } from "../modules/review/review.routes";
+import { SubscriptionRoutes } from "../modules/subscription/subscription.routes";
 import { UserRoutes } from "../modules/user/user.routes";
 import { TravelerRoutes } from './../modules/traveler/traveler.routes';
-import { SubscriptionRoutes } from "../modules/subscription/subscription.routes";
-import { AdminRoutes } from "../modules/admin/admin.routes";
 
 export const router = Router()
 
@@ -57,6 +58,10 @@ const routes: Route[] = [
   {
     path: "/admin",
     router: AdminRoutes
+  },
+  {
+    path: "/newslatter",
+    router: NewsLatterRoutes
   },
 ]
 
