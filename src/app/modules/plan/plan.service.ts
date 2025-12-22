@@ -99,11 +99,11 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
     where: whereConditions,
   });
 
-  const data = result.map(({ buddies, ...plan }) => {
+  const data = result.map(({ buddies, reviews, ...plan }) => {
     let joinedCount = 0;
     let requestedCount = 0;
 
-    buddies.forEach((buddy) => {
+    buddies.forEach(buddy => {
       if (buddy.request_type === RequestType.REQUESTED) {
         requestedCount++;
       }
@@ -112,10 +112,20 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
       }
     });
 
+    const averageRating =
+      reviews.length > 0
+        ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+        : 0;
+
     return {
       ...plan,
+      reviews, // keep if frontend needs it
       total_joined: joinedCount,
       total_requested: requestedCount,
+      rating: {
+        average: Number(averageRating.toFixed(1)), // normalized
+        total: reviews.length,
+      }
     };
   });
 
@@ -179,6 +189,7 @@ export const getBySlug = async (slug: string) => {
           id: true,
           name: true,
           email: true,
+          profile_photo: true
         },
       },
       buddies: {
