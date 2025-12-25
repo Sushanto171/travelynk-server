@@ -10,6 +10,7 @@ import { ReviewRoutes } from "../modules/review/review.routes";
 import { SubscriptionRoutes } from "../modules/subscription/subscription.routes";
 import { UserRoutes } from "../modules/user/user.routes";
 import { TravelerRoutes } from './../modules/traveler/traveler.routes';
+import { StatsRoutes } from "../modules/stats/stats.routes";
 
 export const router = Router()
 
@@ -62,6 +63,10 @@ const routes: Route[] = [
   {
     path: "/newslatter",
     router: NewsLatterRoutes
+  },
+  {
+    path: "/stats",
+    router: StatsRoutes
   },
 ]
 
