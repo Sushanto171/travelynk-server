@@ -1,6 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { RequestType, UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
+import { calculateMatchPercentaged } from "../../utils/calculateMatchedParcentange"
 import { ITravelPlan, UserStats } from "./stats.interface"
 
 const getStats = async (user: JwtPayload) => {
@@ -12,6 +13,8 @@ const getStats = async (user: JwtPayload) => {
     select: {
       id: true,
       email: true,
+      interests: true,
+      subscription_active: true,
       user: {
         select: {
           role: true
@@ -20,8 +23,12 @@ const getStats = async (user: JwtPayload) => {
     }
   })
 
-
-  let stats: UserStats
+  let stats: UserStats = {
+    recentCreatePlans: [],
+    upcomingTrips: 0,
+    pendingRequests: 0,
+    subscriptionStatus: "FREE"
+  }
 
   // for user
   if (userData.user.role === UserRole.USER) {
@@ -98,8 +105,53 @@ const getStats = async (user: JwtPayload) => {
       pendingRequests,
       subscriptionStatus: subscriptionStatus ? subscriptionStatus.plan_type : "FREE"
     }
-    return stats;
+    // return stats;
   }
+
+  // subscribe user matching only
+  if (userData.subscription_active) {
+    const interestIds = userData.interests.map(i => i.interests_id)
+    const users = await prisma.traveler.findMany({
+      where: {
+        id: {
+          not: userData.id
+        },
+        interests: {
+          some: {
+            interests_id: {
+              in: interestIds
+            }
+          }
+        }
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        profile_photo: true,
+        interests: true,
+        current_location: true
+      }
+    })
+
+    stats.matchedUsers = users
+      .map(({ interests, ...user }) => {
+        const userInterestIds = interests.map(i => i.interests_id)
+
+        return {
+          ...user,
+          matchPercentage: calculateMatchPercentaged(
+            interestIds,
+            userInterestIds
+          ),
+        }
+      })
+      .sort((a, b) => b.matchPercentage - a.matchPercentage)
+
+    stats.totalMatchedUsers = stats.matchedUsers.length
+  }
+
+  return stats;
 }
 
 

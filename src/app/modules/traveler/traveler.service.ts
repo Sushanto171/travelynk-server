@@ -165,7 +165,6 @@ const updateById = async (req: Request) => {
 
   const { remove_interests, visited_countries, remove_visited_countries, interests, ...data } = req.body as UpdateTravelerInput
   return await prisma.$transaction(async (tnx) => {
-
     // remove interest
     if (remove_interests && Array.isArray(remove_interests) && remove_interests.length) {
       const existingInterests = await tnx.interests.findMany({
