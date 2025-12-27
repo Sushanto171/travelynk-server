@@ -1,7 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { RequestType, UserRole } from "../../../generated/prisma/enums"
 import { prisma } from "../../config/prisma.config"
-import { calculateMatchPercentaged } from "../../utils/calculateMatchedParcentange"
+import { calculateMatchPercentaged } from "../../utils/calculateMatchedPercentaged"
 import { ITravelPlan, UserStats } from "./stats.interface"
 
 const getStats = async (user: JwtPayload) => {
@@ -12,6 +12,7 @@ const getStats = async (user: JwtPayload) => {
     },
     select: {
       id: true,
+      name: true,
       email: true,
       interests: true,
       subscription_active: true,
@@ -24,6 +25,7 @@ const getStats = async (user: JwtPayload) => {
   })
 
   let stats: UserStats = {
+    name: userData.name || "User",
     recentCreatePlans: [],
     upcomingTrips: 0,
     pendingRequests: 0,
@@ -100,12 +102,12 @@ const getStats = async (user: JwtPayload) => {
 
 
     stats = {
+      ...stats,
       recentCreatePlans: recentPlans,
       upcomingTrips,
       pendingRequests,
       subscriptionStatus: subscriptionStatus ? subscriptionStatus.plan_type : "FREE"
     }
-    // return stats;
   }
 
   // subscribe user matching only

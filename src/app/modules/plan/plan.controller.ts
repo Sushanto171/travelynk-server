@@ -8,7 +8,6 @@ import sendResponse from "../../utils/sendResponse"
 import { PlanService } from "./plan.service"
 
 const getAllFormDB = catchAsync(async (req, res) => {
-
   const filters = pick(req.query, ["startDate", "endDate", "owner_id", "status", "tour_type", "searchTerm", ]);
   const options = pick(req.query, queryOptions);
 

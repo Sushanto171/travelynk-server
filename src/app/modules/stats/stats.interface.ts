@@ -3,12 +3,14 @@
 import { PlanStatus, PlanType, SubscriptionPlan } from "../../../generated/prisma/enums";
 
 export interface UserStats {
+  name: string,
   upcomingTrips: number,
   pendingRequests: number,
   recentCreatePlans: ITravelPlan[],
   subscriptionStatus: SubscriptionPlan | "FREE",
   recentNotifications?: any,
-  matchedUsers?:IMatchedUser[]
+  // subscribe user matching only
+  matchedUsers?: IMatchedUser[]
   totalMatchedUsers?: number
 }
 
@@ -24,11 +26,11 @@ export interface ITravelPlan {
   slug: string
 }
 
-export interface IMatchedUser  {
-    matchPercentage: number;
-    id: string;
-    name: string;
-    email: string;
-    profile_photo: string | null;
-    current_location: string | null;
-  }
+export interface IMatchedUser {
+  matchPercentage: number;
+  id: string;
+  name: string;
+  email: string;
+  profile_photo: string | null;
+  current_location: string | null;
+}
