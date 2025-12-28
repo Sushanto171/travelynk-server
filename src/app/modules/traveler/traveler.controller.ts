@@ -6,7 +6,7 @@ import sendResponse from "../../utils/sendResponse"
 import { TravelerService } from "./traveler.service"
 
 const getAllFormDB = catchAsync(async (req, res) => {
-  const filters = pick(req.query, []);
+  const filters = pick(req.query, ["subscription", "status","searchTerm"]);
   const options = pick(req.query, queryOptions);
   const { data, meta } = await TravelerService.getAllFormDB(filters, options)
   sendResponse(res, {
