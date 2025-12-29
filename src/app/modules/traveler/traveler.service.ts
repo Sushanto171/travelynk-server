@@ -13,52 +13,53 @@ const getAllFormDB = async (filters: any, options: IOptions) => {
   const { limit, page, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(options);
 
-    const {searchTerm, status,...restFilters} = filters;
+  const { searchTerm, status, ...restFilters } = filters;
 
 
-    const andConditions : Prisma.TravelerWhereInput[]= []
+  const andConditions: Prisma.TravelerWhereInput[] = []
 
-    if(searchTerm){
-      ["name", "email"].forEach((field) => {
-        andConditions.push({
-          [field]: {
-            contains: searchTerm,
-            mode: "insensitive",
-          },
-        });
-      });
+  if (searchTerm) {
+    const search = ["name", "email"].map((field) => ({
+      [field]: {
+        contains: searchTerm,
+        mode: "insensitive",
+      },
+    })
+    );
+    andConditions.push({ OR: search });
+  }
+
+  if (status) {
+    const statusFilter: Prisma.TravelerWhereInput = {}
+    if (status === 'ACTIVE') {
+      statusFilter.is_deleted = false
+    } else if (status === 'DELETED') {
+      statusFilter.is_deleted = true
     }
+    andConditions.push(statusFilter)
+  }
 
-if(status){
-      const statusFilter: Prisma.TravelerWhereInput = {}
-      if(status === 'ACTIVE'){
-        statusFilter.is_deleted = false
-      } else if (status === 'DELETED'){
-        statusFilter.is_deleted = true
-      }
-      andConditions.push(statusFilter)
-    }
+  if (restFilters) {
+    Object.entries(restFilters).forEach(([field, value]) => {
+      const condition: Prisma.TravelerWhereInput = {};
+      condition[field as keyof Prisma.TravelerWhereInput] = value as any;
+      andConditions.push(condition);
+    });
+  }
 
-    if(restFilters){
-      Object.entries(restFilters).forEach(([field, value]) => {
-        const condition: Prisma.TravelerWhereInput = {};
-        condition[field as keyof Prisma.TravelerWhereInput] = value as any;
-        andConditions.push(condition);
-      });
+  if (restFilters.subscription) {
+    const subscriptionFilter: Prisma.TravelerWhereInput = {}
+    if (restFilters.subscription === 'ACTIVE') {
+      subscriptionFilter.subscription_active = true
+    } else if (restFilters.subscription === 'INACTIVE') {
+      subscriptionFilter.subscription_active = false
     }
-
-    if(restFilters.subscription){
-      const subscriptionFilter: Prisma.TravelerWhereInput = {}
-      if(restFilters.subscription === 'ACTIVE'){
-        subscriptionFilter.subscription_active = true
-      } else if (restFilters.subscription === 'INACTIVE'){
-        subscriptionFilter.subscription_active =false
-      }
-      andConditions.push(subscriptionFilter)
-    }
+    andConditions.push(subscriptionFilter)
+  }
+  const whereCondition = andConditions.length ? { AND: andConditions } : {}
 
   const raw = await prisma.traveler.findMany({
-    where: andConditions.length ? { AND:  andConditions } : {},
+    where: whereCondition,
     include: {
       interests: {
         select: {
@@ -82,7 +83,7 @@ if(status){
     }
   })
 
-  const total = await prisma.traveler.count()
+  const total = await prisma.traveler.count({ where: whereCondition })
 
   let travelers = []
 
